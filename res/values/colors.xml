@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- P3 New Page -->
+    <color name="app_detail_danger">#f05a23</color>
+    <color name="app_detail_unknown">#ABABAB</color>
+    <color name="app_detail_warn">#fa9a3a</color>
+    <color name="banner_no_pic_bg">#86b244</color>
+
+    <!-- P3 -->
+    <color name="list_item_title">#333333</color>
+    <color name="list_item_sub_title">#ABABAB</color>
+    <color name="search_box_background">#f1f1f1</color>
+    <color name="list_shape2">#ffffff</color>
+    <color name="user_guide_bg">#dd000000</color>
+    <color name="transparent_black">#7F000000</color>
+    <color name="ade_red">#d97d39</color>
+
+    <!-- common colors -->
+    <color name="green">#66aa00</color>
+    <color name="black">#333333</color>
+    <color name="grey">#ababab</color>
+    <color name="orange">#c66a46</color>
+    <color name="ade_green">#e5eadd</color>
+    <color name="ade_dark_green">#739f32</color>
+    <color name="ade_grey">#d5d5d5</color>
+    <color name="white">#f7f7f7</color>
+    <color name="pure_white">#ffffff</color>
+    <color name="holo_blue">#ff005892</color>
+    <color name="sixty_transparent">#66e5eadd</color>
+    <color name="action_pressed">#d8e3c5</color>
+    <color name="disabled">#FFB3B3B3</color>
+    <color name="fifty_percent_white">#99ffffff</color>
+    <color name="darker_grey">#999999</color>
+    <color name="black_grey">#727272</color>
+    <color name="light_grey">#ebebeb</color>
+    <color name="lightgrey">#ff888888</color>
+
+    <!-- action bar -->
+    <color name="action_bar_title_text_color">#333333</color>
+
+    <!-- P2 -->
+    <color name="gray">#FFCCCCCC</color>
+    <color name="transparent">#00000000</color>
+    <color name="light_green">#FF66AA01</color>
+    <color name="normal_text_color_black">#FF333333</color>
+    <color name="normal_text_color_gray">#FF949494</color>
+    <color name="normal_text_color_light_gray">#FFcacaca</color>
+    <color name="storage_inner_app_start">#1e77b1</color>
+    <color name="storage_inner_app_end">#41b2fd</color>
+    <color name="storage_inner_music_start">#b86004</color>
+    <color name="storage_inner_music_end">#f99935</color>
+    <color name="storage_inner_image_start">#4d7e04</color>
+    <color name="storage_inner_image_end">#9bdd38</color>
+    <color name="storage_inner_video_start">#aa1b53</color>
+    <color name="storage_inner_video_end">#e04783</color>
+    <color name="radio_button_divider">#FFA4A7AB</color>
+    <color name="lite_gray_background">#FFF1F1F1</color>
+    <color name="background">#FFE1E3E7</color>
+    <color name="account_guide_background">#FFF1F1F1</color>
+    <color name="app_screenshot_background_color">#FF333333</color>
+    <color name="shadow_background_color">#aa000000</color>
+    <color name="account_guide_seperator_color">#FFCCCCCC</color>
+    <color name="list_banner_background">#FFD8D8D8</color>
+    <color name="list_banner_text_color">#FF747474</color>
+    <color name="bind_disabled">#FF8E8E8E</color>
+    <color name="possible_result_points">#c0ffff00</color>
+    <color name="result_view">#b0000000</color>
+    <color name="viewfinder_frame">#ff000000</color>
+    <color name="viewfinder_laser">#ffff0000</color>
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="app_wash_ignore_normal">#e5e5e5</color>
+    <color name="sidebar_account_layout_bg">#44000000</color>
+    <color name="sidebar_divider_bg">#15000000</color>
+    <color name="homepage_background">#dddddd</color>
+
+    <!-- xibaibai -->
+    <color name="floating_view_close_notification">#6eb800</color>
+    <color name="traffic_progress_color">#b85536</color>
+    <color name="traffic_report_total_mobile_color">#FBA617</color>
+    <color name="traffic_report_background_mobile_color">#D70014</color>
+
+    <!-- mario -->
+    <color name="wan_floating_bg">#66000000</color>
+    <color name="wan_text_link">#8bba00</color>
+    <color name="wan_text_gray">#999999</color>
+    <color name="wan_text_dark_gray">#666666</color>
+    <color name="wan_text_deep_gray">#333333</color>
+    <color name="wan_text_green">#66aa00</color>
+    <color name="wan_text_red">#a12f1b</color>
+    <color name="wan_detail_text_gray">#cccccc</color>
+    <color name="wan_detail_text_dark_gray">#666666</color>
+    <color name="wan_detail_bg">#2a2a2a</color>
+    <color name="wan_detail_divider">#333333</color>
+    <color name="wan_detail_tab">#2f2f2f</color>
+    <color name="wan_detail_gallery_bg">#222222</color>
+    <color name="wan_detail_my_info_bg">#151515</color>
+    <color name="wan_detail_my_info_divider">#222222</color>
+    <color name="wan_detail_pressed_bg">#222917</color>
+    <color name="wan_ranking_divider">#333333</color>
+    <color name="wan_ranking_list_top_edge">#1a1a1a</color>
+    <color name="wan_ranking_list_bg">#cc111111</color>
+    <color name="wan_ranking_list_top_edge_self">#333333</color>
+    <color name="wan_ranking_list_bg_self">#cc222222</color>
+    <color name="wan_my_ranking_bg">#1a1a1a</color>
+    <color name="wan_invitation_button_bg_normal">#9b2e1b</color>
+    <color name="wan_invitation_button_bg_pressed">#6f1202</color>
+    <color name="wan_invitation_text">#ffbaae</color>
+    <color name="wan_invitation_dialog_text">#333333</color>
+    <color name="wan_invitation_dialog_divider_vertical">#dbdbdb</color>
+    <color name="wan_invitation_dialog_divider">#d0d0d0</color>
+    <color name="wan_home_page_card_title">#333333</color>
+    <color name="wan_home_page_card_sub_title">#808080</color>
+    <color name="wan_ranking_guide_text_red">#c66a46</color>
+    <color name="wan_ranking_guide_divider">#cccccc</color>
+    <color name="image_border_start">#40990000</color>
+    <color name="image_border_end">#FF660000</color>
+    <color name="image_border_center">#FFFF3333</color>
+
+    <!-- video -->
+    <color name="video_detail_picture_bg">#383838</color>
+    <color name="backgroung_grey">#E4DECF</color>
+    
+    <!-- title -->
+    <color name="title">#212121</color>
+    <color name="font">#999999</color>
+    
+    <!-- body -->
+    <color name="bg">#303030</color>
+
+</resources>

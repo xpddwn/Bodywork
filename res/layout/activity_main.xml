@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg" >
+    
+    <RelativeLayout
+        android:id="@+id/title"
+        android:layout_width="fill_parent"
+        android:layout_height="65dp"
+        android:background="@color/title"
+        android:gravity="center_vertical" >
+        
+     <ImageButton 
+        android:id="@+id/download"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/download"
+        android:layout_marginLeft="200dp"/>
+     
+     <ImageButton 
+        android:id="@+id/classify"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/classify"
+        android:layout_marginLeft="100dp"/>
+     
+     <TextView 
+        android:id="@+id/download1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="180dp"
+        android:textColor="@color/font"
+        android:layout_below="@id/download"
+        android:layout_marginTop="1dp"
+        android:text="@string/download"/>
+     
+     <TextView 
+        android:id="@+id/classify1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="80dp"
+        android:textColor="@color/font"
+        android:layout_below="@id/classify"
+        android:layout_marginTop="1dp"
+        android:text="@string/classify"/>
+        </RelativeLayout>
+        
+    <RelativeLayout 
+        android:id="@+id/life"
+        android:layout_width="fill_parent"
+        android:layout_height="65dp"
+        android:gravity="center_vertical"
+        android:padding="5dp">
+        
+    <ImageView 
+        android:id="@+id/classIcon"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:src="@drawable/car"
+        android:background="@drawable/yuanjiao"/>    
+       
+    
+    <TextView 
+        android:id="@+id/classText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/life"
+        android:textColor="@color/font"
+        android:textSize="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="85dp"/>
+    
+    <ImageView 
+        android:id="@+id/classarrow"
+        android:layout_width="10dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/arrow"/>
+    </RelativeLayout>
+    
+    <View 
+        android:layout_height="1px" 
+        android:background="@color/title" 
+        android:layout_width="fill_parent"></View>
+    
+    <RelativeLayout 
+        android:id="@+id/life1"
+        android:layout_width="fill_parent"
+        android:layout_height="65dp"
+        android:gravity="center_vertical"
+        android:padding="5dp">
+        
+    <ImageView 
+        android:id="@+id/classIcon1"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:src="@drawable/car"
+        android:background="@drawable/yuanjiao"/>    
+       
+    
+    <TextView 
+        android:id="@+id/classText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/car"
+        android:textColor="@color/font"
+        android:textSize="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="85dp"/>
+    
+    <ImageView 
+        android:id="@+id/classarrow1"
+        android:layout_width="10dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/arrow"/>
+    </RelativeLayout>
+    
+    <View 
+        android:layout_height="1px" 
+        android:background="@color/title" 
+        android:layout_width="fill_parent"></View>
+    
+    <RelativeLayout 
+        android:id="@+id/life2"
+        android:layout_width="fill_parent"
+        android:layout_height="65dp"
+        android:gravity="center_vertical"
+        android:padding="5dp">
+        
+    <ImageView 
+        android:id="@+id/classIcon2"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:src="@drawable/car"
+        android:background="@drawable/yuanjiao"/>    
+       
+    
+    <TextView 
+        android:id="@+id/classText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/news"
+        android:textColor="@color/font"
+        android:textSize="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="85dp"/>
+    
+    <ImageView 
+        android:id="@+id/classarrow2"
+        android:layout_width="10dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/arrow"/>
+    </RelativeLayout>
+    
+    <View 
+        android:layout_height="1px" 
+        android:background="@color/title" 
+        android:layout_width="fill_parent"></View>
+    
+    <RelativeLayout 
+        android:id="@+id/life3"
+        android:layout_width="fill_parent"
+        android:layout_height="65dp"
+        android:gravity="center_vertical"
+        android:padding="5dp">
+        
+    <ImageView 
+        android:id="@+id/classIcon3"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:src="@drawable/car"
+        android:background="@drawable/yuanjiao"/>    
+       
+    
+    <TextView 
+        android:id="@+id/classText3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/movie"
+        android:textColor="@color/font"
+        android:textSize="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="85dp"/>
+    
+    <ImageView 
+        android:id="@+id/classarrow3"
+        android:layout_width="10dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/arrow"/>
+    </RelativeLayout>
+    
+    <View 
+        android:layout_height="1px" 
+        android:background="@color/title" 
+        android:layout_width="fill_parent"></View>
+    
+    <RelativeLayout 
+        android:id="@+id/life4"
+        android:layout_width="fill_parent"
+        android:layout_height="65dp"
+        android:gravity="center_vertical"
+        android:padding="5dp">
+        
+    <ImageView 
+        android:id="@+id/classIcon4"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:src="@drawable/car"
+        android:background="@drawable/yuanjiao"/>    
+       
+    
+    <TextView 
+        android:id="@+id/classText4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/social"
+        android:textColor="@color/font"
+        android:textSize="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="85dp"/>
+    
+    <ImageView 
+        android:id="@+id/classarrow4"
+        android:layout_width="10dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/arrow"/>
+    </RelativeLayout>
+    
+    <View 
+        android:layout_height="1px" 
+        android:background="@color/title" 
+        android:layout_width="fill_parent"></View>
+    
+    <RelativeLayout 
+        android:id="@+id/life5"
+        android:layout_width="fill_parent"
+        android:layout_height="65dp"
+        android:gravity="center_vertical"
+        android:padding="5dp">
+        
+    <ImageView 
+        android:id="@+id/classIcon5"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:src="@drawable/car"
+        android:background="@drawable/yuanjiao"/>    
+       
+    
+    <TextView 
+        android:id="@+id/classText5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tool"
+        android:textColor="@color/font"
+        android:textSize="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="85dp"/>
+    
+    <ImageView 
+        android:id="@+id/classarrow5"
+        android:layout_width="10dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/arrow"/>
+    </RelativeLayout>
+
+   
+
+</LinearLayout>

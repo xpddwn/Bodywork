@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">AppMarket</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="classify">应用分类</string>
+    <string name="download">下载管理</string>
+    <string name="life">生活</string>
+    <string name="car">车务</string>
+    <string name="news">新闻</string>
+    <string name="movie">影音</string>
+    <string name="social">社交</string>
+    <string name="tool">工具</string>
+
+</resources>
