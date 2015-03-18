@@ -52,7 +52,8 @@
         android:layout_width="fill_parent"
         android:layout_height="65dp"
         android:gravity="center_vertical"
-        android:padding="5dp">
+        android:padding="5dp"
+        android:background="@drawable/layout_selector">
         
     <ImageView 
         android:id="@+id/classIcon"
@@ -91,7 +92,8 @@
         android:layout_width="fill_parent"
         android:layout_height="65dp"
         android:gravity="center_vertical"
-        android:padding="5dp">
+        android:padding="5dp"
+        android:background="@drawable/layout_selector">
         
     <ImageView 
         android:id="@+id/classIcon1"
@@ -130,7 +132,8 @@
         android:layout_width="fill_parent"
         android:layout_height="65dp"
         android:gravity="center_vertical"
-        android:padding="5dp">
+        android:padding="5dp"
+        android:background="@drawable/layout_selector">
         
     <ImageView 
         android:id="@+id/classIcon2"
@@ -169,7 +172,8 @@
         android:layout_width="fill_parent"
         android:layout_height="65dp"
         android:gravity="center_vertical"
-        android:padding="5dp">
+        android:padding="5dp"
+        android:background="@drawable/layout_selector">
         
     <ImageView 
         android:id="@+id/classIcon3"
@@ -208,7 +212,8 @@
         android:layout_width="fill_parent"
         android:layout_height="65dp"
         android:gravity="center_vertical"
-        android:padding="5dp">
+        android:padding="5dp"
+        android:background="@drawable/layout_selector">
         
     <ImageView 
         android:id="@+id/classIcon4"
@@ -247,7 +252,8 @@
         android:layout_width="fill_parent"
         android:layout_height="65dp"
         android:gravity="center_vertical"
-        android:padding="5dp">
+        android:padding="5dp"
+        android:background="@drawable/layout_selector">
         
     <ImageView 
         android:id="@+id/classIcon5"
