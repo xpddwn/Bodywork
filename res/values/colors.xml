@@ -127,5 +127,6 @@
     
     <!-- body -->
     <color name="bg">#303030</color>
-
+    <color name="install_bt_border">#9498a4</color>
+	<color name="intsall_bt_text">#e3b16a</color>
 </resources>

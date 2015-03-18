@@ -12,5 +12,12 @@
     <string name="movie">影音</string>
     <string name="social">社交</string>
     <string name="tool">工具</string>
+    <string name="can_uninstall">可卸载</string>
+    <string name="can_update">可升级</string>
+    <string name="can_install">可安装</string>
+    <string name="update">更新</string>
+    <string name="install">安装</string>
+    <string name="ininstall">卸载</string>
+    <string name="title_activity_application_manage">ApplicationManage</string>
 
 </resources>

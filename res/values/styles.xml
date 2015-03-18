@@ -16,5 +16,12 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
+    <style name="ManageTitleText">
+		<item name="android:layout_width">80dp</item>
+		<item name="android:layout_height">fill_parent</item>
+		<item name="android:textSize">18sp</item>
+		<item name="android:gravity">center</item>
+		<item name="android:textColor">@color/font</item>
+    </style>
 
 </resources>
