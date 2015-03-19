@@ -33,7 +33,6 @@ public class ApplicationManage extends FragmentActivity {
 		updateTextView = (TextView) findViewById(R.id.update);
 		installTextView = (TextView) findViewById(R.id.install);
 		unisntallTextView = (TextView) findViewById(R.id.unistall);
-
 		fragments = new ArrayList<Fragment>();
 		for (int i = 0; i < 3; i++) {
 			ApplicationManageFragment fragement = new ApplicationManageFragment();
@@ -46,6 +45,9 @@ public class ApplicationManage extends FragmentActivity {
 		updateTextView.setOnClickListener(onClickListener);
 		installTextView.setOnClickListener(onClickListener);
 		unisntallTextView.setOnClickListener(onClickListener);
+		
+		adapter.showTab(0);
+		updateTextView.setSelected(true);
 	}
 
 	@Override
@@ -59,19 +61,28 @@ public class ApplicationManage extends FragmentActivity {
 		@Override
 		public void onClick(View arg0) {
 			// TODO Auto-generated method stub
+			reset();
 			switch (arg0.getId()) {
 			case R.id.update:
 				adapter.showTab(0);
+				updateTextView.setSelected(true);
 				break;
 			case R.id.unistall:
 				adapter.showTab(1);
+				unisntallTextView.setSelected(true);
 				break;
 			case R.id.install:
 				adapter.showTab(2);
+				installTextView.setSelected(true);
 				break;
 			default:
 				break;
 			}
 		}
 	};
+	public void reset(){
+		updateTextView.setSelected(false);
+		installTextView.setSelected(false);
+		unisntallTextView.setSelected(false);
+	}
 }

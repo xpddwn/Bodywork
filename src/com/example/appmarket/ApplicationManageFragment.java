@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,17 +12,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.appmarket.adapter.ApplicationManageListadapter;
 import com.example.appmarket.entity.ApplicationInfo;
 import com.example.appmarket.util.SyncImageLoader;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 public class ApplicationManageFragment extends Fragment {
 
 	private static final String TAG = "ApplicationManageFragment";
 	private Context mContext;
 	private View view;
-	private ListView listView;
+	private PullToRefreshListView pullToRefreshListView;
 	private ArrayList<ApplicationInfo> infos = new ArrayList<ApplicationInfo>();
 	private ApplicationManageListadapter adapter;
 	private boolean havaLoadData = false;
@@ -29,6 +34,7 @@ public class ApplicationManageFragment extends Fragment {
 	private boolean isLoading = false;// 是否正在加载
 	private int lastVisibleIndex;// 最后一个可见的item
 	private int flag;//0 升级 1卸载  2安装
+	private ListView listView;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,14 +48,16 @@ public class ApplicationManageFragment extends Fragment {
 	}
 
 	public void iniData() {
-		listView = (ListView) view.findViewById(R.id.list);
+		pullToRefreshListView = (PullToRefreshListView) view.findViewById(R.id.list);
+		listView=pullToRefreshListView.getRefreshableView();
 		imageLoader = new SyncImageLoader();
 		adapter = new ApplicationManageListadapter(mContext, infos, listView,
 				imageLoader,flag);
 		listView.setAdapter(adapter);
-		listView.setOnScrollListener(onScrollListener);
+		pullToRefreshListView.setOnScrollListener(onScrollListener);
+		pullToRefreshListView.setOnRefreshListener(onRefreshListener2);
 	}
-
+	
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -92,13 +100,46 @@ public class ApplicationManageFragment extends Fragment {
 		@Override
 		public void onScroll(AbsListView view, int firstVisibleItem,
 				int visibleItemCount, int totalItemCount) {
-			// 计算最后一个可见的item是第几个
-			//Log.e(TAG, "scroll " + lastVisibleIndex);
 			lastVisibleIndex = firstVisibleItem + visibleItemCount - 1;
 			// TODO Auto-generated method stub
 		}
 	};
+	private OnRefreshListener2<ListView> onRefreshListener2=new OnRefreshListener2<ListView>() {
 
+		@Override
+		public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+			// TODO Auto-generated method stub
+			Toast.makeText(mContext, "down", 1000).show();
+			pullToRefreshListView.onRefreshComplete();
+		}
+
+		@Override
+		public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+			// TODO Auto-generated method stub
+			handler.sendEmptyMessage(0);
+		}
+	};
+	private Handler handler = new Handler() {
+		@Override
+		public void handleMessage(android.os.Message msg) {
+			super.handleMessage(msg);
+			switch (msg.what) {
+			case 0:
+				Toast.makeText(mContext, "up", 1000).show();
+				ApplicationInfo info = new ApplicationInfo();
+				info.name = "爱奇艺" +" down";
+				info.description = "音乐 12.5M";
+				info.picturePath = "http://p6.qhimg.com/t013f443fd02b23599f.jpg";
+				infos.add(info);
+				adapter.notifyDataSetChanged();
+				pullToRefreshListView.onRefreshComplete();
+				break;
+			default:
+				break;
+			}
+		}
+	};
+	
 	// 加载图片
 	private void loadImage() {
 		int start = listView.getFirstVisiblePosition();
