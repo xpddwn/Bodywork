@@ -21,7 +21,6 @@
 		<item name="android:layout_height">fill_parent</item>
 		<item name="android:textSize">18sp</item>
 		<item name="android:gravity">center</item>
-		<item name="android:textColor">@color/font</item>
+		<item name="android:textColor">@color/app_manage_tab_color</item>
     </style>
-
 </resources>
