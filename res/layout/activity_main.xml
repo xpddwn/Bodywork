@@ -26,6 +26,14 @@
         android:background="@drawable/classify"
         android:layout_marginLeft="100dp"/>
      
+     <ImageButton 
+         android:id="@+id/user"
+         android:layout_width="30dp"
+         android:layout_height="30dp"
+         android:background="@drawable/user"
+         android:layout_marginRight="10dp"
+         android:layout_alignParentRight="true"/>
+          
      <TextView 
         android:id="@+id/download1"
         android:layout_width="wrap_content"
@@ -59,7 +67,7 @@
         android:id="@+id/classIcon"
         android:layout_width="55dp"
         android:layout_height="55dp"
-        android:src="@drawable/car"
+        android:src="@drawable/life"
         android:background="@drawable/yuanjiao"/>    
        
     
@@ -139,7 +147,7 @@
         android:id="@+id/classIcon2"
         android:layout_width="55dp"
         android:layout_height="55dp"
-        android:src="@drawable/car"
+        android:src="@drawable/news"
         android:background="@drawable/yuanjiao"/>    
        
     
@@ -179,7 +187,7 @@
         android:id="@+id/classIcon3"
         android:layout_width="55dp"
         android:layout_height="55dp"
-        android:src="@drawable/car"
+        android:src="@drawable/movie"
         android:background="@drawable/yuanjiao"/>    
        
     
@@ -219,7 +227,7 @@
         android:id="@+id/classIcon4"
         android:layout_width="55dp"
         android:layout_height="55dp"
-        android:src="@drawable/car"
+        android:src="@drawable/social"
         android:background="@drawable/yuanjiao"/>    
        
     
@@ -259,7 +267,7 @@
         android:id="@+id/classIcon5"
         android:layout_width="55dp"
         android:layout_height="55dp"
-        android:src="@drawable/car"
+        android:src="@drawable/tool"
         android:background="@drawable/yuanjiao"/>    
        
     
@@ -281,7 +289,4 @@
         android:layout_alignParentRight="true"
         android:background="@drawable/arrow"/>
     </RelativeLayout>
-
-   
-
 </LinearLayout>

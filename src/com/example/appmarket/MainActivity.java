@@ -2,6 +2,7 @@ package com.example.appmarket;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,12 +22,15 @@ public class MainActivity extends Activity {
 	private RelativeLayout movie;
 	private RelativeLayout social;
 	private RelativeLayout tool;
+	
+	private Intent classifyIntent;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
+		
 
 		download = (ImageButton) findViewById(R.id.download);
 		download.setOnClickListener(new OnClickListener() {
@@ -34,6 +38,8 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				classifyIntent = new Intent(MainActivity.this,ApplicationManage.class);
+				startActivity(classifyIntent);
 			}
 		});
 
@@ -43,6 +49,7 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				
 			}
 		});
 
