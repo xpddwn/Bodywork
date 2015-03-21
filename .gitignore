@@ -1,2 +1,4 @@
 appmarket/bin/
 appmarket/gen/
+refrencelib/*/gen/
+refrencelib/*/bin/
