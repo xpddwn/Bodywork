@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/bg"
     android:orientation="vertical" >
-
+    
     <RelativeLayout
         android:id="@+id/applist"
         android:layout_width="fill_parent"
@@ -26,5 +26,4 @@
             android:layout_centerHorizontal="true"
             android:text="@string/life" />
     </RelativeLayout>
-   
 </LinearLayout>

@@ -3,3 +3,4 @@ appmarket/gen/
 appmarket/project.properties
 refrencelib/*/gen/
 refrencelib/*/bin/
+refrencelib/*/project.properties
