@@ -32,5 +32,8 @@
         android:layout_height="wrap_content"
         android:background="@color/bg"
         android:id="@+id/container">
+        
     </RelativeLayout>
+    
+    
 </LinearLayout>
