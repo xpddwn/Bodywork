@@ -19,5 +19,5 @@
     <string name="install">安装</string>
     <string name="ininstall">卸载</string>
     <string name="title_activity_application_manage">ApplicationManage</string>
-
+	<string name="title_activity_application_classify">ApplicationClassify</string>
 </resources>

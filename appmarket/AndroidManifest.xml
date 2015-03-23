@@ -37,6 +37,10 @@
             android:name="com.example.appmarket.ApplicationManage"
             android:label="@string/title_activity_application_manage" >
         </activity>
+        <activity
+            android:name="com.example.appmarket.ApplicationClassify"
+            android:label="@string/title_activity_application_classify" >
+        </activity>
     </application>
 
 </manifest>

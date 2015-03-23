@@ -70,17 +70,11 @@ public class ApplicationClassifyGridadapter extends BaseAdapter {
 		else{
 			viewHolder=(ViewHolder)convertView.getTag();
 		}
-		setView(position,applicationInfo);
+		setview(position,application);
 		return convertView;
 	}
 
-	public void setView(int position,
-			ArrayList<ApplicationInfo> applicationInfo2) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	public void setView(int position,ApplicationInfo info){
+	public void setview(int position,ApplicationInfo info){
 		// 异步加载图片 如果本地没有图片 则设置为默认的图片
 		try {
 			Bitmap bitmap=imageLoader.getBitmapFromLocal(info.picturePath);
