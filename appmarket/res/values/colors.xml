@@ -129,4 +129,6 @@
     <color name="bg">#303030</color>
     <color name="install_bt_border">#9498a4</color>
 	<color name="intsall_bt_text">#e3b16a</color>
+	<color name="edit_font">#666666</color>
+	<color name="btn_login">#337d39</color>
 </resources>

@@ -14,9 +14,12 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.AbsListView;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +35,8 @@ public class ApplicationClassify extends Activity{
 	private boolean isLoading = false;// 是否正在加载
 	private int lastVisibleIndex;// 最后一个可见的item
 	private GridView gridview;
+	
+	private ImageButton back;
 	
 	
 	protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +68,16 @@ public class ApplicationClassify extends Activity{
         else if(name.contentEquals("tool")){
         	title.setText(R.string.tool);
         }
+        
+        back = (ImageButton)findViewById(R.id.back);
+        back.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				ApplicationClassify.this.finish();
+			}
+		});
 		mcontext = this;
 		pullToRefreshGridview = (PullToRefreshGridView)findViewById(R.id.grid);
 		gridview=pullToRefreshGridview.getRefreshableView();

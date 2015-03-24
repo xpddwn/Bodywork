@@ -18,6 +18,12 @@
     <string name="update">更新</string>
     <string name="install">安装</string>
     <string name="ininstall">卸载</string>
+    <string name="login">登录</string>
+    <string name="nickname">请输入账号</string>
+    <string name="passport">请输入密码</string>
+    <string name="username">账号</string>
+    <string name="userpassport">密码</string>
     <string name="title_activity_application_manage">ApplicationManage</string>
 	<string name="title_activity_application_classify">ApplicationClassify</string>
+	<string name="title_activity_application_login">UserLogin</string>
 </resources>

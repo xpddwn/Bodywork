@@ -10,11 +10,18 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
-	private ImageButton download;
-	private ImageButton classify;
+	private LinearLayout download;
+	private LinearLayout classify;
+	
+	private TextView down;
+	private TextView up;
+	
+	private ImageButton user;
 
 	private RelativeLayout life;
 	private RelativeLayout car;
@@ -25,6 +32,7 @@ public class MainActivity extends Activity {
 	
 	private Intent classifyIntent;
 	private Intent lifeIntent;
+	private Intent loginIntent;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,25 +40,40 @@ public class MainActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
 		
-
-		download = (ImageButton) findViewById(R.id.download);
+		down = (TextView)findViewById(R.id.download1);
+		up = (TextView)findViewById(R.id.classify1);
+		down.setSelected(false);
+		up.setSelected(true);
+		download = (LinearLayout) findViewById(R.id.title1);
 		download.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				down.setSelected(true);
+				up.setSelected(false);
 				classifyIntent = new Intent(MainActivity.this,ApplicationManage.class);
 				startActivity(classifyIntent);
 			}
 		});
 
-		classify = (ImageButton) findViewById(R.id.classify);
+		classify = (LinearLayout) findViewById(R.id.title2);
 		classify.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				
+			}
+		});
+		
+		user = (ImageButton)findViewById(R.id.user);
+		user.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+				startActivity(loginIntent);
 			}
 		});
 
@@ -149,6 +172,14 @@ public class MainActivity extends Activity {
 				startActivity(lifeIntent);
 			}
 		});
+	}
+	
+	@Override
+	protected void onResume()
+	{
+		super.onResume();
+		down.setSelected(false);
+		up.setSelected(true);
 	}
 
 	@Override
