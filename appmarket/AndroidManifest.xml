@@ -45,6 +45,10 @@
             android:name="com.example.appmarket.LoginActivity"
             android:label="@string/title_activity_application_login" >
         </activity>
+        <activity
+            android:name="com.example.appmarket.RegisterActivity"
+            android:label="@string/title_activity_application_register" >
+        </activity>
     </application>
 
 </manifest>
