@@ -21,7 +21,7 @@
     
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
@@ -36,6 +36,18 @@
         <activity
             android:name="com.example.appmarket.ApplicationManage"
             android:label="@string/title_activity_application_manage" >
+        </activity>
+        <activity
+            android:name="com.example.appmarket.ApplicationClassify"
+            android:label="@string/title_activity_application_classify" >
+        </activity>
+        <activity
+            android:name="com.example.appmarket.LoginActivity"
+            android:label="@string/title_activity_application_login" >
+        </activity>
+        <activity
+            android:name="com.example.appmarket.RegisterActivity"
+            android:label="@string/title_activity_application_register" >
         </activity>
     </application>
 

@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/bg"
     android:orientation="vertical" >
-    
+
     <RelativeLayout
         android:id="@+id/applist"
         android:layout_width="fill_parent"
@@ -14,27 +14,30 @@
 
         <ImageButton
             android:id="@+id/back"
-            android:layout_width="10dp"
-            android:layout_height="20dp"
-            android:layout_marginLeft="15dp"
-            android:background="@drawable/arrow" />
+            android:layout_width="36dp"
+            android:layout_height="18dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/back" />
 
         <TextView
             android:id="@+id/app_classtype"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="@string/life" />
+            android:textColor="@color/app_manage_tab_color"
+            android:textSize="22dp" />
     </RelativeLayout>
-    
+
     <com.handmark.pulltorefresh.library.PullToRefreshGridView
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/grid"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@color/bg"
-        android:divider="@color/title"
-        app:ptrMode="pullFromEnd"
-        android:dividerHeight="1dp"
-        android:numColumns="2" />
+        android:background="@color/title"
+        android:numColumns="2"
+        app:ptrMode="pullFromEnd" 
+        android:horizontalSpacing="1dip" 
+        android:verticalSpacing="1dip"/>
+
 </LinearLayout>

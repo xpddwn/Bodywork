@@ -5,3 +5,4 @@ refrencelib/*/gen/
 refrencelib/*/bin/
 refrencelib/*/project.properties
 *.DS_Store
+.settings/

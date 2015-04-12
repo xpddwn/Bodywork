@@ -10,11 +10,18 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
-	private ImageButton download;
-	private ImageButton classify;
+	private LinearLayout download;
+	private LinearLayout classify;
+	
+	private TextView down;
+	private TextView up;
+	
+	private ImageButton user;
 
 	private RelativeLayout life;
 	private RelativeLayout car;
@@ -24,6 +31,8 @@ public class MainActivity extends Activity {
 	private RelativeLayout tool;
 	
 	private Intent classifyIntent;
+	private Intent lifeIntent;
+	private Intent loginIntent;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,25 +40,40 @@ public class MainActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
 		
-
-		download = (ImageButton) findViewById(R.id.download);
+		down = (TextView)findViewById(R.id.download1);
+		up = (TextView)findViewById(R.id.classify1);
+		down.setSelected(false);
+		up.setSelected(true);
+		download = (LinearLayout) findViewById(R.id.title1);
 		download.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				down.setSelected(true);
+				up.setSelected(false);
 				classifyIntent = new Intent(MainActivity.this,ApplicationManage.class);
 				startActivity(classifyIntent);
 			}
 		});
 
-		classify = (ImageButton) findViewById(R.id.classify);
+		classify = (LinearLayout) findViewById(R.id.title2);
 		classify.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				
+			}
+		});
+		
+		user = (ImageButton)findViewById(R.id.user);
+		user.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+				startActivity(loginIntent);
 			}
 		});
 
@@ -59,9 +83,13 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				new AlertDialog.Builder(MainActivity.this).setTitle("消息")
-						.setMessage("打开生活类型应用列表").setPositiveButton("确定", null)
-						.show();
+				lifeIntent = new Intent(MainActivity.this,ApplicationClassify.class);
+				//用Bundle携带数据
+			    Bundle bundle=new Bundle();
+			    //传递name参数为life
+			    bundle.putString("name", "life");
+			    lifeIntent.putExtras(bundle);
+				startActivity(lifeIntent);
 			}
 		});
 
@@ -71,9 +99,13 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				new AlertDialog.Builder(MainActivity.this).setTitle("消息")
-						.setMessage("打开车务类型应用列表").setPositiveButton("确定", null)
-						.show();
+				lifeIntent = new Intent(MainActivity.this,ApplicationClassify.class);
+				//用Bundle携带数据
+			    Bundle bundle=new Bundle();
+			    //传递name参数为life
+			    bundle.putString("name", "car");
+			    lifeIntent.putExtras(bundle);
+				startActivity(lifeIntent);
 			}
 		});
 
@@ -83,9 +115,13 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				new AlertDialog.Builder(MainActivity.this).setTitle("消息")
-						.setMessage("打开新闻类型应用列表").setPositiveButton("确定", null)
-						.show();
+				lifeIntent = new Intent(MainActivity.this,ApplicationClassify.class);
+				//用Bundle携带数据
+			    Bundle bundle=new Bundle();
+			    //传递name参数为life
+			    bundle.putString("name", "news");
+			    lifeIntent.putExtras(bundle);
+				startActivity(lifeIntent);
 			}
 		});
 
@@ -95,9 +131,13 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				new AlertDialog.Builder(MainActivity.this).setTitle("消息")
-						.setMessage("打开影音类型应用列表").setPositiveButton("确定", null)
-						.show();
+				lifeIntent = new Intent(MainActivity.this,ApplicationClassify.class);
+				//用Bundle携带数据
+			    Bundle bundle=new Bundle();
+			    //传递name参数为life
+			    bundle.putString("name", "movie");
+			    lifeIntent.putExtras(bundle);
+				startActivity(lifeIntent);
 			}
 		});
 
@@ -107,9 +147,13 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				new AlertDialog.Builder(MainActivity.this).setTitle("消息")
-						.setMessage("打开社交类型应用列表").setPositiveButton("确定", null)
-						.show();
+				lifeIntent = new Intent(MainActivity.this,ApplicationClassify.class);
+				//用Bundle携带数据
+			    Bundle bundle=new Bundle();
+			    //传递name参数为life
+			    bundle.putString("name", "social");
+			    lifeIntent.putExtras(bundle);
+				startActivity(lifeIntent);
 			}
 		});
 
@@ -119,11 +163,23 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				new AlertDialog.Builder(MainActivity.this).setTitle("消息")
-						.setMessage("打开工具类型应用列表").setPositiveButton("确定", null)
-						.show();
+				lifeIntent = new Intent(MainActivity.this,ApplicationClassify.class);
+				//用Bundle携带数据
+			    Bundle bundle=new Bundle();
+			    //传递name参数为life
+			    bundle.putString("name", "tool");
+			    lifeIntent.putExtras(bundle);
+				startActivity(lifeIntent);
 			}
 		});
+	}
+	
+	@Override
+	protected void onResume()
+	{
+		super.onResume();
+		down.setSelected(false);
+		up.setSelected(true);
 	}
 
 	@Override

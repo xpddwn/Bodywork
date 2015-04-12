@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/user_login"
+        android:layout_width="fill_parent"
+        android:layout_height="65dp"
+        android:background="@color/title"
+        android:gravity="center_vertical" >
+
+        <ImageButton
+            android:id="@+id/back"
+            android:layout_width="36dp"
+            android:layout_height="18dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/back" />
+
+        <TextView
+            android:id="@+id/login_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/login"
+            android:textColor="@color/app_manage_tab_color"
+            android:textSize="22dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/login_bg"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <EditText
+            android:id="@+id/nickname"
+            android:layout_width="340dp"
+            android:layout_height="46dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/edittext_style"
+            android:gravity="center_vertical"
+            android:hint="@string/nickname"
+            android:paddingLeft="65dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/nickname"
+            android:layout_alignTop="@id/nickname"
+            android:layout_marginLeft="3dip"
+            android:layout_marginTop="9dip"
+            android:paddingLeft="5dp"
+            android:text="@string/username"
+            android:textColor="@color/edit_font"
+            android:textSize="20dp" />
+
+        <EditText
+            android:id="@+id/passport"
+            android:layout_width="340dp"
+            android:layout_height="46dp"
+            android:layout_below="@id/nickname"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/edittext_style"
+            android:gravity="center_vertical"
+            android:hint="@string/passport"
+            android:inputType="textPassword"
+            android:paddingLeft="65dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/passport"
+            android:layout_alignTop="@id/passport"
+            android:layout_marginLeft="3dip"
+            android:layout_marginTop="9dip"
+            android:paddingLeft="5dp"
+            android:text="@string/userpassport"
+            android:textColor="@color/edit_font"
+            android:textSize="20dp" />
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="340dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/passport"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/btn_login"
+            android:gravity="center"
+            android:text="@string/login"
+            android:textColor="@color/app_manage_tab_color"
+            android:textSize="22dp" />
+
+        <RelativeLayout
+            android:id="@+id/bottom_bg"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btn_login"
+            android:layout_marginTop="25dp"
+            android:layout_centerHorizontal="true" >
+
+            <TextView
+                android:id="@+id/find_passport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:text="@string/find_passport"
+                android:textSize="18dp" 
+                android:textColor="@color/app_manage_tab_color"/>
+            
+            <TextView 
+                android:id="@+id/flag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="|"
+                android:textSize="18dp"
+                android:textColor="@color/app_manage_tab_color"
+                android:layout_centerInParent="true"/>
+
+            <TextView
+                android:id="@+id/user_register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:layout_toRightOf="@id/flag"
+                android:text="@string/user_register"
+                android:textSize="18dp" 
+                android:textColor="@color/app_manage_tab_color"/>
+        </RelativeLayout>
+    </RelativeLayout>
+
+</LinearLayout>
