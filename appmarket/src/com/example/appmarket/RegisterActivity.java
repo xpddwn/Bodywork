@@ -146,16 +146,8 @@ public class RegisterActivity extends Activity {
 	private void method() {
 		// TODO Auto-generated method stub
 		RequestParams register_request = new RequestParams();
-		JSONObject data = new JSONObject();
-		try{
-			data.put("username", nickname);
-			data.put("password", password);
-		} catch(JSONException e){
-			e.printStackTrace();
-		}
-		String datajson = data.toString();
-		register_request.put("", datajson);
-		System.out.println("json " + datajson);
+		register_request.put("username", nickname);
+		register_request.put("password", password);
 
 		HttpUtil.post(tag,register_request, new JsonHttpResponseHandler() {
 			@Override
@@ -164,7 +156,7 @@ public class RegisterActivity extends Activity {
 				super.onSuccess(jsonobject);
 				String statuscode = null;
 				try {
-					statuscode = jsonobject.getString("code");
+					statuscode = jsonobject.getString("status");
 					System.out.println("statuscode " + statuscode);
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
@@ -172,23 +164,13 @@ public class RegisterActivity extends Activity {
 				}
 
 				System.out.println("Setting onsuccess" + statuscode.toString());
-				if (statuscode.equalsIgnoreCase("200")) {
-					JSONObject myinfo = null;
-					try {
-						myinfo = jsonobject.getJSONObject("");
-						String mystatus = myinfo.getString("status");
-
-						if (mystatus.equalsIgnoreCase("0")) {
-							status = 1;
-						} else if (mystatus.equalsIgnoreCase("2")) {
-							status = 3;
-						}
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+				if (statuscode.equalsIgnoreCase("0")) {
+					status = 1;
 				}
-				if (statuscode.equalsIgnoreCase("403")) {
+				else if(statuscode.equalsIgnoreCase("2")){
+					status = 3;
+				}
+				else if (statuscode.equalsIgnoreCase("100")) {
 					status = 2;
 				}
 
