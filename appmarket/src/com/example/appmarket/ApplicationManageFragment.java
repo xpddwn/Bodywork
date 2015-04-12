@@ -41,23 +41,24 @@ public class ApplicationManageFragment extends Fragment {
 			Bundle savedInstanceState) {
 		view = inflater.inflate(R.layout.app_manage_frgment, container, false);
 		mContext = getActivity();// 由getActivity()获取其上下文
-		flag=getArguments().getInt("flag");
+		flag = getArguments().getInt("flag");
 		iniData();
 		Log.e(TAG, "on create");
 		return view;
 	}
 
 	public void iniData() {
-		pullToRefreshListView = (PullToRefreshListView) view.findViewById(R.id.list);
-		listView=pullToRefreshListView.getRefreshableView();
+		pullToRefreshListView = (PullToRefreshListView) view
+				.findViewById(R.id.list);
+		listView = pullToRefreshListView.getRefreshableView();
 		imageLoader = new SyncImageLoader();
 		adapter = new ApplicationManageListadapter(mContext, infos, listView,
-				imageLoader,flag);
+				imageLoader, flag);
 		listView.setAdapter(adapter);
 		pullToRefreshListView.setOnScrollListener(onScrollListener);
 		pullToRefreshListView.setOnRefreshListener(onRefreshListener2);
 	}
-	
+
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -104,7 +105,7 @@ public class ApplicationManageFragment extends Fragment {
 			// TODO Auto-generated method stub
 		}
 	};
-	private OnRefreshListener2<ListView> onRefreshListener2=new OnRefreshListener2<ListView>() {
+	private OnRefreshListener2<ListView> onRefreshListener2 = new OnRefreshListener2<ListView>() {
 
 		@Override
 		public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
@@ -127,7 +128,7 @@ public class ApplicationManageFragment extends Fragment {
 			case 0:
 				Toast.makeText(mContext, "up", 1000).show();
 				ApplicationInfo info = new ApplicationInfo();
-				info.name = "爱奇艺" +" down";
+				info.name = "爱奇艺" + " down";
 				info.description = "音乐 12.5M";
 				info.picturePath = "http://p6.qhimg.com/t013f443fd02b23599f.jpg";
 				infos.add(info);
@@ -139,7 +140,7 @@ public class ApplicationManageFragment extends Fragment {
 			}
 		}
 	};
-	
+
 	// 加载图片
 	private void loadImage() {
 		int start = listView.getFirstVisiblePosition();
