@@ -15,7 +15,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.appmarket.adapter.ApplicationManageListadapter;
-import com.example.appmarket.entity.ApplicationInfo;
+import com.example.appmarket.sqlite.model.ApplicationInfo;
 import com.example.appmarket.util.SyncImageLoader;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
@@ -35,7 +35,8 @@ public class ApplicationManageFragment extends Fragment {
 	private int lastVisibleIndex;// 最后一个可见的item
 	private int flag;//0 升级 1卸载  2安装
 	private ListView listView;
-
+	
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -46,7 +47,7 @@ public class ApplicationManageFragment extends Fragment {
 		Log.e(TAG, "on create");
 		return view;
 	}
-
+	
 	public void iniData() {
 		pullToRefreshListView = (PullToRefreshListView) view
 				.findViewById(R.id.list);
@@ -68,9 +69,9 @@ public class ApplicationManageFragment extends Fragment {
 			infos.clear();
 			for (int i = 0; i < 10; i++) {
 				ApplicationInfo info = new ApplicationInfo();
-				info.name = "爱奇艺" + i;
+				info.app_name = "爱奇艺" + i;
 				info.description = "音乐 12.5M";
-				info.picturePath = "http://p6.qhimg.com/t013f443fd02b23599f.jpg";
+				info.icon_url = "http://p6.qhimg.com/t013f443fd02b23599f.jpg";
 				infos.add(info);
 			}
 			havaLoadData = true;
@@ -128,9 +129,9 @@ public class ApplicationManageFragment extends Fragment {
 			case 0:
 				Toast.makeText(mContext, "up", 1000).show();
 				ApplicationInfo info = new ApplicationInfo();
-				info.name = "爱奇艺" + " down";
+				info.app_name = "爱奇艺" + " down";
 				info.description = "音乐 12.5M";
-				info.picturePath = "http://p6.qhimg.com/t013f443fd02b23599f.jpg";
+				info.icon_url = "http://p6.qhimg.com/t013f443fd02b23599f.jpg";
 				infos.add(info);
 				adapter.notifyDataSetChanged();
 				pullToRefreshListView.onRefreshComplete();
@@ -151,4 +152,5 @@ public class ApplicationManageFragment extends Fragment {
 		imageLoader.setLoadLimit(start, end);
 		imageLoader.unlock();
 	}
+	
 }

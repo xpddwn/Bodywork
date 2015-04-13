@@ -1,25 +1,25 @@
 package com.example.appmarket.adapter;
 
 import java.util.ArrayList;
-import com.example.appmarket.util.SyncImageLoader;
-import com.example.appmarket.util.SyncImageLoader.OnImageLoadListener;
-
-import com.example.appmarket.R;
-import com.makeramen.roundedimageview.RoundedImageView;
 
 import android.content.Context;
-import com.example.appmarket.entity.ApplicationInfo;
 import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.appmarket.R;
+import com.example.appmarket.sqlite.model.ApplicationInfo;
+import com.example.appmarket.util.SyncImageLoader;
+import com.example.appmarket.util.SyncImageLoader.OnImageLoadListener;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 public class ApplicationClassifyGridadapter extends BaseAdapter {
 	private final String TAG = "ApplicationClassifyGridadapter";
@@ -77,10 +77,10 @@ public class ApplicationClassifyGridadapter extends BaseAdapter {
 	public void setview(int position,ApplicationInfo info){
 		// 异步加载图片 如果本地没有图片 则设置为默认的图片
 		try {
-			Bitmap bitmap=imageLoader.getBitmapFromLocal(info.picturePath);
+			Bitmap bitmap=imageLoader.getBitmapFromLocal(info.icon_url);
 			if(bitmap==null){
 				viewHolder.pictureImageView.setImageResource(R.drawable.car);
-				imageLoader.showImageAsyn(position, info.picturePath,imageLoadListener);
+				imageLoader.showImageAsyn(position, info.icon_url,imageLoadListener);
 			}else{
 				viewHolder.pictureImageView.setImageBitmap(bitmap);
 			}
@@ -92,10 +92,9 @@ public class ApplicationClassifyGridadapter extends BaseAdapter {
 			Log.e(TAG, "内存溢出");
 		}
 		viewHolder.pictureImageView.setTag(position);		
-		viewHolder.nameTextView.setText(info.name);
+		viewHolder.nameTextView.setText(info.app_name);
 		viewHolder.descriptionTextView.setText(info.description);
 		viewHolder.operationButton.setOnClickListener(new OnClickListener() {
-			
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub

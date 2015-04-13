@@ -16,9 +16,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.appmarket.R;
-import com.example.appmarket.entity.ApplicationInfo;
+import com.example.appmarket.sqlite.model.ApplicationInfo;
 import com.example.appmarket.util.SyncImageLoader;
 import com.example.appmarket.util.SyncImageLoader.OnImageLoadListener;
+import com.example.appmarket.util.ThreadManageUtil;
+import com.example.appmarket.util.ThreadObject;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 /**
@@ -86,10 +88,10 @@ public class ApplicationManageListadapter extends BaseAdapter{
 	public void setView(int position,ApplicationInfo info){
 		// 异步加载图片 如果本地没有图片 则设置为默认的图片
 		try {
-			Bitmap bitmap=imageLoader.getBitmapFromLocal(info.picturePath);
+			Bitmap bitmap=imageLoader.getBitmapFromLocal(info.icon_url);
 			if(bitmap==null){
 				viewHolder.pictureImageView.setImageResource(R.drawable.car);
-				imageLoader.showImageAsyn(position, info.picturePath,imageLoadListener);
+				imageLoader.showImageAsyn(position, info.icon_url,imageLoadListener);
 			}else{
 				viewHolder.pictureImageView.setImageBitmap(bitmap);
 			}
@@ -101,7 +103,7 @@ public class ApplicationManageListadapter extends BaseAdapter{
 			Log.e(TAG, "内存溢出");
 		}
 		viewHolder.pictureImageView.setTag(position);		
-		viewHolder.nameTextView.setText(info.name);
+		viewHolder.nameTextView.setText(info.app_name);
 		viewHolder.descriptionTextView.setText(info.description);
 		if(flag==0){
 			viewHolder.operationButton.setText("更新");
@@ -115,7 +117,21 @@ public class ApplicationManageListadapter extends BaseAdapter{
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				
+				ThreadManageUtil.sendRequest(new ThreadObject() {
+					
+					@Override
+					public Object handleOperation() {
+						// TODO Auto-generated method stub
+						return null;
+					}
+				});
+				if(flag==0){//更新
+					
+				}else if(flag==1){//卸载
+					
+				}else if(flag==2){//安装
+					
+				}
 			}
 		});
 	}

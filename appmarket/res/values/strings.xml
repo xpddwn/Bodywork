@@ -28,8 +28,11 @@
     <string name="re_userpassport">确认</string>
     <string name="find_passport">找回密码</string>
     <string name="user_register">注册账号</string>
+    <string name="update_all">全部更新</string>
     <string name="title_activity_application_manage">ApplicationManage</string>
-	<string name="title_activity_application_classify">ApplicationClassify</string>
-	<string name="title_activity_application_login">UserLogin</string>
-	<string name="title_activity_application_register">UserRegister</string>
+    <string name="title_activity_application_classify">ApplicationClassify</string>
+    <string name="title_activity_application_login">UserLogin</string>
+    <string name="title_activity_application_register">UserRegister</string>
+    <string name="title_activity_init">InitActivity</string>
+
 </resources>

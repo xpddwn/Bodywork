@@ -2,13 +2,6 @@ package com.example.appmarket;
 
 import java.util.ArrayList;
 
-import com.example.appmarket.adapter.ApplicationClassifyGridadapter;
-import com.example.appmarket.entity.ApplicationInfo;
-import com.example.appmarket.util.SyncImageLoader;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshGridView;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
-
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -23,6 +16,13 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.appmarket.adapter.ApplicationClassifyGridadapter;
+import com.example.appmarket.sqlite.model.ApplicationInfo;
+import com.example.appmarket.util.SyncImageLoader;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshGridView;
+
 public class ApplicationClassify extends Activity{
 	private final String TAG = "ApplicationClassify";
 	private Context mcontext;
@@ -32,8 +32,8 @@ public class ApplicationClassify extends Activity{
     private ApplicationClassifyGridadapter adapter;
     private boolean havaLoadData = false;
 	private SyncImageLoader imageLoader;
-	private boolean isLoading = false;// 是否正在加载
-	private int lastVisibleIndex;// 最后一个可见的item
+	private boolean isLoading = false;// 鏄惁姝ｅ湪鍔犺浇
+	private int lastVisibleIndex;// 鏈�鍚庝竴涓彲瑙佺殑item
 	private GridView gridview;
 	
 	private ImageButton back;
@@ -43,9 +43,9 @@ public class ApplicationClassify extends Activity{
 		super.onCreate(savedInstanceState);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.app_grid);
-		//新页面接收数据
+		//鏂伴〉闈㈡帴鏀舵暟鎹�
         Bundle bundle = this.getIntent().getExtras();
-        //接收name值
+        //鎺ユ敹name鍊�
         String name = bundle.getString("name");
         
         title = (TextView)findViewById(R.id.app_classtype);
@@ -94,14 +94,14 @@ public class ApplicationClassify extends Activity{
 	public void onResume() {
 		super.onResume();
 		Log.e(TAG, "on resume");
-		//如果没有加载数据，就从网络加载数据
+		//濡傛灉娌℃湁鍔犺浇鏁版嵁锛屽氨浠庣綉缁滃姞杞芥暟鎹�
 		if (!havaLoadData) {
 			infos.clear();
 			for (int i = 0; i < 10; i++) {
 				ApplicationInfo info = new ApplicationInfo();
-				info.name = "爱奇艺" + i;
-				info.description = "音乐 12.5M";
-				info.picturePath = "http://p6.qhimg.com/t013f443fd02b23599f.jpg";
+				info.app_name = "鐖卞鑹�" + i;
+				info.description = "闊充箰 12.5M";
+				info.icon_url = "http://p6.qhimg.com/t013f443fd02b23599f.jpg";
 				infos.add(info);
 			}
 			havaLoadData = true;
@@ -109,7 +109,7 @@ public class ApplicationClassify extends Activity{
 		}
 	}
 
-	// 完成只去加载显示的的图片
+	// 瀹屾垚鍙幓鍔犺浇鏄剧ず鐨勭殑鍥剧墖
 		private AbsListView.OnScrollListener onScrollListener = new AbsListView.OnScrollListener() {
 			@Override
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -159,9 +159,9 @@ public class ApplicationClassify extends Activity{
 				case 0:
 					Toast.makeText(mcontext, "up", 1000).show();
 					ApplicationInfo info = new ApplicationInfo();
-					info.name = "爱奇艺" +" down";
-					info.description = "音乐 12.5M";
-					info.picturePath = "http://p6.qhimg.com/t013f443fd02b23599f.jpg";
+					info.app_name = "鐖卞鑹�" +" down";
+					info.description = "闊充箰 12.5M";
+					info.icon_url = "http://p6.qhimg.com/t013f443fd02b23599f.jpg";
 					infos.add(info);
 					adapter.notifyDataSetChanged();
 					pullToRefreshGridview.onRefreshComplete();
@@ -172,7 +172,7 @@ public class ApplicationClassify extends Activity{
 			}
 		};
 		
-		// 加载图片
+		// 鍔犺浇鍥剧墖
 		private void loadImage() {
 			int start = gridview.getFirstVisiblePosition();
 			int end = gridview.getLastVisiblePosition();

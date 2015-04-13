@@ -1,39 +1,60 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
-    <LinearLayout 
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
         android:layout_width="fill_parent"
-        android:gravity="center"
-        android:orientation="horizontal"
         android:background="@color/title"
-        android:layout_height="60dp">
-         <TextView 
-            style="@style/ManageTitleText"
-            android:id="@+id/update"
-            android:textColor="@color/app_manage_tab_color"
-            android:text="@string/can_update"
-            />
+        android:layout_height="60dp" >
+        <Button 
+            android:layout_width="60dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:id="@+id/back"
+            android:text="back"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/update"
+                style="@style/ManageTitleText"
+                android:text="@string/can_update"
+                android:textColor="@color/app_manage_tab_color" />
+
+            <TextView
+                android:id="@+id/unistall"
+                style="@style/ManageTitleText"
+                android:text="@string/can_uninstall" />
+            
+            <TextView
+                android:id="@+id/install"
+                style="@style/ManageTitleText"
+                android:text="@string/can_install" />
+        </LinearLayout>
         <TextView 
-            style="@style/ManageTitleText"
-            android:text="@string/can_uninstall"
-            android:id="@+id/unistall"
-            />
-       
-        <TextView 
-            android:id="@+id/install"
-            style="@style/ManageTitleText"
-            android:text="@string/can_install"
-            />
-    </LinearLayout>
-    <RelativeLayout 
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/bg"
-        android:id="@+id/container">
-        
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:id="@+id/update_all"
+            android:textSize="16sp"
+            android:textColor="@color/update_all_color"
+            android:text="@string/update_all"/>
     </RelativeLayout>
     
-    
+    <RelativeLayout
+        android:id="@+id/container"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg" >
+    </RelativeLayout>
+
 </LinearLayout>
