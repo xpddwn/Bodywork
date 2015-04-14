@@ -71,9 +71,7 @@ public class LoginActivity extends Activity {
 		});
 		
 		login_nickname = (EditText)findViewById(R.id.nickname);
-		nickname = login_nickname.getText().toString();
 		login_password = (EditText)findViewById(R.id.passport);
-		password = login_password.getText().toString();
 		
 		login = (Button)findViewById(R.id.btn_login);
 		login.setOnClickListener(new OnClickListener() {
@@ -81,6 +79,9 @@ public class LoginActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				nickname = login_nickname.getText().toString();
+				password = login_password.getText().toString();
+				
 				method();
 				
 				CircleDialog = ProgressDialog.show(LoginActivity.this, null,"正在提交",true,false);
@@ -130,6 +131,8 @@ public class LoginActivity extends Activity {
 		login_request.put("username",nickname);
 		login_request.put("password", password);
 		
+		System.out.println("username:"+nickname+"   password:"+password);
+		
 		HttpUtil.post(tag, login_request, new JsonHttpResponseHandler(){
 			@Override
 			public void onSuccess(JSONObject jsonobject) {
@@ -145,10 +148,10 @@ public class LoginActivity extends Activity {
 				}
 
 				System.out.println("Setting onsuccess" + statuscode.toString());
-				if (statuscode.equalsIgnoreCase("1")) {
+				if (statuscode.equalsIgnoreCase("0")) {
 					status = 1;
 				}
-				else if(statuscode.equalsIgnoreCase("2")){
+				else if(statuscode.equalsIgnoreCase("1")||statuscode.equalsIgnoreCase("2")){
 					status = 3;
 				}
 				else if (statuscode.equalsIgnoreCase("100")) {
