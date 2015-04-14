@@ -1,7 +1,11 @@
 package com.example.appmarket;
 
+import com.example.appmarket.configs.MyAppMarket;
+
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,6 +36,7 @@ public class MainActivity extends Activity {
 	private Intent classifyIntent;
 	private Intent lifeIntent;
 	private Intent loginIntent;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +49,24 @@ public class MainActivity extends Activity {
 		down.setSelected(false);
 		up.setSelected(true);
 		download = (LinearLayout) findViewById(R.id.title1);
+		classify = (LinearLayout) findViewById(R.id.title2);
+		user = (ImageButton)findViewById(R.id.user);
+		life = (RelativeLayout) findViewById(R.id.life);
+		car = (RelativeLayout) findViewById(R.id.life1);
+		movie = (RelativeLayout) findViewById(R.id.life3);
+		social = (RelativeLayout) findViewById(R.id.life4);
+		news = (RelativeLayout) findViewById(R.id.life2);
+		tool = (RelativeLayout) findViewById(R.id.life5);
+		
+		if(MyAppMarket.getRegister()==0)
+		{
+			loginIntent = new Intent(this, LoginActivity.class);
+			startActivity(loginIntent);
+		}else{
+			user.setBackgroundResource(R.drawable.user1);
+		}
+		
+		
 		download.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -56,7 +79,6 @@ public class MainActivity extends Activity {
 			}
 		});
 
-		classify = (LinearLayout) findViewById(R.id.title2);
 		classify.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -65,7 +87,6 @@ public class MainActivity extends Activity {
 			}
 		});
 		
-		user = (ImageButton)findViewById(R.id.user);
 		user.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -76,7 +97,6 @@ public class MainActivity extends Activity {
 			}
 		});
 
-		life = (RelativeLayout) findViewById(R.id.life);
 		life.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -92,7 +112,6 @@ public class MainActivity extends Activity {
 			}
 		});
 
-		car = (RelativeLayout) findViewById(R.id.life1);
 		car.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -108,7 +127,6 @@ public class MainActivity extends Activity {
 			}
 		});
 
-		news = (RelativeLayout) findViewById(R.id.life2);
 		news.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -124,7 +142,6 @@ public class MainActivity extends Activity {
 			}
 		});
 
-		movie = (RelativeLayout) findViewById(R.id.life3);
 		movie.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -140,7 +157,6 @@ public class MainActivity extends Activity {
 			}
 		});
 
-		social = (RelativeLayout) findViewById(R.id.life4);
 		social.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -156,7 +172,6 @@ public class MainActivity extends Activity {
 			}
 		});
 
-		tool = (RelativeLayout) findViewById(R.id.life5);
 		tool.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -179,6 +194,11 @@ public class MainActivity extends Activity {
 		super.onResume();
 		down.setSelected(false);
 		up.setSelected(true);
+		
+		if(MyAppMarket.getRegister() == 1)
+		{
+			user.setBackgroundResource(R.drawable.user1);
+		}
 	}
 
 	@Override

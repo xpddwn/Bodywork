@@ -3,6 +3,7 @@ package com.example.appmarket;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.example.appmarket.configs.MyAppMarket;
 import com.example.appmarket.util.HttpUtil;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -12,6 +13,8 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -42,12 +45,17 @@ public class LoginActivity extends Activity {
 	private String password;
 	
 	private final String tag = "login";
+	private SharedPreferences mysp;
+	private Editor myeditor;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.login);
+		
+		mysp = MyAppMarket.mysp;
+		myeditor = mysp.edit();
 		
 		back = (ImageButton)findViewById(R.id.back);
 		back.setOnClickListener(new OnClickListener() {
@@ -73,6 +81,14 @@ public class LoginActivity extends Activity {
 		login_nickname = (EditText)findViewById(R.id.nickname);
 		login_password = (EditText)findViewById(R.id.passport);
 		
+		if(!mysp.getString("username", "").equalsIgnoreCase("")){
+			login_nickname.setText(mysp.getString("username", ""));
+		}
+		
+		if(!mysp.getString("papapa", "").equalsIgnoreCase("")){
+			login_password.setText(mysp.getString("papapa", ""));
+		}
+		
 		login = (Button)findViewById(R.id.btn_login);
 		login.setOnClickListener(new OnClickListener() {
 			
@@ -94,6 +110,13 @@ public class LoginActivity extends Activity {
 						while(true){
 							if(status == 1)
 							{
+								//save the userinfo by sharedPreference
+								myeditor.putString("username", nickname);
+								myeditor.putString("papapa", password);
+								myeditor.commit();
+								
+								MyAppMarket.setRegister();//set user have registered
+								
 								Message msg = new Message();
 								msg.what = 1;
 								mHandler.sendMessage(msg);
