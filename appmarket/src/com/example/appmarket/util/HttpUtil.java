@@ -40,6 +40,8 @@ public class HttpUtil {
 			httpurl = baseurl + "login";
 		} else if (tag.equalsIgnoreCase("app")) {
 			httpurl = baseurl + "get_apps";
+		}else if(tag.equalsIgnoreCase("download_app")){
+			httpurl = baseurl + "download_app";
 		}
 		client.post(httpurl, params, res);
 	}

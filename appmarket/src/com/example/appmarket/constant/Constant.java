@@ -8,5 +8,6 @@ public class Constant {
 			.getExternalStorageDirectory() + "/appmarket/";
 	public static final String ASSETS_IMAGE_PATH = "images";
 	public static final String SDCARD_IMAGE_PATH = APP_DATA_PATH + "image/";
+	public static final String SDCARD_APK_PATH = APP_DATA_PATH + "apk/";
 	public static final String BASE_URL = "http://123.57.133.126/app/v1/";
 }
