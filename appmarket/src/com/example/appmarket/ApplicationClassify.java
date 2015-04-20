@@ -2,6 +2,8 @@ package com.example.appmarket;
 
 import java.util.ArrayList;
 
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -19,14 +21,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.appmarket.adapter.ApplicationClassifyGridadapter;
-import com.example.appmarket.dal.AppMarketService;
-import com.example.appmarket.entity.AppMarket;
+import com.example.appmarket.configs.MyAppMarket;
 import com.example.appmarket.sqlite.model.ApplicationInfo;
-import com.example.appmarket.sqlite.service.AppInfoService;
+import com.example.appmarket.util.HttpUtil;
+import com.example.appmarket.util.JsonUtil;
 import com.example.appmarket.util.SyncImageLoader;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshGridView;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 public class ApplicationClassify extends Activity {
 	private final String TAG = "ApplicationClassify";
@@ -44,7 +50,6 @@ public class ApplicationClassify extends Activity {
 	private ImageButton back;
 	private String name;
 	private int start = 0;
-	private Thread myThread;
 	private Handler mHandler;
 
 	protected void onCreate(Bundle savedInstanceState) {
@@ -95,19 +100,88 @@ public class ApplicationClassify extends Activity {
 		Log.e(TAG, "on resume");
 		System.out.println("system onresume");
 		if (!havaLoadData) {
-			AppMarketService.setStatus();
-			restartthread();
-			getdata(name, String.valueOf(start));
-			havaLoadData=true;
+			handler.sendEmptyMessage(0);
 		}
 	}
 
 	private void getdata(String tag, String start) {
 		// TODO Auto-generated method stub
 		try {
-			infos.clear();
-			infos.addAll(AppMarketService.getJSONlistshops(tag, start));
-			adapter.notifyDataSetChanged();
+			RequestParams params = new RequestParams();
+			String username = MyAppMarket.getUsername();
+			String password = MyAppMarket.getpapapa();
+			
+			if (tag.equalsIgnoreCase("life")) {
+				params.put("username", username);
+				params.put("password", password);
+				params.put("category_id", "2");
+				params.put("start", start);
+				params.put("length", "12");
+			} else if (tag.equalsIgnoreCase("car")) {
+				params.put("username", username);
+				params.put("password", password);
+				params.put("category_id", "3");
+				params.put("start", start);
+				params.put("length", "12");
+			} else if (tag.equalsIgnoreCase("new")) {
+				params.put("username", username);
+				params.put("password", password);
+				params.put("category_id", "4");
+				params.put("start", start);
+				params.put("length", "12");
+			} else if (tag.equalsIgnoreCase("movie")) {
+				params.put("username", username);
+				params.put("password", password);
+				params.put("category_id", "5");
+				params.put("start", start);
+				params.put("length", "12");
+			} else if (tag.equalsIgnoreCase("social")) {
+				params.put("username", username);
+				params.put("password", password);
+				params.put("category_id", "6");
+				params.put("start", start);
+				params.put("length", "12");
+			} else if (tag.equalsIgnoreCase("tool")) {
+				params.put("username", username);
+				params.put("password", password);
+				params.put("category_id", "7");
+				params.put("start", start);
+				params.put("length", "12");
+			}
+			
+			HttpUtil.post("app", params, new JsonHttpResponseHandler() {
+				@Override
+				protected void handleFailureMessage(Throwable arg0, String arg1) {
+					super.handleFailureMessage(arg0, arg1);
+					System.out.println("onfailure");
+			
+				};
+
+				@Override
+				public void onFailure(Throwable arg0, JSONObject arg1) {
+					// TODO Auto-generated method stub
+					super.onFailure(arg0, arg1);
+					System.out.println("onfailure");
+				}
+
+				@Override
+				public void onSuccess(JSONObject jsonobject) {
+					// TODO Auto-generated method stub
+					super.onSuccess(jsonobject);
+					try {
+						JsonObject object=JsonUtil.stringToJsonObject(jsonobject.toString());
+						int statuscode = object.get("status").getAsInt();
+						ArrayList<ApplicationInfo> minfos=JsonUtil.jsonToComplexBean(object.get("apps").toString(), 
+								new TypeToken<ArrayList<ApplicationInfo>>() {}.getType() );
+						infos.clear();
+						infos.addAll(minfos);
+						havaLoadData=true;
+						handler.sendEmptyMessage(1);
+					} catch (Exception e) {
+						// TODO: handle exception
+					}
+				}
+			});
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -119,6 +193,21 @@ public class ApplicationClassify extends Activity {
 		gridview.setAdapter(adapter);
 		System.out.println("test");
 	}
+	
+	private Handler handler = new Handler() {
+		@Override
+		public void handleMessage(android.os.Message msg) {
+			super.handleMessage(msg);
+			switch (msg.what) {
+			case 0:
+				getdata(name, String.valueOf(start));
+				break;
+			case 1:
+				adapter.notifyDataSetChanged();
+				break;
+			}
+		}
+	};
 
 	private Handler mHandler1 = new Handler() {
 		public void handleMessage(Message msg) {
@@ -139,51 +228,8 @@ public class ApplicationClassify extends Activity {
 		}
 	};
 
-	public Thread newThread() {
-		Thread myThread = new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				while (true) {
-					if (AppMarketService.getStatus() == 1) {
-						System.out.println(" decide status = 1");
-						Message msg = new Message();
-						msg.what = 1;
-						mHandler1.sendMessage(msg);
-						AppMarketService.setStatus();
-						break;
-					} else if (AppMarketService.getStatus() == 2) {
-						Message msg = new Message();
-						msg.what = 2;
-						mHandler1.sendMessage(msg);
-						AppMarketService.setStatus();
-						break;
-					}
-
-					else {
-						continue;
-					}
-
-				}
-			}
-		});
-		return myThread;
-	}
-
-	public void restartthread() {
-		if (myThread != null) {
-			if (myThread.isAlive()) {
-				myThread.interrupt();
-			}
-			myThread = newThread();
-			myThread.start();
-		} else {
-			myThread = newThread();
-			myThread.start();
-		}
-	}
-
+	
+	
 
 	private AbsListView.OnScrollListener onScrollListener = new AbsListView.OnScrollListener() {
 		@Override
