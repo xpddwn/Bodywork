@@ -15,9 +15,9 @@ public abstract class BaseClientDataBaseService {
 	}
 
 	/**
-	 * ���ܣ�����ݿ�
+	 * 打开数据库
+	 * @return
 	 */
-
 	public SQLiteDatabase openDatabase() {
 		return SQLiteDatabase.openOrCreateDatabase(ClientDataBase.DB_PATH + "/"
 				+ ClientDataBase.DB_NAME, null);

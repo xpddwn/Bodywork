@@ -11,7 +11,7 @@ import com.example.appmarket.sqlite.model.ApplicationInfo;
 public class AppInfoService extends BaseClientDataBaseService {
 
 	private Context mContext;
-	private SQLiteDatabase db;// �������
+	private SQLiteDatabase db;
 
 	public AppInfoService(Context context) {
 		super(context);
@@ -20,8 +20,7 @@ public class AppInfoService extends BaseClientDataBaseService {
 
 	/**
 	 * 
-	 * ��ȡ��װ��Ӧ���б�
-	 * 
+	 * 获取所有安装的app
 	 * @return
 	 */
 	public ArrayList<ApplicationInfo> getInstalledApp() {
@@ -52,8 +51,8 @@ public class AppInfoService extends BaseClientDataBaseService {
 	}
 
 	/**
-	 * ��ȡ�ɰ�װ��Ӧ���б�
 	 * 
+	 * 获取可安装的app
 	 * @return
 	 */
 	public ArrayList<ApplicationInfo> getCanIntallApp() {
@@ -85,8 +84,7 @@ public class AppInfoService extends BaseClientDataBaseService {
 
 	/**
 	 * 
-	 * ����һ��Application�����������Ϣ
-	 * 
+	 * 更新应用的信息
 	 * @param info
 	 * @return
 	 */
@@ -102,8 +100,7 @@ public class AppInfoService extends BaseClientDataBaseService {
 
 	/**
 	 * 
-	 * ��app�������һ����¼
-	 * 
+	 * 插入一条应用信息
 	 * @param info
 	 * @return
 	 */
@@ -119,8 +116,7 @@ public class AppInfoService extends BaseClientDataBaseService {
 
 	/**
 	 * 
-	 * ��cursor�������app����Ϣ
-	 * 
+	 * 从cursor中获取应用的信息
 	 * @param cursor
 	 * @return
 	 */

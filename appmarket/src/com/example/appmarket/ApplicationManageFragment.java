@@ -15,11 +15,14 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.appmarket.adapter.ApplicationManageListadapter;
+import com.example.appmarket.configs.MyAppMarket;
 import com.example.appmarket.sqlite.model.ApplicationInfo;
+import com.example.appmarket.util.HttpUtil;
 import com.example.appmarket.util.SyncImageLoader;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.loopj.android.http.RequestParams;
 
 public class ApplicationManageFragment extends Fragment {
 
@@ -31,16 +34,16 @@ public class ApplicationManageFragment extends Fragment {
 	private ApplicationManageListadapter adapter;
 	private boolean havaLoadData = false;
 	private SyncImageLoader imageLoader;
-	private boolean isLoading = false;// �Ƿ����ڼ���
-	private int lastVisibleIndex;// ���һ���ɼ��item
-	private int flag;// 0 �� 1ж�� 2��װ
+	private boolean isLoading = false;// 是否正在加载
+	private int lastVisibleIndex;// 最后一个可见的item
+	private int flag;// 0 更新  1安装  2卸载
 	private ListView listView;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		view = inflater.inflate(R.layout.app_manage_frgment, container, false);
-		mContext = getActivity();// ��getActivity()��ȡ��������
+		mContext = getActivity();
 		flag = getArguments().getInt("flag");
 		iniData();
 		Log.e(TAG, "on create");
@@ -63,22 +66,16 @@ public class ApplicationManageFragment extends Fragment {
 	public void onResume() {
 		super.onResume();
 		Log.e(TAG, "on resume");
-		// ���û�м�����ݣ��ʹ�����������
+		
 		if (!havaLoadData) {
 			infos.clear();
-			for (int i = 0; i < 10; i++) {
-				ApplicationInfo info = new ApplicationInfo();
-				info.app_name = "������" + i;
-				info.description = "���� 12.5M";
-				info.icon_url = "http://p6.qhimg.com/t013f443fd02b23599f.jpg";
-				infos.add(info);
-			}
+			
 			havaLoadData = true;
 			adapter.notifyDataSetChanged();
 		}
 	}
 
-	// ���ֻȥ������ʾ�ĵ�ͼƬ
+	
 	private AbsListView.OnScrollListener onScrollListener = new AbsListView.OnScrollListener() {
 		@Override
 		public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -128,8 +125,8 @@ public class ApplicationManageFragment extends Fragment {
 			case 0:
 				Toast.makeText(mContext, "up", 1000).show();
 				ApplicationInfo info = new ApplicationInfo();
-				info.app_name = "������" + " down";
-				info.description = "���� 12.5M";
+				info.app_name = "" + " down";
+				info.description = "音乐 12.5M";
 				info.icon_url = "http://p6.qhimg.com/t013f443fd02b23599f.jpg";
 				infos.add(info);
 				adapter.notifyDataSetChanged();
@@ -141,7 +138,7 @@ public class ApplicationManageFragment extends Fragment {
 		}
 	};
 
-	// ����ͼƬ
+	// 加载图片信息
 	private void loadImage() {
 		int start = listView.getFirstVisiblePosition();
 		int end = listView.getLastVisiblePosition();

@@ -19,13 +19,11 @@ import com.example.appmarket.R;
 import com.example.appmarket.sqlite.model.ApplicationInfo;
 import com.example.appmarket.util.SyncImageLoader;
 import com.example.appmarket.util.SyncImageLoader.OnImageLoadListener;
-import com.example.appmarket.util.ThreadManageUtil;
-import com.example.appmarket.util.ThreadObject;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 /**
  * 
- * Ӧ�ù����������
+ * 
  * 
  * @author tuomao
  * 
@@ -92,7 +90,6 @@ public class ApplicationManageListadapter extends BaseAdapter {
 	}
 
 	public void setView(int position, ApplicationInfo info) {
-		// �첽����ͼƬ ����û��ͼƬ ������ΪĬ�ϵ�ͼƬ
 		try {
 			Bitmap bitmap = imageLoader.getBitmapFromLocal(info.icon_url);
 			if (bitmap == null) {
@@ -103,41 +100,34 @@ public class ApplicationManageListadapter extends BaseAdapter {
 				viewHolder.pictureImageView.setImageBitmap(bitmap);
 			}
 		} catch (Exception e) {
-			Log.e(TAG, "��ȡͼƬ����");
+			Log.e(TAG, e.toString());
 			// TODO: handle exception
 		} catch (OutOfMemoryError e) {
 			// TODO: handle exception
-			Log.e(TAG, "�ڴ����");
+			Log.e(TAG, e.toString());
 		}
 		viewHolder.pictureImageView.setTag(position);
 		viewHolder.nameTextView.setText(info.app_name);
 		viewHolder.descriptionTextView.setText(info.description);
 		if (flag == 0) {
-			viewHolder.operationButton.setText("����");
+			viewHolder.operationButton.setText("更新");
 		} else if (flag == 1) {
-			viewHolder.operationButton.setText("ж��");
+			viewHolder.operationButton.setText("安装");
 		} else if (flag == 2) {
-			viewHolder.operationButton.setText("��װ");
+			viewHolder.operationButton.setText("卸载");
 		}
 		viewHolder.operationButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				ThreadManageUtil.sendRequest(new ThreadObject() {
+				
+				if (flag == 0) {//
 
-					@Override
-					public Object handleOperation() {
-						// TODO Auto-generated method stub
-						return null;
-					}
-				});
-				if (flag == 0) {// ����
+				} else if (flag == 1) {// 
 
-				} else if (flag == 1) {// ж��
-
-				} else if (flag == 2) {// ��װ
-
+				} else if (flag == 2) {// 
+					
 				}
 			}
 		});

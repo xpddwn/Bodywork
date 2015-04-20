@@ -25,14 +25,14 @@ import com.makeramen.roundedimageview.RoundedImageView;
 public class ApplicationClassifyGridadapter extends BaseAdapter {
 	private final String TAG = "ApplicationClassifyGridadapter";
 	private Context mcontext;
-	private ArrayList<AppMarket> applicationInfo;
+	private ArrayList<ApplicationInfo> applicationInfo;
 	private LayoutInflater mInflater;
 	private GridView gridview;
 	private ViewHolder viewHolder;
 	private SyncImageLoader imageLoader;
 
 	public ApplicationClassifyGridadapter(Context context,
-			ArrayList<AppMarket> applicationInfos, GridView gridviews,
+			ArrayList<ApplicationInfo> applicationInfos, GridView gridviews,
 			SyncImageLoader imageLoaders) {
 		mcontext = context;
 		this.applicationInfo = applicationInfos;
@@ -63,7 +63,7 @@ public class ApplicationClassifyGridadapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
-		AppMarket application = applicationInfo.get(position);
+		ApplicationInfo application = applicationInfo.get(position);
 		if (convertView == null) {
 			convertView = mInflater.inflate(R.layout.app_grid_items, null);
 			findView(convertView);
@@ -75,27 +75,24 @@ public class ApplicationClassifyGridadapter extends BaseAdapter {
 		return convertView;
 	}
 
-	public void setview(int position, AppMarket info) {
-		// �첽����ͼƬ ����û��ͼƬ ������ΪĬ�ϵ�ͼƬ
+	public void setview(int position, ApplicationInfo info) {
+		
 		try {
-			Bitmap bitmap = imageLoader.getBitmapFromLocal(info.geticon_url());
+			Bitmap bitmap = imageLoader.getBitmapFromLocal(info.getIcon_url());
 			if (bitmap == null) {
 				viewHolder.pictureImageView.setImageResource(R.drawable.car);
-				imageLoader.showImageAsyn(position, info.geticon_url(),
+				imageLoader.showImageAsyn(position, info.getIcon_url(),
 						imageLoadListener);
 			} else {
 				viewHolder.pictureImageView.setImageBitmap(bitmap);
 			}
 		} catch (Exception e) {
-			Log.e(TAG, "��ȡͼƬ����");
-			// TODO: handle exception
 		} catch (OutOfMemoryError e) {
 			// TODO: handle exception
-			Log.e(TAG, "�ڴ����");
 		}
 		viewHolder.pictureImageView.setTag(position);
-		viewHolder.nameTextView.setText(info.getapp_name());
-		viewHolder.descriptionTextView.setText(info.getdescription());
+		viewHolder.nameTextView.setText(info.getApp_name());
+		viewHolder.descriptionTextView.setText(info.getDescription());
 		viewHolder.operationButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {

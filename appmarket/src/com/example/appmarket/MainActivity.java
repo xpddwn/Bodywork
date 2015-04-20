@@ -1,11 +1,7 @@
 package com.example.appmarket;
 
-import com.example.appmarket.configs.MyAppMarket;
-
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,6 +12,8 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.example.appmarket.configs.MyAppMarket;
 
 public class MainActivity extends Activity {
 	private LinearLayout download;

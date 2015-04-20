@@ -33,7 +33,7 @@ public class ApplicationClassify extends Activity {
 	private Context mcontext;
 	private TextView title;
 	private PullToRefreshGridView pullToRefreshGridview;
-	private ArrayList<AppMarket> infos = new ArrayList<AppMarket>();
+	private ArrayList<ApplicationInfo> infos = new ArrayList<ApplicationInfo>();
 	private ApplicationClassifyGridadapter adapter;
 	private boolean havaLoadData = false;
 	private SyncImageLoader imageLoader;
@@ -51,9 +51,7 @@ public class ApplicationClassify extends Activity {
 		super.onCreate(savedInstanceState);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.app_grid);
-		// 鏂伴〉闈㈡帴鏀舵暟鎹�
 		Bundle bundle = this.getIntent().getExtras();
-		// 鎺ユ敹name鍊�
 		name = bundle.getString("name");
 
 		title = (TextView) findViewById(R.id.app_classtype);
@@ -96,20 +94,20 @@ public class ApplicationClassify extends Activity {
 		super.onResume();
 		Log.e(TAG, "on resume");
 		System.out.println("system onresume");
-		// 濡傛灉娌℃湁鍔犺浇鏁版嵁锛屽氨浠庣綉缁滃姞杞芥暟鎹�
 		if (!havaLoadData) {
-			infos.clear();
-
 			AppMarketService.setStatus();
 			restartthread();
 			getdata(name, String.valueOf(start));
+			havaLoadData=true;
 		}
 	}
 
 	private void getdata(String tag, String start) {
 		// TODO Auto-generated method stub
 		try {
-			infos = AppMarketService.getJSONlistshops(tag, start);
+			infos.clear();
+			infos.addAll(AppMarketService.getJSONlistshops(tag, start));
+			adapter.notifyDataSetChanged();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -130,7 +128,6 @@ public class ApplicationClassify extends Activity {
 				havaLoadData = true;
 				adapter.notifyDataSetChanged();
 				break;
-
 			case 2:
 				Toast mytoast = Toast.makeText(getApplicationContext(),
 						"失败了，等会再试试，或者检查一下网络", Toast.LENGTH_SHORT);
@@ -187,7 +184,7 @@ public class ApplicationClassify extends Activity {
 		}
 	}
 
-	// 瀹屾垚鍙幓鍔犺浇鏄剧ず鐨勭殑鍥剧墖
+
 	private AbsListView.OnScrollListener onScrollListener = new AbsListView.OnScrollListener() {
 		@Override
 		public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -231,7 +228,7 @@ public class ApplicationClassify extends Activity {
 		}
 	};
 
-	// 鍔犺浇鍥剧墖
+	// 加载图片
 	private void loadImage() {
 		int start = gridview.getFirstVisiblePosition();
 		int end = gridview.getLastVisiblePosition();

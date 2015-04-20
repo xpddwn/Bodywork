@@ -36,16 +36,7 @@ public abstract class BaseDataBaseManager {
 		return dbPath;
 	}
 
-	/**
-	 * 
-	 * 
-	 * @param context
-	 *            ������
-	 * @param rawResource
-	 *            ��ݿ���Դ�ļ�
-	 * @param dbName
-	 *            �������ֻ��ϵ���ݿ�����
-	 */
+	
 	public BaseDataBaseManager(Context context, int rawResource, String dbName,
 			String dbPath) {
 		this.context = context;

@@ -11,7 +11,7 @@ import com.example.appmarket.constant.Constant;
 
 /**
  * 
- * �첽����ͼƬ ���Կ�����ЩͼƬ���� ��ЩͼƬ������
+ * 异步加载图片 可以控制那些图片加载 那些图片不加载
  * 
  * @author tuomao
  * 
@@ -29,7 +29,7 @@ public class SyncImageLoader {
 	private int mStopLoadLimit = 0;
 
 	final Handler handler = new Handler();
-	private boolean getFromLocal = false;
+	private boolean getFromLocal=false;
 
 	private static HashMap<String, SoftReference<Bitmap>> caches = new HashMap<String, SoftReference<Bitmap>>();
 
@@ -37,8 +37,8 @@ public class SyncImageLoader {
 		/**
 		 * 
 		 * @param indentify
-		 *            imageview ͨ��settag������Ψһ��indentify
-		 *            �����÷��ص�ʱ��ͨ���identify�ҵ���view
+		 *            imageview 通过settag设置其唯一的indentify
+		 *            当调用返回的时候，通过该identify找到该view
 		 * @param bitmap
 		 * 
 		 */
@@ -75,9 +75,9 @@ public class SyncImageLoader {
 	/**
 	 * 
 	 * 
-	 * Ҫ��ͼƬ���ش洢����ƺ������ϴ洢�������һ�µ�
+	 * 要求图片本地存储的名称和网络上存储的名称是一致的
 	 * 
-	 * �ȳ��Դӱ��ؼ������
+	 * 先尝试从本地加载数据
 	 * 
 	 * @param imageUrl
 	 * @return
@@ -89,21 +89,21 @@ public class SyncImageLoader {
 			}
 			Bitmap bitmap = null;
 			if (caches.containsKey(imageUrl)) {
-				// ȡ��������
+				// 取出软引用
 				SoftReference<Bitmap> rf = caches.get(imageUrl);
-				// ͨ�������ã���ȡͼƬ
+				// 通过软引用，获取图片
 				bitmap = rf.get();
-				if (bitmap != null) {// ����֮�д��ڸ�bitmapze
+				if (bitmap != null) {// 缓存之中存在该bitmapze
 					return bitmap;
 				}
 			}
-			if (getFromLocal) {
+			if(getFromLocal){
 				String name = imageUrl.substring(imageUrl.lastIndexOf("/") + 1,
 						imageUrl.length());
-				// �ӱ��ؼ���ͼƬ
+				// 从本地加载图片
 				String pathString = Constant.SDCARD_IMAGE_PATH + name;
 				bitmap = BitmapFactory.decodeFile(pathString);
-				if (bitmap != null) {// ���ز����ڸ�ͼƬ
+				if (bitmap != null) {// 本地不存在该图片
 					caches.put(imageUrl, new SoftReference<Bitmap>(bitmap));
 					return bitmap;
 				}
@@ -111,7 +111,7 @@ public class SyncImageLoader {
 		} catch (Exception e) {
 			e.printStackTrace();
 			// TODO: handle exception
-		} catch (OutOfMemoryError e) {
+		}catch (OutOfMemoryError e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
@@ -146,7 +146,7 @@ public class SyncImageLoader {
 					if ((mAllowLoad && firstLoad)
 							|| (mAllowLoad && mPosition <= mStopLoadLimit && mPosition >= mStartLoadLimit)) {
 						bitmap = loadImage(mImageUrl, mPosition, mListener);
-						if (bitmap == null) {// ͼƬδ�ܼ��سɹ�
+						if (bitmap == null) {// 图片未能加载成功
 							handler.post(new Runnable() {
 
 								@Override
@@ -188,4 +188,5 @@ public class SyncImageLoader {
 		}
 		return bitmap;
 	}
+
 }

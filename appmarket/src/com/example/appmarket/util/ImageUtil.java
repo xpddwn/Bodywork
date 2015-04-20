@@ -30,19 +30,21 @@ import android.graphics.Shader.TileMode;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 
-public class ImageUtil {
+import com.example.appmarket.constant.Constant;
 
+public class ImageUtil {
+	
 	private static String TAG = "IMAGE_UTIL";
 
-	// �Ŵ���СͼƬ
+	// 放大缩小图片
 	/**
 	 * 
 	 * 
 	 * @param bitmap
 	 * @param w
-	 *            ���ź��ͼƬ�Ŀ��
+	 *            缩放后的图片的宽度
 	 * @param h
-	 *            ���ź�ͼƬ�ĸ߶�
+	 *            缩放后图片的高度
 	 * @return
 	 */
 	public static Bitmap zoomBitmap(Bitmap bitmap, int w, int h) {
@@ -51,16 +53,16 @@ public class ImageUtil {
 		Matrix matrix = new Matrix();
 		float scaleWidht = ((float) w / width);
 		float scaleHeight = ((float) h / height);
-		// �����������Ƿ����̵ı���
+		// 这个函数传入的是方缩短的比例
 		matrix.postScale(scaleWidht, scaleHeight);
 		Bitmap newbmp = Bitmap.createBitmap(bitmap, 0, 0, width, height,
 				matrix, true);
 		return newbmp;
 	}
 
-	// ��Drawableת��ΪBitmap
+	// 将Drawable转化为Bitmap
 	/**
-	 * ��Drawableת��ΪBitmap
+	 * 将Drawable转化为Bitmap
 	 * 
 	 * @param drawable
 	 * @return
@@ -68,7 +70,7 @@ public class ImageUtil {
 	public static Bitmap drawableToBitmap(Drawable drawable) {
 		int width = drawable.getIntrinsicWidth();
 		int height = drawable.getIntrinsicHeight();
-		// bitmapconfig ������λͼ�Ĵ洢��ʽ������
+		// bitmapconfig 决定了位图的存储格式和质量
 		Bitmap bitmap = Bitmap.createBitmap(width, height, drawable
 				.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888
 				: Bitmap.Config.RGB_565);
@@ -79,13 +81,13 @@ public class ImageUtil {
 
 	}
 
-	// ���Բ��ͼƬ�ķ���
+	// 获得圆角图片的方法
 	/**
 	 * 
 	 * 
 	 * @param bitmap
 	 * @param roundPx
-	 *            Բ�ǰ뾶�ĵĴ�С
+	 *            圆角半径的的大小
 	 * @return
 	 */
 	public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, float roundPx) {
@@ -110,9 +112,9 @@ public class ImageUtil {
 		return output;
 	}
 
-	// ��ô�Ӱ��ͼƬ����
+	// 获得带倒影的图片方法
 	/***
-	 * ��ô�Ӱ��ͼƬ����
+	 * 获得带倒影的图片方法
 	 * 
 	 * @param bitmap
 	 * @return
@@ -151,11 +153,11 @@ public class ImageUtil {
 		return bitmapWithReflection;
 	}
 
-	// ѹ��ͼƬ��С
+	// 压缩图片大小
 	/**
 	 * 
 	 * image.compress(Bitmap.CompressFormat.JPEG, 100, baos); //
-	 * ����ѹ������������100��ʾ��ѹ������ѹ�������ݴ�ŵ�baos��
+	 * 质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
 	 * 
 	 * @param image
 	 * @param type
@@ -168,41 +170,39 @@ public class ImageUtil {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		image.compress(format, quality, baos);
 		// image.compress(Bitmap.CompressFormat.JPEG, 100, baos);//
-		// ����ѹ������������100��ʾ��ѹ������ѹ�������ݴ�ŵ�baos��
+		// 质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
 		int options = 100;
-		while (baos.toByteArray().length / 1024 > 100) { // ѭ���ж����ѹ����ͼƬ�Ƿ����100kb,���ڼ���ѹ��
-			baos.reset();// ����baos�����baos
-			image.compress(Bitmap.CompressFormat.JPEG, options, baos);// ����ѹ��options%����ѹ�������ݴ�ŵ�baos��
-			options -= 10;// ÿ�ζ�����10
+		while (baos.toByteArray().length / 1024 > 100) { // 循环判断如果压缩后图片是否大于100kb,大于继续压缩
+			baos.reset();// 重置baos即清空baos
+			image.compress(Bitmap.CompressFormat.JPEG, options, baos);// 这里压缩options%，把压缩后的数据存放到baos中
+			options -= 10;// 每次都减少10
 		}
-		ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());// ��ѹ��������baos��ŵ�ByteArrayInputStream��
-		Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);// ��ByteArrayInputStream������ͼƬ
+		ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());// 把压缩后的数据baos存放到ByteArrayInputStream中
+		Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);// 把ByteArrayInputStream数据生成图片
 		return bitmap;
 	}
 
 	/**
-	 * ����ɫͼת��Ϊ�Ҷ�ͼ
+	 * 将彩色图转换为灰度图
 	 * 
 	 * @param img
-	 *            λͼ
-	 * @return ����ת���õ�λͼ
+	 *            位图
+	 * @return 返回转换好的位图
 	 */
 	public static Bitmap convertGreyImg(Bitmap img) {
 
-		int width = img.getWidth(); // ��ȡλͼ�Ŀ�
-		int height = img.getHeight(); // ��ȡλͼ�ĸ�
+		int width = img.getWidth(); // 获取位图的宽
+		int height = img.getHeight(); // 获取位图的高
 
-		int[] pixels = new int[width * height]; // ͨ��λͼ�Ĵ�С�������ص�����
+		int[] pixels = new int[width * height]; // 通过位图的大小创建像素点数组
 
-		// ��������� getPixels (int[] pixels, int offset, int stride, int x, int
-		// y,
+		// 参数的意义 getPixels (int[] pixels, int offset, int stride, int x, int y,
 		// int width, int height)
 		/**
 		 * 
-		 * 1.piexls ��ȡ�����ص���Ϣ���õ����� 2.offect ��ʼ���������صĵ�һ��Ϊֹ
-		 * eg��offect=0������ piexls[0] 3.stride ÿ���ڽ�����һ�е�����ʱ��Ӧ�üӵĳ���
-		 * stride>=width eg�� stride=10 ��
-		 * ��һ��Ϊpiexls[0,9],�ڶ���Ϊpiexls[10,19];
+		 * 1.piexls 获取的像素的信息放置的数组 2.offect 开始放置置像素的第一个为止 eg：offect=0，代表从
+		 * piexls[0] 3.stride 每次在进行下一行的像素时，应该加的长度 stride>=width eg： stride=10 则
+		 * 第一行为piexls[0,9],第二行为piexls[10,19];
 		 */
 		img.getPixels(pixels, 0, width, 0, 0, width, height);
 		// int alpha = 0xFF << 24;
@@ -213,9 +213,9 @@ public class ImageUtil {
 				int green = ((grey & 0x0000FF00) >> 8);
 				int blue = (grey & 0x000000FF);
 
-				// ����Ҷȣ����������㣬���ٸ���������㣬�Ҷ�Ҳ��Ϊ�ҽ֣�ֱ��ͼ�ô���ͳ��
+				// 计算灰度，用整数来算，减少浮点数的运算，灰度也称为灰街，直方图用此来统计
 				grey = (int) ((red * 30 + green * 59 + blue * 11) / 100);
-				// Color��reb(grey,grey,grey)��ʾ�Ҷ�ͼ�� ���������͸����
+				// Color。reb(grey,grey,grey)表示灰度图。 这里加上了透明度
 				grey = Color.rgb(grey, grey, grey);
 				pixels[width * i + j] = grey;
 			}
@@ -233,21 +233,19 @@ public class ImageUtil {
 		return result;
 	}
 
-	// ��ȡͼ��Ļҽ���Ϣ
+	// 获取图像的灰阶信息
 	public static void getGreyInfos(Bitmap img, int[] greyInfos) {
-		int width = img.getWidth(); // ��ȡλͼ�Ŀ�
-		int height = img.getHeight(); // ��ȡλͼ�ĸ�
+		int width = img.getWidth(); // 获取位图的宽
+		int height = img.getHeight(); // 获取位图的高
 
-		int[] pixels = new int[width * height]; // ͨ��λͼ�Ĵ�С�������ص�����
-		// ��������� getPixels (int[] pixels, int offset, int stride, int x, int
-		// y,
+		int[] pixels = new int[width * height]; // 通过位图的大小创建像素点数组
+		// 参数的意义 getPixels (int[] pixels, int offset, int stride, int x, int y,
 		// int width, int height)
 		/**
 		 * 
-		 * 1.piexls ��ȡ�����ص���Ϣ���õ����� 2.offect ��ʼ���������صĵ�һ��Ϊֹ
-		 * eg��offect=0������ piexls[0] 3.stride ÿ���ڽ�����һ�е�����ʱ��Ӧ�üӵĳ���
-		 * stride>=width eg�� stride=10 ��
-		 * ��һ��Ϊpiexls[0,9],�ڶ���Ϊpiexls[10,19];
+		 * 1.piexls 获取的像素的信息放置的数组 2.offect 开始放置置像素的第一个为止 eg：offect=0，代表从
+		 * piexls[0] 3.stride 每次在进行下一行的像素时，应该加的长度 stride>=width eg： stride=10 则
+		 * 第一行为piexls[0,9],第二行为piexls[10,19];
 		 */
 		img.getPixels(pixels, 0, width, 0, 0, width, height);
 		// int alpha = 0xFF << 24;
@@ -259,17 +257,17 @@ public class ImageUtil {
 				int green = ((grey & 0x0000FF00) >> 8);
 				int blue = (grey & 0x000000FF);
 
-				// ����Ҷȣ����������㣬���ٸ���������㣬�Ҷ�Ҳ��Ϊ�ҽ֣�ֱ��ͼ�ô���ͳ��
+				// 计算灰度，用整数来算，减少浮点数的运算，灰度也称为灰街，直方图用此来统计
 				grey = (int) ((red * 30 + green * 59 + blue * 11) / 100);
-				// Color��reb(grey,grey,grey)��ʾ�Ҷ�ͼ�� ���������͸����
+				// Color。reb(grey,grey,grey)表示灰度图。 这里加上了透明度
 
 				greyInfos[width * i + j] = grey;
 			}
 		}
 	}
-
-	// ͼƬUrl����Ϊλͼ���������Ų���
-	// ͨ����ͼƬurl��ȡλͼ����
+	
+	// 图片Url保存为位图并进行缩放操作
+	// 通过传入图片url获取位图方法
 	public static Bitmap getBitmap(String url) {
 		URL myFileUrl = null;
 		Bitmap bitmap = null;
@@ -292,21 +290,19 @@ public class ImageUtil {
 			e.printStackTrace();
 		} catch (OutOfMemoryError e) {
 			e.printStackTrace();
+			
 			// TODO: handle exception
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
 		}
 		return null;
 	}
 
 	/***
-	 * ���ر���ͼƬ
+	 * 加载本地图片
 	 * 
 	 * @param context
-	 *            �������к���ʵ��
+	 *            ：主运行函数实例
 	 * @param bitAdress
-	 *            ��ͼƬ��ַ��һ��ָ��R�µ�drawableĿ¼
+	 *            ：图片地址，一般指向R下的drawable目录
 	 * @return
 	 */
 	public static Bitmap CreatImage(Context context, int bitAdress) {
@@ -317,26 +313,26 @@ public class ImageUtil {
 	}
 
 	/***
-	 * 2.ͼƬƽ��ָ��������ͼƽ��ָ�ΪN��N�У������û�ʹ�� ͼƬ�ָ�
+	 * 2.图片平均分割方法，将大图平均分割为N行N列，方便用户使用 图片分割
 	 * 
 	 * @param g
-	 *            ������
+	 *            ：画布
 	 * @param paint
-	 *            ������
+	 *            ：画笔
 	 * @param imgBit
-	 *            ��ͼƬ
+	 *            ：图片
 	 * @param x
-	 *            ��X��������
+	 *            ：X轴起点坐标
 	 * @param y
-	 *            ��Y��������
+	 *            ：Y轴起点坐标
 	 * @param w
-	 *            ����һͼƬ�Ŀ��
+	 *            ：单一图片的宽度
 	 * @param h
-	 *            ����һͼƬ�ĸ߶�
+	 *            ：单一图片的高度
 	 * @param line
-	 *            ���ڼ���
+	 *            ：第几列
 	 * @param row
-	 *            ���ڼ���
+	 *            ：第几行
 	 */
 	public static void cuteImage(Canvas g, Paint paint, Bitmap imgBit, int x,
 			int y, int w, int h, int line, int row) {
@@ -346,22 +342,22 @@ public class ImageUtil {
 	}
 
 	/***
-	 * 4.���ƴ��б߿�����֣�һ������Ϸ�������ֵ��������� ���ƴ��б߿������
+	 * 4.绘制带有边框的文字，一般在游戏中起文字的美化作用 绘制带有边框的文字
 	 * 
 	 * @param strMsg
-	 *            ����������
+	 *            ：绘制内容
 	 * @param g
-	 *            ������
+	 *            ：画布
 	 * @param paint
-	 *            ������
+	 *            ：画笔
 	 * @param setx
-	 *            ����X����ʼ���
+	 *            ：：X轴起始坐标
 	 * @param sety
-	 *            ��Y�����ʼ���
+	 *            ：Y轴的起始坐标
 	 * @param fg
-	 *            ��ǰ��ɫ
+	 *            ：前景色
 	 * @param bg
-	 *            ������ɫ
+	 *            ：背景色
 	 */
 	public static void drawText(String strMsg, Canvas g, Paint paint, int setx,
 			int sety, int fg, int bg) {
@@ -377,15 +373,15 @@ public class ImageUtil {
 
 	/**
 	 * 
-	 * ͨ����bitmap����ָ����bitmap���м���
+	 * 通过传人bitmap，对指定的bitmap进行剪切
 	 * 
 	 * @param bitmap
-	 *            Դbitmap
+	 *            源bitmap
 	 * @param x
-	 *            ���е���ʼλ�õ����
+	 *            剪切的起始位置的左边
 	 * @param y
 	 * @param width
-	 *            ���еĳ��ȺͿ��
+	 *            剪切的长度和宽度
 	 * @param height
 	 * @return
 	 */
@@ -399,11 +395,11 @@ public class ImageUtil {
 	 * 
 	 * 
 	 * @param saveDir
-	 *            �����Ŀ¼
+	 *            保存的目录
 	 * @param saveName
-	 *            ������ļ���
+	 *            保存的文件名
 	 * @param bitmap
-	 *            λͼ
+	 *            位图
 	 * @return
 	 */
 
@@ -411,13 +407,13 @@ public class ImageUtil {
 			Bitmap bitmap) {
 		boolean nowbol = false;
 		try {
-			// ���Ŀ¼�ļ�
+			// 生成目录文件
 			File dir = new File(saveDir);
 			if (!dir.exists()) {
 				dir.mkdirs();
 			}
 
-			// ���Ŀ���ļ�
+			// 生成目标文件
 			File saveFile = new File(saveDir, saveName);
 			if (!saveFile.exists()) {
 				saveFile.createNewFile();
@@ -437,11 +433,10 @@ public class ImageUtil {
 		}
 		return nowbol;
 	}
-
-	// ��ͼƬ��Դת��Ϊbitmap
-	public static Bitmap resourceTobitmap(int resource, Context context) {
-		Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(),
-				resource);
+	
+	//将图片资源转化为bitmap
+	public static Bitmap resourceTobitmap(int resource,Context context){
+		Bitmap  bitmap = BitmapFactory.decodeResource(context.getResources(),resource);
 		return bitmap;
 	}
 }
