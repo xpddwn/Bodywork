@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.appmarket.R;
+import com.example.appmarket.entity.AppMarket;
 import com.example.appmarket.sqlite.model.ApplicationInfo;
 import com.example.appmarket.util.SyncImageLoader;
 import com.example.appmarket.util.SyncImageLoader.OnImageLoadListener;
@@ -24,13 +25,15 @@ import com.makeramen.roundedimageview.RoundedImageView;
 public class ApplicationClassifyGridadapter extends BaseAdapter {
 	private final String TAG = "ApplicationClassifyGridadapter";
 	private Context mcontext;
-	private ArrayList<ApplicationInfo> applicationInfo;
+	private ArrayList<AppMarket> applicationInfo;
 	private LayoutInflater mInflater;
 	private GridView gridview;
 	private ViewHolder viewHolder;
 	private SyncImageLoader imageLoader;
-	
-	public ApplicationClassifyGridadapter(Context context, ArrayList<ApplicationInfo> applicationInfos, GridView gridviews,SyncImageLoader imageLoaders){
+
+	public ApplicationClassifyGridadapter(Context context,
+			ArrayList<AppMarket> applicationInfos, GridView gridviews,
+			SyncImageLoader imageLoaders) {
 		mcontext = context;
 		this.applicationInfo = applicationInfos;
 		this.gridview = gridviews;
@@ -60,45 +63,44 @@ public class ApplicationClassifyGridadapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
-		ApplicationInfo application = applicationInfo.get(position);
-		if(convertView == null)
-		{
+		AppMarket application = applicationInfo.get(position);
+		if (convertView == null) {
 			convertView = mInflater.inflate(R.layout.app_grid_items, null);
 			findView(convertView);
 			convertView.setTag(viewHolder);
+		} else {
+			viewHolder = (ViewHolder) convertView.getTag();
 		}
-		else{
-			viewHolder=(ViewHolder)convertView.getTag();
-		}
-		setview(position,application);
+		setview(position, application);
 		return convertView;
 	}
 
-	public void setview(int position,ApplicationInfo info){
-		// Òì²½¼ÓÔØÍ¼Æ¬ Èç¹û±¾µØÃ»ÓÐÍ¼Æ¬ ÔòÉèÖÃÎªÄ¬ÈÏµÄÍ¼Æ¬
+	public void setview(int position, AppMarket info) {
+		// ï¿½ì²½ï¿½ï¿½ï¿½ï¿½Í¼Æ¬ ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½Í¼Æ¬ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÎªÄ¬ï¿½Ïµï¿½Í¼Æ¬
 		try {
-			Bitmap bitmap=imageLoader.getBitmapFromLocal(info.icon_url);
-			if(bitmap==null){
+			Bitmap bitmap = imageLoader.getBitmapFromLocal(info.geticon_url());
+			if (bitmap == null) {
 				viewHolder.pictureImageView.setImageResource(R.drawable.car);
-				imageLoader.showImageAsyn(position, info.icon_url,imageLoadListener);
-			}else{
+				imageLoader.showImageAsyn(position, info.geticon_url(),
+						imageLoadListener);
+			} else {
 				viewHolder.pictureImageView.setImageBitmap(bitmap);
 			}
 		} catch (Exception e) {
-			Log.e(TAG, "»ñÈ¡Í¼Æ¬´íÎó");
+			Log.e(TAG, "ï¿½ï¿½È¡Í¼Æ¬ï¿½ï¿½ï¿½ï¿½");
 			// TODO: handle exception
 		} catch (OutOfMemoryError e) {
 			// TODO: handle exception
-			Log.e(TAG, "ÄÚ´æÒç³ö");
+			Log.e(TAG, "ï¿½Ú´ï¿½ï¿½ï¿½ï¿½");
 		}
-		viewHolder.pictureImageView.setTag(position);		
-		viewHolder.nameTextView.setText(info.app_name);
-		viewHolder.descriptionTextView.setText(info.description);
+		viewHolder.pictureImageView.setTag(position);
+		viewHolder.nameTextView.setText(info.getapp_name());
+		viewHolder.descriptionTextView.setText(info.getdescription());
 		viewHolder.operationButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 	}
@@ -106,19 +108,23 @@ public class ApplicationClassifyGridadapter extends BaseAdapter {
 	public void findView(View convertView) {
 		// TODO Auto-generated method stub
 		viewHolder = new ViewHolder();
-		viewHolder.pictureImageView=(RoundedImageView)convertView.findViewById(R.id.picture);
-		viewHolder.nameTextView=(TextView)convertView.findViewById(R.id.name);
-		viewHolder.descriptionTextView=(TextView)convertView.findViewById(R.id.description);
-		viewHolder.operationButton=(Button)convertView.findViewById(R.id.operation);
+		viewHolder.pictureImageView = (RoundedImageView) convertView
+				.findViewById(R.id.picture);
+		viewHolder.nameTextView = (TextView) convertView
+				.findViewById(R.id.name);
+		viewHolder.descriptionTextView = (TextView) convertView
+				.findViewById(R.id.description);
+		viewHolder.operationButton = (Button) convertView
+				.findViewById(R.id.operation);
 	}
-	
+
 	class ViewHolder {
-		RoundedImageView pictureImageView ;
+		RoundedImageView pictureImageView;
 		TextView nameTextView;
 		TextView descriptionTextView;
 		Button operationButton;
 	}
-	
+
 	private OnImageLoadListener imageLoadListener = new OnImageLoadListener() {
 
 		@Override

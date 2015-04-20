@@ -43,7 +43,8 @@ public class ApplicationManage extends FragmentActivity {
 		findView();
 		setView();
 	}
-	private void setView(){
+
+	private void setView() {
 		adapter = new FragementTabAdapter(fragments, this, R.id.container, 0);
 		updateTextView.setOnClickListener(onClickListener);
 		installTextView.setOnClickListener(onClickListener);
@@ -52,43 +53,43 @@ public class ApplicationManage extends FragmentActivity {
 		updateAllTextView.setOnClickListener(updateAllOnClickListener);
 		adapter.showTab(0);
 		updateTextView.setSelected(true);
-		
+
 	}
-	
-	private OnClickListener backOnClickListener=new OnClickListener() {
-		
+
+	private OnClickListener backOnClickListener = new OnClickListener() {
+
 		@Override
 		public void onClick(View arg0) {
 			// TODO Auto-generated method stub
 			finish();
 		}
 	};
-	
-	private OnClickListener updateAllOnClickListener=new OnClickListener() {
-		
+
+	private OnClickListener updateAllOnClickListener = new OnClickListener() {
+
 		@Override
 		public void onClick(View arg0) {
 			// TODO Auto-generated method stub
-			
+
 		}
 	};
-	
-	private void findView(){
+
+	private void findView() {
 		container = (RelativeLayout) findViewById(R.id.container);
 		updateTextView = (TextView) findViewById(R.id.update);
 		installTextView = (TextView) findViewById(R.id.install);
 		unisntallTextView = (TextView) findViewById(R.id.unistall);
-		backButton=(Button)findViewById(R.id.back);
-		updateAllTextView=(TextView)findViewById(R.id.update_all);
+		backButton = (Button) findViewById(R.id.back);
+		updateAllTextView = (TextView) findViewById(R.id.update_all);
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.application_manage, menu);
 		return true;
 	}
-	
+
 	private OnClickListener onClickListener = new OnClickListener() {
 		@Override
 		public void onClick(View arg0) {
@@ -112,7 +113,8 @@ public class ApplicationManage extends FragmentActivity {
 			}
 		}
 	};
-	public void reset(){
+
+	public void reset() {
 		updateTextView.setSelected(false);
 		installTextView.setSelected(false);
 		unisntallTextView.setSelected(false);

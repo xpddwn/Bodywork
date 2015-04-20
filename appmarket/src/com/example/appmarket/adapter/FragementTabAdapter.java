@@ -5,18 +5,19 @@ import java.util.List;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+
 /**
  * 
- * fragment tabµÄÊÊÅäÆ÷£¬µ±fragmentÇĞ»»µÄÊ±ºò£¬¿ÉÒÔ±£´æfragmentµÄ×´Ì¬
+ * fragment tabï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½fragmentï¿½Ğ»ï¿½ï¿½ï¿½Ê±ï¿½ò£¬¿ï¿½ï¿½Ô±ï¿½ï¿½ï¿½fragmentï¿½ï¿½×´Ì¬
+ * 
  * @author tuomao
- *
+ * 
  */
 public class FragementTabAdapter {
-	private List<Fragment> fragments; // Ò»¸ötabÒ³Ãæ¶ÔÓ¦Ò»¸öFragment
-	private FragmentActivity fragmentActivity; // FragmentËùÊôµÄActivity
-	private int containerId; // ActivityÖĞËùÒª±»Ìæ»»µÄÇøÓòµÄid
-	private int currentTab = 0; // µ±Ç°TabÒ³ÃæË÷Òı
-	
+	private List<Fragment> fragments; // Ò»ï¿½ï¿½tabÒ³ï¿½ï¿½ï¿½Ó¦Ò»ï¿½ï¿½Fragment
+	private FragmentActivity fragmentActivity; // Fragmentï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Activity
+	private int containerId; // Activityï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½æ»»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½id
+	private int currentTab = 0; // ï¿½ï¿½Ç°TabÒ³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 	public FragementTabAdapter(List<Fragment> fragments,
 			FragmentActivity fragmentActivity, int containerId, int currentTab) {
@@ -24,7 +25,7 @@ public class FragementTabAdapter {
 		this.fragmentActivity = fragmentActivity;
 		this.containerId = containerId;
 		this.currentTab = currentTab;
-		// Ä¬ÈÏÏÔÊ¾µÚÒ»Ò³
+		// Ä¬ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½Ò»Ò³
 		FragmentTransaction ft = fragmentActivity.getSupportFragmentManager()
 				.beginTransaction();
 		ft.add(containerId, fragments.get(currentTab));
@@ -36,11 +37,11 @@ public class FragementTabAdapter {
 			Fragment fragment = fragments.get(position);
 			Fragment curFragment = getCurrentFragment();
 			FragmentTransaction ft = obtainFragmentTransaction(position);
-			curFragment.onPause(); // ÔİÍ£µ±Ç°tab
-			// getCurrentFragment().onStop(); // ÔİÍ£µ±Ç°tab
+			curFragment.onPause(); // ï¿½ï¿½Í£ï¿½ï¿½Ç°tab
+			// getCurrentFragment().onStop(); // ï¿½ï¿½Í£ï¿½ï¿½Ç°tab
 			if (fragment.isAdded()) {
-				// fragment.onStart(); // Æô¶¯Ä¿±êtabµÄonStart()
-				fragment.onResume(); // Æô¶¯Ä¿±êtabµÄonResume()
+				// fragment.onStart(); // ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½tabï¿½ï¿½onStart()
+				fragment.onResume(); // ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½tabï¿½ï¿½onResume()
 			} else {
 				ft.add(containerId, fragment);
 			}
@@ -60,7 +61,7 @@ public class FragementTabAdapter {
 	}
 
 	/**
-	 * »ñÈ¡Ò»¸ö´ø¶¯»­µÄFragmentTransaction
+	 * ï¿½ï¿½È¡Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½FragmentTransaction
 	 * 
 	 * @param index
 	 * @return
@@ -68,7 +69,7 @@ public class FragementTabAdapter {
 	private FragmentTransaction obtainFragmentTransaction(int index) {
 		FragmentTransaction ft = fragmentActivity.getSupportFragmentManager()
 				.beginTransaction();
-		// ÉèÖÃÇĞ»»¶¯»­
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Ğ»ï¿½ï¿½ï¿½ï¿½ï¿½
 		/*
 		 * if(index > currentTab){ ft.setCustomAnimations(R.anim.slide_left_in,
 		 * R.anim.slide_left_out); }else{
@@ -77,7 +78,8 @@ public class FragementTabAdapter {
 		 */
 		return ft;
 	}
-	public interface updateFragmentCallBack{
-		public void onUpdate(int preFragment,int curFragment);
+
+	public interface updateFragmentCallBack {
+		public void onUpdate(int preFragment, int curFragment);
 	}
 }

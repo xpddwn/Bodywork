@@ -25,12 +25,13 @@ import com.makeramen.roundedimageview.RoundedImageView;
 
 /**
  * 
- * Ó¦ÓÃ¹ÜÀíµÄÊÊÅäÆ÷
+ * Ó¦ï¿½Ã¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ * 
  * @author tuomao
- *
+ * 
  */
-public class ApplicationManageListadapter extends BaseAdapter{
-	private static final String TAG="ApplicationManageListadapter";
+public class ApplicationManageListadapter extends BaseAdapter {
+	private static final String TAG = "ApplicationManageListadapter";
 	private Context mContext;
 	private ArrayList<ApplicationInfo> applicationInfos;
 	private LayoutInflater mInflater;
@@ -39,16 +40,18 @@ public class ApplicationManageListadapter extends BaseAdapter{
 	private ListView listView;
 	private int flag;
 
-	public ApplicationManageListadapter(Context context, ArrayList<ApplicationInfo> applicationInfos,ListView listView
-			,SyncImageLoader imageLoader,int flag) {
+	public ApplicationManageListadapter(Context context,
+			ArrayList<ApplicationInfo> applicationInfos, ListView listView,
+			SyncImageLoader imageLoader, int flag) {
 		mContext = context;
 		mInflater = (LayoutInflater) mContext
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		this.imageLoader=imageLoader;
-		this.listView=listView;
-		this.applicationInfos=applicationInfos;
-		this.flag=flag;
+		this.imageLoader = imageLoader;
+		this.listView = listView;
+		this.applicationInfos = applicationInfos;
+		this.flag = flag;
 	}
+
 	public int getCount() {
 		// TODO Auto-generated method stub
 		return applicationInfos.size();
@@ -62,89 +65,91 @@ public class ApplicationManageListadapter extends BaseAdapter{
 	public long getItemId(int arg0) {
 		// TODO Auto-generated method stub
 		return arg0;
-	} 
+	}
 
 	public View getView(int position, View convertview, ViewGroup arg2) {
 		// TODO Auto-generated method stub
-		ApplicationInfo applicationInfo=applicationInfos.get(position);
+		ApplicationInfo applicationInfo = applicationInfos.get(position);
 		if (convertview == null) {
 			convertview = mInflater.inflate(R.layout.manage__list_item, null);
 			findView(convertview);
 			convertview.setTag(viewHolder);
-		}else{
-			viewHolder=(ViewHolder)convertview.getTag();  
+		} else {
+			viewHolder = (ViewHolder) convertview.getTag();
 		}
-		setView(position,applicationInfo);
+		setView(position, applicationInfo);
 		return convertview;
 	}
-	public void findView(View arg1){
+
+	public void findView(View arg1) {
 		viewHolder = new ViewHolder();
-		viewHolder.pictureImageView=(RoundedImageView)arg1.findViewById(R.id.picture);
-		viewHolder.nameTextView=(TextView)arg1.findViewById(R.id.name);
-		viewHolder.descriptionTextView=(TextView)arg1.findViewById(R.id.description);
-		viewHolder.operationButton=(Button)arg1.findViewById(R.id.operation);
+		viewHolder.pictureImageView = (RoundedImageView) arg1
+				.findViewById(R.id.picture);
+		viewHolder.nameTextView = (TextView) arg1.findViewById(R.id.name);
+		viewHolder.descriptionTextView = (TextView) arg1
+				.findViewById(R.id.description);
+		viewHolder.operationButton = (Button) arg1.findViewById(R.id.operation);
 	}
-	
-	public void setView(int position,ApplicationInfo info){
-		// Òì²½¼ÓÔØÍ¼Æ¬ Èç¹û±¾µØÃ»ÓÐÍ¼Æ¬ ÔòÉèÖÃÎªÄ¬ÈÏµÄÍ¼Æ¬
+
+	public void setView(int position, ApplicationInfo info) {
+		// ï¿½ì²½ï¿½ï¿½ï¿½ï¿½Í¼Æ¬ ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½Í¼Æ¬ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÎªÄ¬ï¿½Ïµï¿½Í¼Æ¬
 		try {
-			Bitmap bitmap=imageLoader.getBitmapFromLocal(info.icon_url);
-			if(bitmap==null){
+			Bitmap bitmap = imageLoader.getBitmapFromLocal(info.icon_url);
+			if (bitmap == null) {
 				viewHolder.pictureImageView.setImageResource(R.drawable.car);
-				imageLoader.showImageAsyn(position, info.icon_url,imageLoadListener);
-			}else{
+				imageLoader.showImageAsyn(position, info.icon_url,
+						imageLoadListener);
+			} else {
 				viewHolder.pictureImageView.setImageBitmap(bitmap);
 			}
 		} catch (Exception e) {
-			Log.e(TAG, "»ñÈ¡Í¼Æ¬´íÎó");
+			Log.e(TAG, "ï¿½ï¿½È¡Í¼Æ¬ï¿½ï¿½ï¿½ï¿½");
 			// TODO: handle exception
 		} catch (OutOfMemoryError e) {
 			// TODO: handle exception
-			Log.e(TAG, "ÄÚ´æÒç³ö");
+			Log.e(TAG, "ï¿½Ú´ï¿½ï¿½ï¿½ï¿½");
 		}
-		viewHolder.pictureImageView.setTag(position);		
+		viewHolder.pictureImageView.setTag(position);
 		viewHolder.nameTextView.setText(info.app_name);
 		viewHolder.descriptionTextView.setText(info.description);
-		if(flag==0){
-			viewHolder.operationButton.setText("¸üÐÂ");
-		}else if(flag==1) {
-			viewHolder.operationButton.setText("Ð¶ÔØ");
-		}else if(flag==2){
-			viewHolder.operationButton.setText("°²×°");
+		if (flag == 0) {
+			viewHolder.operationButton.setText("ï¿½ï¿½ï¿½ï¿½");
+		} else if (flag == 1) {
+			viewHolder.operationButton.setText("Ð¶ï¿½ï¿½");
+		} else if (flag == 2) {
+			viewHolder.operationButton.setText("ï¿½ï¿½×°");
 		}
 		viewHolder.operationButton.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				ThreadManageUtil.sendRequest(new ThreadObject() {
-					
+
 					@Override
 					public Object handleOperation() {
 						// TODO Auto-generated method stub
 						return null;
 					}
 				});
-				if(flag==0){//¸üÐÂ
-					
-				}else if(flag==1){//Ð¶ÔØ
-					
-				}else if(flag==2){//°²×°
-					
+				if (flag == 0) {// ï¿½ï¿½ï¿½ï¿½
+
+				} else if (flag == 1) {// Ð¶ï¿½ï¿½
+
+				} else if (flag == 2) {// ï¿½ï¿½×°
+
 				}
 			}
 		});
 	}
-	
-	
+
 	class ViewHolder {
-		RoundedImageView pictureImageView ;
+		RoundedImageView pictureImageView;
 		TextView nameTextView;
 		TextView descriptionTextView;
 		Button operationButton;
 	}
-	
-	
+
 	private OnImageLoadListener imageLoadListener = new OnImageLoadListener() {
 
 		@Override
@@ -170,4 +175,3 @@ public class ApplicationManageListadapter extends BaseAdapter{
 		}
 	};
 }
-

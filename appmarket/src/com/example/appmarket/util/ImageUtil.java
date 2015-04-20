@@ -31,18 +31,18 @@ import android.graphics.drawable.Drawable;
 import android.util.Log;
 
 public class ImageUtil {
-	
+
 	private static String TAG = "IMAGE_UTIL";
 
-	// ·Å´óËõÐ¡Í¼Æ¬
+	// ï¿½Å´ï¿½ï¿½ï¿½Ð¡Í¼Æ¬
 	/**
 	 * 
 	 * 
 	 * @param bitmap
 	 * @param w
-	 *            Ëõ·ÅºóµÄÍ¼Æ¬µÄ¿í¶È
+	 *            ï¿½ï¿½ï¿½Åºï¿½ï¿½Í¼Æ¬ï¿½Ä¿ï¿½ï¿½
 	 * @param h
-	 *            Ëõ·ÅºóÍ¼Æ¬µÄ¸ß¶È
+	 *            ï¿½ï¿½ï¿½Åºï¿½Í¼Æ¬ï¿½Ä¸ß¶ï¿½
 	 * @return
 	 */
 	public static Bitmap zoomBitmap(Bitmap bitmap, int w, int h) {
@@ -51,16 +51,16 @@ public class ImageUtil {
 		Matrix matrix = new Matrix();
 		float scaleWidht = ((float) w / width);
 		float scaleHeight = ((float) h / height);
-		// Õâ¸öº¯Êý´«ÈëµÄÊÇ·½Ëõ¶ÌµÄ±ÈÀý
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ÌµÄ±ï¿½ï¿½ï¿½
 		matrix.postScale(scaleWidht, scaleHeight);
 		Bitmap newbmp = Bitmap.createBitmap(bitmap, 0, 0, width, height,
 				matrix, true);
 		return newbmp;
 	}
 
-	// ½«Drawable×ª»¯ÎªBitmap
+	// ï¿½ï¿½Drawable×ªï¿½ï¿½ÎªBitmap
 	/**
-	 * ½«Drawable×ª»¯ÎªBitmap
+	 * ï¿½ï¿½Drawable×ªï¿½ï¿½ÎªBitmap
 	 * 
 	 * @param drawable
 	 * @return
@@ -68,7 +68,7 @@ public class ImageUtil {
 	public static Bitmap drawableToBitmap(Drawable drawable) {
 		int width = drawable.getIntrinsicWidth();
 		int height = drawable.getIntrinsicHeight();
-		// bitmapconfig ¾ö¶¨ÁËÎ»Í¼µÄ´æ´¢¸ñÊ½ºÍÖÊÁ¿
+		// bitmapconfig ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»Í¼ï¿½Ä´æ´¢ï¿½ï¿½Ê½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		Bitmap bitmap = Bitmap.createBitmap(width, height, drawable
 				.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888
 				: Bitmap.Config.RGB_565);
@@ -79,13 +79,13 @@ public class ImageUtil {
 
 	}
 
-	// »ñµÃÔ²½ÇÍ¼Æ¬µÄ·½·¨
+	// ï¿½ï¿½ï¿½Ô²ï¿½ï¿½Í¼Æ¬ï¿½Ä·ï¿½ï¿½ï¿½
 	/**
 	 * 
 	 * 
 	 * @param bitmap
 	 * @param roundPx
-	 *            Ô²½Ç°ë¾¶µÄµÄ´óÐ¡
+	 *            Ô²ï¿½Ç°ë¾¶ï¿½ÄµÄ´ï¿½Ð¡
 	 * @return
 	 */
 	public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, float roundPx) {
@@ -110,9 +110,9 @@ public class ImageUtil {
 		return output;
 	}
 
-	// »ñµÃ´øµ¹Ó°µÄÍ¼Æ¬·½·¨
+	// ï¿½ï¿½Ã´ï¿½Ó°ï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½ï¿½
 	/***
-	 * »ñµÃ´øµ¹Ó°µÄÍ¼Æ¬·½·¨
+	 * ï¿½ï¿½Ã´ï¿½Ó°ï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 * @param bitmap
 	 * @return
@@ -151,11 +151,11 @@ public class ImageUtil {
 		return bitmapWithReflection;
 	}
 
-	// Ñ¹ËõÍ¼Æ¬´óÐ¡
+	// Ñ¹ï¿½ï¿½Í¼Æ¬ï¿½ï¿½Ð¡
 	/**
 	 * 
 	 * image.compress(Bitmap.CompressFormat.JPEG, 100, baos); //
-	 * ÖÊÁ¿Ñ¹Ëõ·½·¨£¬ÕâÀï100±íÊ¾²»Ñ¹Ëõ£¬°ÑÑ¹ËõºóµÄÊý¾Ý´æ·Åµ½baosÖÐ
+	 * ï¿½ï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½100ï¿½ï¿½Ê¾ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý´ï¿½Åµï¿½baosï¿½ï¿½
 	 * 
 	 * @param image
 	 * @param type
@@ -168,39 +168,41 @@ public class ImageUtil {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		image.compress(format, quality, baos);
 		// image.compress(Bitmap.CompressFormat.JPEG, 100, baos);//
-		// ÖÊÁ¿Ñ¹Ëõ·½·¨£¬ÕâÀï100±íÊ¾²»Ñ¹Ëõ£¬°ÑÑ¹ËõºóµÄÊý¾Ý´æ·Åµ½baosÖÐ
+		// ï¿½ï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½100ï¿½ï¿½Ê¾ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý´ï¿½Åµï¿½baosï¿½ï¿½
 		int options = 100;
-		while (baos.toByteArray().length / 1024 > 100) { // Ñ­»·ÅÐ¶ÏÈç¹ûÑ¹ËõºóÍ¼Æ¬ÊÇ·ñ´óÓÚ100kb,´óÓÚ¼ÌÐøÑ¹Ëõ
-			baos.reset();// ÖØÖÃbaos¼´Çå¿Õbaos
-			image.compress(Bitmap.CompressFormat.JPEG, options, baos);// ÕâÀïÑ¹Ëõoptions%£¬°ÑÑ¹ËõºóµÄÊý¾Ý´æ·Åµ½baosÖÐ
-			options -= 10;// Ã¿´Î¶¼¼õÉÙ10
+		while (baos.toByteArray().length / 1024 > 100) { // Ñ­ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½Í¼Æ¬ï¿½Ç·ï¿½ï¿½ï¿½ï¿½100kb,ï¿½ï¿½ï¿½Ú¼ï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½
+			baos.reset();// ï¿½ï¿½ï¿½ï¿½baosï¿½ï¿½ï¿½ï¿½ï¿½baos
+			image.compress(Bitmap.CompressFormat.JPEG, options, baos);// ï¿½ï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½options%ï¿½ï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý´ï¿½Åµï¿½baosï¿½ï¿½
+			options -= 10;// Ã¿ï¿½Î¶ï¿½ï¿½ï¿½ï¿½ï¿½10
 		}
-		ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());// °ÑÑ¹ËõºóµÄÊý¾Ýbaos´æ·Åµ½ByteArrayInputStreamÖÐ
-		Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);// °ÑByteArrayInputStreamÊý¾ÝÉú³ÉÍ¼Æ¬
+		ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());// ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½baosï¿½ï¿½Åµï¿½ByteArrayInputStreamï¿½ï¿½
+		Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);// ï¿½ï¿½ByteArrayInputStreamï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼Æ¬
 		return bitmap;
 	}
 
 	/**
-	 * ½«²ÊÉ«Í¼×ª»»Îª»Ò¶ÈÍ¼
+	 * ï¿½ï¿½ï¿½ï¿½É«Í¼×ªï¿½ï¿½Îªï¿½Ò¶ï¿½Í¼
 	 * 
 	 * @param img
 	 *            Î»Í¼
-	 * @return ·µ»Ø×ª»»ºÃµÄÎ»Í¼
+	 * @return ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½Ãµï¿½Î»Í¼
 	 */
 	public static Bitmap convertGreyImg(Bitmap img) {
 
-		int width = img.getWidth(); // »ñÈ¡Î»Í¼µÄ¿í
-		int height = img.getHeight(); // »ñÈ¡Î»Í¼µÄ¸ß
+		int width = img.getWidth(); // ï¿½ï¿½È¡Î»Í¼ï¿½Ä¿ï¿½
+		int height = img.getHeight(); // ï¿½ï¿½È¡Î»Í¼ï¿½Ä¸ï¿½
 
-		int[] pixels = new int[width * height]; // Í¨¹ýÎ»Í¼µÄ´óÐ¡´´½¨ÏñËØµãÊý×é
+		int[] pixels = new int[width * height]; // Í¨ï¿½ï¿½Î»Í¼ï¿½Ä´ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½
 
-		// ²ÎÊýµÄÒâÒå getPixels (int[] pixels, int offset, int stride, int x, int y,
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ getPixels (int[] pixels, int offset, int stride, int x, int
+		// y,
 		// int width, int height)
 		/**
 		 * 
-		 * 1.piexls »ñÈ¡µÄÏñËØµÄÐÅÏ¢·ÅÖÃµÄÊý×é 2.offect ¿ªÊ¼·ÅÖÃÖÃÏñËØµÄµÚÒ»¸öÎªÖ¹ eg£ºoffect=0£¬´ú±í´Ó
-		 * piexls[0] 3.stride Ã¿´ÎÔÚ½øÐÐÏÂÒ»ÐÐµÄÏñËØÊ±£¬Ó¦¸Ã¼ÓµÄ³¤¶È stride>=width eg£º stride=10 Ôò
-		 * µÚÒ»ÐÐÎªpiexls[0,9],µÚ¶þÐÐÎªpiexls[10,19];
+		 * 1.piexls ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ 2.offect ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ØµÄµï¿½Ò»ï¿½ï¿½ÎªÖ¹
+		 * egï¿½ï¿½offect=0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ piexls[0] 3.stride Ã¿ï¿½ï¿½ï¿½Ú½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½Ó¦ï¿½Ã¼ÓµÄ³ï¿½ï¿½ï¿½
+		 * stride>=width egï¿½ï¿½ stride=10 ï¿½ï¿½
+		 * ï¿½ï¿½Ò»ï¿½ï¿½Îªpiexls[0,9],ï¿½Ú¶ï¿½ï¿½ï¿½Îªpiexls[10,19];
 		 */
 		img.getPixels(pixels, 0, width, 0, 0, width, height);
 		// int alpha = 0xFF << 24;
@@ -211,9 +213,9 @@ public class ImageUtil {
 				int green = ((grey & 0x0000FF00) >> 8);
 				int blue = (grey & 0x000000FF);
 
-				// ¼ÆËã»Ò¶È£¬ÓÃÕûÊýÀ´Ëã£¬¼õÉÙ¸¡µãÊýµÄÔËËã£¬»Ò¶ÈÒ²³ÆÎª»Ò½Ö£¬Ö±·½Í¼ÓÃ´ËÀ´Í³¼Æ
+				// ï¿½ï¿½ï¿½ï¿½Ò¶È£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ã£¬ï¿½ï¿½ï¿½Ù¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ã£¬ï¿½Ò¶ï¿½Ò²ï¿½ï¿½Îªï¿½Ò½Ö£ï¿½Ö±ï¿½ï¿½Í¼ï¿½Ã´ï¿½ï¿½ï¿½Í³ï¿½ï¿½
 				grey = (int) ((red * 30 + green * 59 + blue * 11) / 100);
-				// Color¡£reb(grey,grey,grey)±íÊ¾»Ò¶ÈÍ¼¡£ ÕâÀï¼ÓÉÏÁËÍ¸Ã÷¶È
+				// Colorï¿½ï¿½reb(grey,grey,grey)ï¿½ï¿½Ê¾ï¿½Ò¶ï¿½Í¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ï¿½ï¿½ï¿½
 				grey = Color.rgb(grey, grey, grey);
 				pixels[width * i + j] = grey;
 			}
@@ -231,19 +233,21 @@ public class ImageUtil {
 		return result;
 	}
 
-	// »ñÈ¡Í¼ÏñµÄ»Ò½×ÐÅÏ¢
+	// ï¿½ï¿½È¡Í¼ï¿½ï¿½Ä»Ò½ï¿½ï¿½ï¿½Ï¢
 	public static void getGreyInfos(Bitmap img, int[] greyInfos) {
-		int width = img.getWidth(); // »ñÈ¡Î»Í¼µÄ¿í
-		int height = img.getHeight(); // »ñÈ¡Î»Í¼µÄ¸ß
+		int width = img.getWidth(); // ï¿½ï¿½È¡Î»Í¼ï¿½Ä¿ï¿½
+		int height = img.getHeight(); // ï¿½ï¿½È¡Î»Í¼ï¿½Ä¸ï¿½
 
-		int[] pixels = new int[width * height]; // Í¨¹ýÎ»Í¼µÄ´óÐ¡´´½¨ÏñËØµãÊý×é
-		// ²ÎÊýµÄÒâÒå getPixels (int[] pixels, int offset, int stride, int x, int y,
+		int[] pixels = new int[width * height]; // Í¨ï¿½ï¿½Î»Í¼ï¿½Ä´ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ getPixels (int[] pixels, int offset, int stride, int x, int
+		// y,
 		// int width, int height)
 		/**
 		 * 
-		 * 1.piexls »ñÈ¡µÄÏñËØµÄÐÅÏ¢·ÅÖÃµÄÊý×é 2.offect ¿ªÊ¼·ÅÖÃÖÃÏñËØµÄµÚÒ»¸öÎªÖ¹ eg£ºoffect=0£¬´ú±í´Ó
-		 * piexls[0] 3.stride Ã¿´ÎÔÚ½øÐÐÏÂÒ»ÐÐµÄÏñËØÊ±£¬Ó¦¸Ã¼ÓµÄ³¤¶È stride>=width eg£º stride=10 Ôò
-		 * µÚÒ»ÐÐÎªpiexls[0,9],µÚ¶þÐÐÎªpiexls[10,19];
+		 * 1.piexls ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ 2.offect ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ØµÄµï¿½Ò»ï¿½ï¿½ÎªÖ¹
+		 * egï¿½ï¿½offect=0ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ piexls[0] 3.stride Ã¿ï¿½ï¿½ï¿½Ú½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½Ó¦ï¿½Ã¼ÓµÄ³ï¿½ï¿½ï¿½
+		 * stride>=width egï¿½ï¿½ stride=10 ï¿½ï¿½
+		 * ï¿½ï¿½Ò»ï¿½ï¿½Îªpiexls[0,9],ï¿½Ú¶ï¿½ï¿½ï¿½Îªpiexls[10,19];
 		 */
 		img.getPixels(pixels, 0, width, 0, 0, width, height);
 		// int alpha = 0xFF << 24;
@@ -255,17 +259,17 @@ public class ImageUtil {
 				int green = ((grey & 0x0000FF00) >> 8);
 				int blue = (grey & 0x000000FF);
 
-				// ¼ÆËã»Ò¶È£¬ÓÃÕûÊýÀ´Ëã£¬¼õÉÙ¸¡µãÊýµÄÔËËã£¬»Ò¶ÈÒ²³ÆÎª»Ò½Ö£¬Ö±·½Í¼ÓÃ´ËÀ´Í³¼Æ
+				// ï¿½ï¿½ï¿½ï¿½Ò¶È£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ã£¬ï¿½ï¿½ï¿½Ù¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ã£¬ï¿½Ò¶ï¿½Ò²ï¿½ï¿½Îªï¿½Ò½Ö£ï¿½Ö±ï¿½ï¿½Í¼ï¿½Ã´ï¿½ï¿½ï¿½Í³ï¿½ï¿½
 				grey = (int) ((red * 30 + green * 59 + blue * 11) / 100);
-				// Color¡£reb(grey,grey,grey)±íÊ¾»Ò¶ÈÍ¼¡£ ÕâÀï¼ÓÉÏÁËÍ¸Ã÷¶È
+				// Colorï¿½ï¿½reb(grey,grey,grey)ï¿½ï¿½Ê¾ï¿½Ò¶ï¿½Í¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ï¿½ï¿½ï¿½
 
 				greyInfos[width * i + j] = grey;
 			}
 		}
 	}
-	
-	// Í¼Æ¬Url±£´æÎªÎ»Í¼²¢½øÐÐËõ·Å²Ù×÷
-	// Í¨¹ý´«ÈëÍ¼Æ¬url»ñÈ¡Î»Í¼·½·¨
+
+	// Í¼Æ¬Urlï¿½ï¿½ï¿½ï¿½ÎªÎ»Í¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å²ï¿½ï¿½ï¿½
+	// Í¨ï¿½ï¿½ï¿½ï¿½Í¼Æ¬urlï¿½ï¿½È¡Î»Í¼ï¿½ï¿½ï¿½ï¿½
 	public static Bitmap getBitmap(String url) {
 		URL myFileUrl = null;
 		Bitmap bitmap = null;
@@ -287,9 +291,9 @@ public class ImageUtil {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (OutOfMemoryError e) {
-			e.printStackTrace();	
+			e.printStackTrace();
 			// TODO: handle exception
-		}catch (Exception e) {
+		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
@@ -297,12 +301,12 @@ public class ImageUtil {
 	}
 
 	/***
-	 * ¼ÓÔØ±¾µØÍ¼Æ¬
+	 * ï¿½ï¿½ï¿½Ø±ï¿½ï¿½ï¿½Í¼Æ¬
 	 * 
 	 * @param context
-	 *            £ºÖ÷ÔËÐÐº¯ÊýÊµÀý
+	 *            ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðºï¿½ï¿½ï¿½Êµï¿½ï¿½
 	 * @param bitAdress
-	 *            £ºÍ¼Æ¬µØÖ·£¬Ò»°ãÖ¸ÏòRÏÂµÄdrawableÄ¿Â¼
+	 *            ï¿½ï¿½Í¼Æ¬ï¿½ï¿½Ö·ï¿½ï¿½Ò»ï¿½ï¿½Ö¸ï¿½ï¿½Rï¿½Âµï¿½drawableÄ¿Â¼
 	 * @return
 	 */
 	public static Bitmap CreatImage(Context context, int bitAdress) {
@@ -313,26 +317,26 @@ public class ImageUtil {
 	}
 
 	/***
-	 * 2.Í¼Æ¬Æ½¾ù·Ö¸î·½·¨£¬½«´óÍ¼Æ½¾ù·Ö¸îÎªNÐÐNÁÐ£¬·½±ãÓÃ»§Ê¹ÓÃ Í¼Æ¬·Ö¸î
+	 * 2.Í¼Æ¬Æ½ï¿½ï¿½Ö¸î·½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼Æ½ï¿½ï¿½Ö¸ï¿½ÎªNï¿½ï¿½Nï¿½Ð£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½Ê¹ï¿½ï¿½ Í¼Æ¬ï¿½Ö¸ï¿½
 	 * 
 	 * @param g
-	 *            £º»­²¼
+	 *            ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * @param paint
-	 *            £º»­±Ê
+	 *            ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * @param imgBit
-	 *            £ºÍ¼Æ¬
+	 *            ï¿½ï¿½Í¼Æ¬
 	 * @param x
-	 *            £ºXÖáÆðµã×ø±ê
+	 *            ï¿½ï¿½Xï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * @param y
-	 *            £ºYÖáÆðµã×ø±ê
+	 *            ï¿½ï¿½Yï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * @param w
-	 *            £ºµ¥Ò»Í¼Æ¬µÄ¿í¶È
+	 *            ï¿½ï¿½ï¿½ï¿½Ò»Í¼Æ¬ï¿½Ä¿ï¿½ï¿½
 	 * @param h
-	 *            £ºµ¥Ò»Í¼Æ¬µÄ¸ß¶È
+	 *            ï¿½ï¿½ï¿½ï¿½Ò»Í¼Æ¬ï¿½Ä¸ß¶ï¿½
 	 * @param line
-	 *            £ºµÚ¼¸ÁÐ
+	 *            ï¿½ï¿½ï¿½Ú¼ï¿½ï¿½ï¿½
 	 * @param row
-	 *            £ºµÚ¼¸ÐÐ
+	 *            ï¿½ï¿½ï¿½Ú¼ï¿½ï¿½ï¿½
 	 */
 	public static void cuteImage(Canvas g, Paint paint, Bitmap imgBit, int x,
 			int y, int w, int h, int line, int row) {
@@ -342,22 +346,22 @@ public class ImageUtil {
 	}
 
 	/***
-	 * 4.»æÖÆ´øÓÐ±ß¿òµÄÎÄ×Ö£¬Ò»°ãÔÚÓÎÏ·ÖÐÆðÎÄ×ÖµÄÃÀ»¯×÷ÓÃ »æÖÆ´øÓÐ±ß¿òµÄÎÄ×Ö
+	 * 4.ï¿½ï¿½ï¿½Æ´ï¿½ï¿½Ð±ß¿ï¿½ï¿½ï¿½ï¿½ï¿½Ö£ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ´ï¿½ï¿½Ð±ß¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 * @param strMsg
-	 *            £º»æÖÆÄÚÈÝ
+	 *            ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * @param g
-	 *            £º»­²¼
+	 *            ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * @param paint
-	 *            £º»­±Ê
+	 *            ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * @param setx
-	 *            £º£ºXÖáÆðÊ¼×ø±ê
+	 *            ï¿½ï¿½ï¿½ï¿½Xï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½
 	 * @param sety
-	 *            £ºYÖáµÄÆðÊ¼×ø±ê
+	 *            ï¿½ï¿½Yï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½
 	 * @param fg
-	 *            £ºÇ°¾°É«
+	 *            ï¿½ï¿½Ç°ï¿½ï¿½É«
 	 * @param bg
-	 *            £º±³¾°É«
+	 *            ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«
 	 */
 	public static void drawText(String strMsg, Canvas g, Paint paint, int setx,
 			int sety, int fg, int bg) {
@@ -373,15 +377,15 @@ public class ImageUtil {
 
 	/**
 	 * 
-	 * Í¨¹ý´«ÈËbitmap£¬¶ÔÖ¸¶¨µÄbitmap½øÐÐ¼ôÇÐ
+	 * Í¨ï¿½ï¿½ï¿½ï¿½bitmapï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½bitmapï¿½ï¿½ï¿½Ð¼ï¿½ï¿½ï¿½
 	 * 
 	 * @param bitmap
 	 *            Ô´bitmap
 	 * @param x
-	 *            ¼ôÇÐµÄÆðÊ¼Î»ÖÃµÄ×ó±ß
+	 *            ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½Ê¼Î»ï¿½Ãµï¿½ï¿½ï¿½ï¿½
 	 * @param y
 	 * @param width
-	 *            ¼ôÇÐµÄ³¤¶ÈºÍ¿í¶È
+	 *            ï¿½ï¿½ï¿½ÐµÄ³ï¿½ï¿½ÈºÍ¿ï¿½ï¿½
 	 * @param height
 	 * @return
 	 */
@@ -395,9 +399,9 @@ public class ImageUtil {
 	 * 
 	 * 
 	 * @param saveDir
-	 *            ±£´æµÄÄ¿Â¼
+	 *            ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿Â¼
 	 * @param saveName
-	 *            ±£´æµÄÎÄ¼þÃû
+	 *            ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½
 	 * @param bitmap
 	 *            Î»Í¼
 	 * @return
@@ -407,13 +411,13 @@ public class ImageUtil {
 			Bitmap bitmap) {
 		boolean nowbol = false;
 		try {
-			// Éú³ÉÄ¿Â¼ÎÄ¼þ
+			// ï¿½ï¿½ï¿½Ä¿Â¼ï¿½Ä¼ï¿½
 			File dir = new File(saveDir);
 			if (!dir.exists()) {
 				dir.mkdirs();
 			}
 
-			// Éú³ÉÄ¿±êÎÄ¼þ
+			// ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½Ä¼ï¿½
 			File saveFile = new File(saveDir, saveName);
 			if (!saveFile.exists()) {
 				saveFile.createNewFile();
@@ -433,12 +437,11 @@ public class ImageUtil {
 		}
 		return nowbol;
 	}
-	
-	
-	
-	//½«Í¼Æ¬×ÊÔ´×ª»¯Îªbitmap
-	public static Bitmap resourceTobitmap(int resource,Context context){
-		Bitmap  bitmap = BitmapFactory.decodeResource(context.getResources(),resource);
+
+	// ï¿½ï¿½Í¼Æ¬ï¿½ï¿½Ô´×ªï¿½ï¿½Îªbitmap
+	public static Bitmap resourceTobitmap(int resource, Context context) {
+		Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(),
+				resource);
 		return bitmap;
 	}
 }

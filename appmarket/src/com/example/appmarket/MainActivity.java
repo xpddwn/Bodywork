@@ -20,10 +20,10 @@ import android.widget.TextView;
 public class MainActivity extends Activity {
 	private LinearLayout download;
 	private LinearLayout classify;
-	
+
 	private TextView down;
 	private TextView up;
-	
+
 	private ImageButton user;
 
 	private RelativeLayout life;
@@ -32,41 +32,38 @@ public class MainActivity extends Activity {
 	private RelativeLayout movie;
 	private RelativeLayout social;
 	private RelativeLayout tool;
-	
+
 	private Intent classifyIntent;
 	private Intent lifeIntent;
 	private Intent loginIntent;
-	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
-		
-		down = (TextView)findViewById(R.id.download1);
-		up = (TextView)findViewById(R.id.classify1);
+
+		down = (TextView) findViewById(R.id.download1);
+		up = (TextView) findViewById(R.id.classify1);
 		down.setSelected(false);
 		up.setSelected(true);
 		download = (LinearLayout) findViewById(R.id.title1);
 		classify = (LinearLayout) findViewById(R.id.title2);
-		user = (ImageButton)findViewById(R.id.user);
+		user = (ImageButton) findViewById(R.id.user);
 		life = (RelativeLayout) findViewById(R.id.life);
 		car = (RelativeLayout) findViewById(R.id.life1);
 		movie = (RelativeLayout) findViewById(R.id.life3);
 		social = (RelativeLayout) findViewById(R.id.life4);
 		news = (RelativeLayout) findViewById(R.id.life2);
 		tool = (RelativeLayout) findViewById(R.id.life5);
-		
-		if(MyAppMarket.getRegister()==0)
-		{
+
+		if (MyAppMarket.getRegister() == 0) {
 			loginIntent = new Intent(this, LoginActivity.class);
 			startActivity(loginIntent);
-		}else{
+		} else {
 			user.setBackgroundResource(R.drawable.user1);
 		}
-		
-		
+
 		download.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -74,7 +71,8 @@ public class MainActivity extends Activity {
 				// TODO Auto-generated method stub
 				down.setSelected(true);
 				up.setSelected(false);
-				classifyIntent = new Intent(MainActivity.this,ApplicationManage.class);
+				classifyIntent = new Intent(MainActivity.this,
+						ApplicationManage.class);
 				startActivity(classifyIntent);
 			}
 		});
@@ -86,9 +84,9 @@ public class MainActivity extends Activity {
 				// TODO Auto-generated method stub
 			}
 		});
-		
+
 		user.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
@@ -102,12 +100,13 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				lifeIntent = new Intent(MainActivity.this,ApplicationClassify.class);
-				//ÓÃBundleÐ¯´øÊý¾Ý
-			    Bundle bundle=new Bundle();
-			    //´«µÝname²ÎÊýÎªlife
-			    bundle.putString("name", "life");
-			    lifeIntent.putExtras(bundle);
+				lifeIntent = new Intent(MainActivity.this,
+						ApplicationClassify.class);
+				// ï¿½ï¿½BundleÐ¯ï¿½ï¿½ï¿½ï¿½ï¿½
+				Bundle bundle = new Bundle();
+				// ï¿½ï¿½ï¿½ï¿½nameï¿½ï¿½ï¿½ï¿½Îªlife
+				bundle.putString("name", "life");
+				lifeIntent.putExtras(bundle);
 				startActivity(lifeIntent);
 			}
 		});
@@ -117,12 +116,13 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				lifeIntent = new Intent(MainActivity.this,ApplicationClassify.class);
-				//ÓÃBundleÐ¯´øÊý¾Ý
-			    Bundle bundle=new Bundle();
-			    //´«µÝname²ÎÊýÎªlife
-			    bundle.putString("name", "car");
-			    lifeIntent.putExtras(bundle);
+				lifeIntent = new Intent(MainActivity.this,
+						ApplicationClassify.class);
+				// ï¿½ï¿½BundleÐ¯ï¿½ï¿½ï¿½ï¿½ï¿½
+				Bundle bundle = new Bundle();
+				// ï¿½ï¿½ï¿½ï¿½nameï¿½ï¿½ï¿½ï¿½Îªlife
+				bundle.putString("name", "car");
+				lifeIntent.putExtras(bundle);
 				startActivity(lifeIntent);
 			}
 		});
@@ -132,12 +132,13 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				lifeIntent = new Intent(MainActivity.this,ApplicationClassify.class);
-				//ÓÃBundleÐ¯´øÊý¾Ý
-			    Bundle bundle=new Bundle();
-			    //´«µÝname²ÎÊýÎªlife
-			    bundle.putString("name", "news");
-			    lifeIntent.putExtras(bundle);
+				lifeIntent = new Intent(MainActivity.this,
+						ApplicationClassify.class);
+				// ï¿½ï¿½BundleÐ¯ï¿½ï¿½ï¿½ï¿½ï¿½
+				Bundle bundle = new Bundle();
+				// ï¿½ï¿½ï¿½ï¿½nameï¿½ï¿½ï¿½ï¿½Îªlife
+				bundle.putString("name", "news");
+				lifeIntent.putExtras(bundle);
 				startActivity(lifeIntent);
 			}
 		});
@@ -147,12 +148,13 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				lifeIntent = new Intent(MainActivity.this,ApplicationClassify.class);
-				//ÓÃBundleÐ¯´øÊý¾Ý
-			    Bundle bundle=new Bundle();
-			    //´«µÝname²ÎÊýÎªlife
-			    bundle.putString("name", "movie");
-			    lifeIntent.putExtras(bundle);
+				lifeIntent = new Intent(MainActivity.this,
+						ApplicationClassify.class);
+				// ï¿½ï¿½BundleÐ¯ï¿½ï¿½ï¿½ï¿½ï¿½
+				Bundle bundle = new Bundle();
+				// ï¿½ï¿½ï¿½ï¿½nameï¿½ï¿½ï¿½ï¿½Îªlife
+				bundle.putString("name", "movie");
+				lifeIntent.putExtras(bundle);
 				startActivity(lifeIntent);
 			}
 		});
@@ -162,12 +164,13 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				lifeIntent = new Intent(MainActivity.this,ApplicationClassify.class);
-				//ÓÃBundleÐ¯´øÊý¾Ý
-			    Bundle bundle=new Bundle();
-			    //´«µÝname²ÎÊýÎªlife
-			    bundle.putString("name", "social");
-			    lifeIntent.putExtras(bundle);
+				lifeIntent = new Intent(MainActivity.this,
+						ApplicationClassify.class);
+				// ï¿½ï¿½BundleÐ¯ï¿½ï¿½ï¿½ï¿½ï¿½
+				Bundle bundle = new Bundle();
+				// ï¿½ï¿½ï¿½ï¿½nameï¿½ï¿½ï¿½ï¿½Îªlife
+				bundle.putString("name", "social");
+				lifeIntent.putExtras(bundle);
 				startActivity(lifeIntent);
 			}
 		});
@@ -177,26 +180,25 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				lifeIntent = new Intent(MainActivity.this,ApplicationClassify.class);
-				//ÓÃBundleÐ¯´øÊý¾Ý
-			    Bundle bundle=new Bundle();
-			    //´«µÝname²ÎÊýÎªlife
-			    bundle.putString("name", "tool");
-			    lifeIntent.putExtras(bundle);
+				lifeIntent = new Intent(MainActivity.this,
+						ApplicationClassify.class);
+				// ï¿½ï¿½BundleÐ¯ï¿½ï¿½ï¿½ï¿½ï¿½
+				Bundle bundle = new Bundle();
+				// ï¿½ï¿½ï¿½ï¿½nameï¿½ï¿½ï¿½ï¿½Îªlife
+				bundle.putString("name", "tool");
+				lifeIntent.putExtras(bundle);
 				startActivity(lifeIntent);
 			}
 		});
 	}
-	
+
 	@Override
-	protected void onResume()
-	{
+	protected void onResume() {
 		super.onResume();
 		down.setSelected(false);
 		up.setSelected(true);
-		
-		if(MyAppMarket.getRegister() == 1)
-		{
+
+		if (MyAppMarket.getRegister() == 1) {
 			user.setBackgroundResource(R.drawable.user1);
 		}
 	}

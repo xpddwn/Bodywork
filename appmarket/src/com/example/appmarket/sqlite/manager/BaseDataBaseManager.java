@@ -9,106 +9,117 @@ import java.io.InputStream;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+
 /**
  * 
  * 
- * ¹¦ÄÜ£º¿½±´res/rawÄ¿Â¼ÏÂÊý¾Ý¿âÎÄ¼þµ½dataÖÐ£¬·ÀÖ¹ÓÃ»§ÎóÉ¾
- * ²Î¿¼£ºhttp://www.cnblogs.com/xiaowenji/archive/2011/01/03/1925014.html
+ * ï¿½ï¿½ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½res/rawÄ¿Â¼ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½dataï¿½Ð£ï¿½ï¿½ï¿½Ö¹ï¿½Ã»ï¿½ï¿½ï¿½É¾
+ * ï¿½Î¿ï¿½ï¿½ï¿½http://www.cnblogs.com/xiaowenji/archive/2011/01/03/1925014.html
  * 
- *
+ * 
  */
 public abstract class BaseDataBaseManager {
-	public static final String TAG="BaseDataBaseManager";
+	public static final String TAG = "BaseDataBaseManager";
 	private final int BUFFER_SIZE = 3000000;
-	private String dbName  ;//±£´æµÄÊý¾Ý¿âÎÄ¼þÃû
-	private String  dbPath; //ÔÚÊÖ»úÀï´æ·ÅÊý¾Ý¿âµÄÎ»ÖÃ
+	private String dbName;// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½
+	private String dbPath; // ï¿½ï¿½ï¿½Ö»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½Î»ï¿½ï¿½
 	private SQLiteDatabase database;
 	private Context context;
 	private int rarResource;
-	private int version=1;//Ä¬ÈÏµÄversion	
-	
+	private int version = 1;// Ä¬ï¿½Ïµï¿½version
+
 	public String getDbName() {
 		return dbName;
 	}
+
 	public String getDbPath() {
 		return dbPath;
 	}
-	
+
 	/**
 	 * 
 	 * 
-	 * @param context  ÉÏÏÂÎÄ
-	 * @param rawResource Êý¾Ý¿â×ÊÔ´ÎÄ¼þ
-	 * @param dbName ±£´æÔÚÊÖ»úÉÏµÄÊý¾Ý¿âµÄÃû³Æ
+	 * @param context
+	 *            ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	 * @param rawResource
+	 *            ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½Ô´ï¿½Ä¼ï¿½
+	 * @param dbName
+	 *            ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½Ïµï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½ï¿½ï¿½
 	 */
-	public BaseDataBaseManager(Context context,int rawResource,String dbName,String dbPath) {
-	    this.context = context;
-	    this.rarResource=rawResource;
-	    this.dbName=dbName;
-	    this.dbPath =dbPath;
+	public BaseDataBaseManager(Context context, int rawResource, String dbName,
+			String dbPath) {
+		this.context = context;
+		this.rarResource = rawResource;
+		this.dbName = dbName;
+		this.dbPath = dbPath;
 	}
-	public BaseDataBaseManager(Context context,int rawResource,String dbName,int version,String dbPath) {
-	    this.context = context;
-	    this.rarResource=rawResource;
-	    this.dbName=dbName;
-	    this.dbPath =dbPath;
-	    this.version=version;
+
+	public BaseDataBaseManager(Context context, int rawResource, String dbName,
+			int version, String dbPath) {
+		this.context = context;
+		this.rarResource = rawResource;
+		this.dbName = dbName;
+		this.dbPath = dbPath;
+		this.version = version;
 	}
-	
-	  /**
-	   * 
-	   * 
-	   * ¹¦ÄÜ£º³õÊ¼»¯Ê±µ÷ÓÃ
-	   */
-	  public SQLiteDatabase openDatabase() {
-	    this.database = this.openDatabase(dbPath + "/" + dbName);
-	    return database;
-	  }
-	  
-	  
-	  /**
-	   * 
-	   * @param dbfile
-	   * @return
-	   * ¹¦ÄÜ£º²Ù×÷Ö¸¶¨µØÖ·µÄÊý¾Ý¿âÎÄ¼þÊ±µ÷ÓÃ
-	   */
-	  private SQLiteDatabase openDatabase(String dbfile) {
-		SQLiteDatabase db=null;
-	    try {
-	     if (!(new File(dbfile).exists())) {//ÅÐ¶ÏÊý¾Ý¿âÎÄ¼þÊÇ·ñ´æÔÚ£¬Èô²»´æÔÚÔòÖ´ÐÐµ¼Èë£¬·ñÔòÖ±½Ó´ò¿ªÊý¾Ý¿â
-	        InputStream is = this.context.getResources().openRawResource(rarResource); //Óûµ¼ÈëµÄÊý¾Ý¿â
-	        FileOutputStream fos = new FileOutputStream(dbfile);
-	        byte[] buffer = new byte[BUFFER_SIZE];
-	        int count = 0;
-	        while ((count = is.read(buffer)) > 0) {
-	          fos.write(buffer, 0, count);
-	        }
-	        fos.close();
-	        is.close();
-	        db = SQLiteDatabase.openDatabase(dbfile,null,SQLiteDatabase.OPEN_READWRITE);
-	  	    db.setVersion(version);
-	      }else{
-	    	  db = SQLiteDatabase.openDatabase(dbfile,null,SQLiteDatabase.OPEN_READWRITE);
-	    	  if(db!=null){//¼ì²é°æ±¾¸üÐÂ
-	    		  int kk=db.getVersion();
-	    		  if(db.getVersion()<version){
-	    			  onUpdate(db);
-	    			  db.setVersion(version);
-	    		  }
-	    	  }
-	      }
-	      return db;
-	    } catch (FileNotFoundException e) {
-	    Log.e("Database", "File not found");
-	      e.printStackTrace();
-	    } catch (IOException e) {
-	     Log.e("Database", "IO exception");
-	      e.printStackTrace();
-	    }
-	    return null;
-	  }//do something else here  
-	  public void closeDatabase() {
-	    this.database.close();
-	  }
-	  abstract protected void onUpdate(SQLiteDatabase db);
+
+	/**
+	 * 
+	 * 
+	 * ï¿½ï¿½ï¿½Ü£ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½
+	 */
+	public SQLiteDatabase openDatabase() {
+		this.database = this.openDatabase(dbPath + "/" + dbName);
+		return database;
 	}
+
+	/**
+	 * 
+	 * @param dbfile
+	 * @return ï¿½ï¿½ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½Ä¼ï¿½Ê±ï¿½ï¿½ï¿½ï¿½
+	 */
+	private SQLiteDatabase openDatabase(String dbfile) {
+		SQLiteDatabase db = null;
+		try {
+			if (!(new File(dbfile).exists())) {// ï¿½Ð¶ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½Ä¼ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Ú£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½Ðµï¿½ï¿½ë£¬ï¿½ï¿½ï¿½ï¿½Ö±ï¿½Ó´ï¿½ï¿½ï¿½Ý¿ï¿½
+				InputStream is = this.context.getResources().openRawResource(
+						rarResource); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½
+				FileOutputStream fos = new FileOutputStream(dbfile);
+				byte[] buffer = new byte[BUFFER_SIZE];
+				int count = 0;
+				while ((count = is.read(buffer)) > 0) {
+					fos.write(buffer, 0, count);
+				}
+				fos.close();
+				is.close();
+				db = SQLiteDatabase.openDatabase(dbfile, null,
+						SQLiteDatabase.OPEN_READWRITE);
+				db.setVersion(version);
+			} else {
+				db = SQLiteDatabase.openDatabase(dbfile, null,
+						SQLiteDatabase.OPEN_READWRITE);
+				if (db != null) {// ï¿½ï¿½ï¿½æ±¾ï¿½ï¿½ï¿½ï¿½
+					int kk = db.getVersion();
+					if (db.getVersion() < version) {
+						onUpdate(db);
+						db.setVersion(version);
+					}
+				}
+			}
+			return db;
+		} catch (FileNotFoundException e) {
+			Log.e("Database", "File not found");
+			e.printStackTrace();
+		} catch (IOException e) {
+			Log.e("Database", "IO exception");
+			e.printStackTrace();
+		}
+		return null;
+	}// do something else here
+
+	public void closeDatabase() {
+		this.database.close();
+	}
+
+	abstract protected void onUpdate(SQLiteDatabase db);
+}

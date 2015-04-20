@@ -76,9 +76,9 @@ public class RegisterActivity extends Activity {
 						|| password.equalsIgnoreCase("")
 						|| repassword.equalsIgnoreCase("")) {
 					new AlertDialog.Builder(RegisterActivity.this)
-							.setTitle("×¢²á´íÎó")
-							.setMessage("ÇëÏÈÌîÍêÕû×¢²áÐÅÏ¢")
-							.setNegativeButton("È·¶¨",
+							.setTitle("×¢ï¿½ï¿½ï¿½ï¿½ï¿½")
+							.setMessage("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½ï¿½ï¿½Ï¢")
+							.setNegativeButton("È·ï¿½ï¿½",
 									new DialogInterface.OnClickListener() {
 										@Override
 										public void onClick(
@@ -88,11 +88,11 @@ public class RegisterActivity extends Activity {
 											// own
 										}
 									}).show();
-				}else if (!password.equalsIgnoreCase(repassword)) {
+				} else if (!password.equalsIgnoreCase(repassword)) {
 					new AlertDialog.Builder(RegisterActivity.this)
-							.setTitle("×¢²á´íÎó")
-							.setMessage("Á½´ÎÊäÈëµÄÃÜÂë²»Í¬")
-							.setNegativeButton("È·¶¨",
+							.setTitle("×¢ï¿½ï¿½ï¿½ï¿½ï¿½")
+							.setMessage("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë²»Í¬")
+							.setNegativeButton("È·ï¿½ï¿½",
 									new DialogInterface.OnClickListener() {
 										@Override
 										public void onClick(
@@ -102,10 +102,10 @@ public class RegisterActivity extends Activity {
 											// own
 										}
 									}).show();
-				}else{
+				} else {
 					method();
-					circleDialog = ProgressDialog.show(RegisterActivity.this, null,
-							"ÕýÔÚÌá½»", true, false);
+					circleDialog = ProgressDialog.show(RegisterActivity.this,
+							null, "ï¿½ï¿½ï¿½ï¿½ï¿½á½»", true, false);
 
 					Thread myThread = new Thread(new Runnable() {
 
@@ -149,7 +149,7 @@ public class RegisterActivity extends Activity {
 		register_request.put("username", nickname);
 		register_request.put("password", password);
 
-		HttpUtil.post(tag,register_request, new JsonHttpResponseHandler() {
+		HttpUtil.post(tag, register_request, new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(JSONObject jsonobject) {
 				// TODO Auto-generated method stub
@@ -166,22 +166,20 @@ public class RegisterActivity extends Activity {
 				System.out.println("Setting onsuccess" + statuscode.toString());
 				if (statuscode.equalsIgnoreCase("0")) {
 					status = 1;
-				}
-				else if(statuscode.equalsIgnoreCase("2")){
+				} else if (statuscode.equalsIgnoreCase("2")) {
 					status = 3;
-				}
-				else if (statuscode.equalsIgnoreCase("100")) {
+				} else if (statuscode.equalsIgnoreCase("100")) {
 					status = 2;
 				}
 
 			}
 
-			public void onFailure(Throwable arg0) { // Ê§°Ü£¬µ÷ÓÃ
+			public void onFailure(Throwable arg0) { // Ê§ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½
 				System.out.println("onfailure");
 				status = 2;
 			}
 
-			public void onFinish() { // Íê³Éºóµ÷ÓÃ£¬Ê§°Ü£¬³É¹¦£¬¶¼Òªµô
+			public void onFinish() { // ï¿½ï¿½Éºï¿½ï¿½ï¿½Ã£ï¿½Ê§ï¿½Ü£ï¿½ï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½
 				System.out.println("Setting onfinish");
 			}
 
@@ -205,7 +203,7 @@ public class RegisterActivity extends Activity {
 				circleDialog.dismiss();
 				Thread.currentThread().interrupt();
 				Toast mytoast = Toast.makeText(getApplicationContext(),
-						"×¢²á³É¹¦,Á¢¼´µÇÂ½", Toast.LENGTH_SHORT);
+						"×¢ï¿½ï¿½É¹ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â½", Toast.LENGTH_SHORT);
 				mytoast.setGravity(Gravity.CENTER_HORIZONTAL
 						| Gravity.CENTER_VERTICAL, 0, 0);
 				mytoast.show();
@@ -214,9 +212,9 @@ public class RegisterActivity extends Activity {
 			case 2:
 				circleDialog.dismiss();
 				new AlertDialog.Builder(RegisterActivity.this)
-						.setTitle("¶Ô²»Æð")
-						.setMessage("ÏÖÔÚµÄÍøÂç²»¿ÉÓÃ£¬ÉÔºóÔÙÊÔ!")
-						.setNegativeButton("È·¶¨",
+						.setTitle("ï¿½Ô²ï¿½ï¿½ï¿½")
+						.setMessage("ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ï¿½ç²»ï¿½ï¿½ï¿½Ã£ï¿½ï¿½Ôºï¿½ï¿½ï¿½ï¿½ï¿½!")
+						.setNegativeButton("È·ï¿½ï¿½",
 								new DialogInterface.OnClickListener() {
 									@Override
 									public void onClick(DialogInterface dialog,
@@ -229,9 +227,9 @@ public class RegisterActivity extends Activity {
 			case 3:
 				circleDialog.dismiss();
 				new AlertDialog.Builder(RegisterActivity.this)
-						.setTitle("¶Ô²»Æð")
-						.setMessage("¸ÃÓÃ»§ÃûÒÑ¾­±»Ê¹ÓÃ£¬ÇëÖØÊÔ")
-						.setNegativeButton("È·¶¨",
+						.setTitle("ï¿½Ô²ï¿½ï¿½ï¿½")
+						.setMessage("ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½Ê¹ï¿½Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")
+						.setNegativeButton("È·ï¿½ï¿½",
 								new DialogInterface.OnClickListener() {
 									@Override
 									public void onClick(DialogInterface dialog,

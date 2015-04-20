@@ -3,14 +3,14 @@ package com.example.appmarket.constant;
 import android.os.Environment;
 
 public class Constant {
-	//app°üÃû
-	public static final String PACKAGE_NAME="com.example.appmarket";
+	// appï¿½ï¿½ï¿½ï¿½
+	public static final String PACKAGE_NAME = "com.example.appmarket";
 
-	// ³ÌÐò´æ·ÅÔÚsd¿¨ÉÏµØÖ·
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½sdï¿½ï¿½ï¿½Ïµï¿½Ö·
 	public static final String APP_DATA_PATH = Environment
 			.getExternalStorageDirectory() + "/appmarket/";
-	// assetsÄ¿Â¼ÏÂÍ¼Æ¬´æ·ÅÎÄ¼þ¼Ð
+	// assetsÄ¿Â¼ï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½
 	public static final String ASSETS_IMAGE_PATH = "images";
-	// images×ª´æµ½sd¿¨ÉÏÎÄ¼þ¼Ð
-	public static final String SDCARD_IMAGE_PATH = APP_DATA_PATH+"image/";
+	// images×ªï¿½æµ½sdï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½
+	public static final String SDCARD_IMAGE_PATH = APP_DATA_PATH + "image/";
 }

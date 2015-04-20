@@ -4,142 +4,139 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Ïß³Ì¹ÜÀí¹¤¾ßÀà
+ * ï¿½ß³Ì¹ï¿½ï¿½?ï¿½ï¿½ï¿½ï¿½
  * 
- * @×÷Õß komojoemary
- * @version [°æ±¾ºÅ, 2011-2-24]
- * @see [Ïà¹ØÀà/·½·¨]
- * @since [²úÆ·/Ä£¿é°æ±¾]
+ * @ï¿½ï¿½ï¿½ï¿½ komojoemary
+ * @version [ï¿½æ±¾ï¿½ï¿½, 2011-2-24]
+ * @see [ï¿½ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½]
+ * @since [ï¿½ï¿½Æ·/Ä£ï¿½ï¿½æ±¾]
  */
-public class ThreadManageUtil implements Runnable
-{
-    /**
-     * ÇëÇó¶ÓÁÐ(ÓÃÓÚµ¥Ïß³Ì)
-     */
-    private static List<ThreadObject> requestList = null;
+public class ThreadManageUtil implements Runnable {
+	/**
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½Úµï¿½ï¿½ß³ï¿½)
+	 */
+	private static List<ThreadObject> requestList = null;
 
-    /**
-     * Í¬²½¶ÔÏó(ÓÃÓÚµ¥Ïß³Ì)
-     */
-    private static Object object = new Object();
+	/**
+	 * Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½Úµï¿½ï¿½ß³ï¿½)
+	 */
+	private static Object object = new Object();
 
-    /**
-     * ThreadManageUtil¶ÔÏóµÄÊµÀý(ÓÃÓÚµ¥Ïß³Ì)
-     */
-    private static ThreadManageUtil instance = null;
+	/**
+	 * ThreadManageUtilï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½(ï¿½ï¿½ï¿½Úµï¿½ï¿½ß³ï¿½)
+	 */
+	private static ThreadManageUtil instance = null;
 
-    /**
-     * µ±Ç°µÄÇëÇó¶ÔÏó
-     */
-    private ThreadObject currentRequest = null;
+	/**
+	 * ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	 */
+	private ThreadObject currentRequest = null;
 
-    /**
-     * ÔËÐÐÏß³Ì
-     * 
-     * @param ÎÞ
-     * @return ÎÞ
-     * @exception/throws ÎÞ
-     * @see ÎÞ
-     */
-    public void run() {
-        // Èç¹ûÎª¶àÏß³Ì
-//        if (isMultiThread) {
-//            runHandle();
-//        }
-        // ·Ç¶àÏß³Ì
-//        else {
-            while (true) {
-                // Èç¹û²»Îª¿ÕÔòÎª³¬Ê±ÐèÒªÖØÁ¬µÄÇëÇó£¬²»´Ó¶ÓÁÐÀïÖØÐÂ»ñÈ¡
-                if (currentRequest == null) {
-                    synchronized (object) {
-                        // ¶ÓÁÐ²»Îª¿Õ
-                        if (requestList.size() > 0) {
-                            // ´Ó¶ÓÁÐÖÐ»ñÈ¡ÇëÇó
-                            currentRequest = (ThreadObject) requestList.get(0);
-                            // ´ÓÇëÇó¶ÓÁÐÖÐ½«µ±Ç°ÇëÇóÉ¾³ý
-                            requestList.remove(0);
-                        }
-                        else {
-                            try {
-                                // ¶ÓÁÐÎª¿ÕÔò½»³ö¶ÔÏóËø£¬µÈ´ý»½ÐÑ
-                                object.wait();
-                                continue;
-                            }
-                            catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                }
-                runHandle();
-                currentRequest = null;
-            }
-//        }
-    }
+	/**
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ß³ï¿½
+	 * 
+	 * @param ï¿½ï¿½
+	 * @return ï¿½ï¿½
+	 * @exception/throws ï¿½ï¿½
+	 * @see ï¿½ï¿½
+	 */
+	public void run() {
+		// ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ß³ï¿½
+		// if (isMultiThread) {
+		// runHandle();
+		// }
+		// ï¿½Ç¶ï¿½ï¿½ß³ï¿½
+		// else {
+		while (true) {
+			// ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½Ê±ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ó£¬²ï¿½ï¿½Ó¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â»ï¿½È¡
+			if (currentRequest == null) {
+				synchronized (object) {
+					// ï¿½ï¿½ï¿½Ð²ï¿½Îªï¿½ï¿½
+					if (requestList.size() > 0) {
+						// ï¿½Ó¶ï¿½ï¿½ï¿½ï¿½Ð»ï¿½È¡ï¿½ï¿½ï¿½ï¿½
+						currentRequest = (ThreadObject) requestList.get(0);
+						// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½
+						requestList.remove(0);
+					} else {
+						try {
+							// ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ò½»³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È´ï¿½ï¿½ï¿½
+							object.wait();
+							continue;
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+			runHandle();
+			currentRequest = null;
+		}
+		// }
+	}
 
-    /**
-     * 
-     * ÇëÇó¹ý³Ì´¦Àí ¹ý³Ì
-     * 
-     * @param ÎÞ
-     * @return ÎÞ
-     * @exception/throws ÎÞ ÎÞ
-     * @see ÎÞ
-     */
-    private void runHandle() {
-        try {
-            currentRequest.handleOperation();
-            Thread.yield();
-        }
-        catch (Exception ce) {
-            ce.printStackTrace();
-        }
-    }
+	/**
+	 * 
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+	 * 
+	 * @param ï¿½ï¿½
+	 * @return ï¿½ï¿½
+	 * @exception/throws ï¿½ï¿½ ï¿½ï¿½
+	 * @see ï¿½ï¿½
+	 */
+	private void runHandle() {
+		try {
+			currentRequest.handleOperation();
+			Thread.yield();
+		} catch (Exception ce) {
+			ce.printStackTrace();
+		}
+	}
 
-    /**
-     * 
-     * Æô¶¯Ïß³Ì µ±ÓÃµ¥Ïß³Ì¶àÈÎÎñÅÅ¶ÓÇëÇóÊ±£¬½«ÇëÇóÌí¼ÓÖÁÇëÇó¶ÓÁÐÖÐ¡£µ±ÇëÇóµÄÊÇ¶àÏß³ÌÊ±£¬¿ª±ÙÒ»¸öÐÂµÄÏß³Ì
-     * 
-     * @param request
-     *            ÇëÇó¶ÔÏó
-     * @return ÎÞ
-     * @exception/throws ÎÞ
-     */
-    public static void sendRequest(ThreadObject request) {
-        // ¶àÏß³Ì
-//        if (request.isMultiThread()) {
-//            ThreadManageUtil downloadHttp = new ThreadManageUtil();
-//            downloadHttp.isMultiThread = true;
-//            downloadHttp.currentRequest = request;
-//            new Thread(downloadHttp).start();
-//        }
-//        else {
-            // µ¥Ïß³ÌÇëÇóÅÅ¶Ó
-            if (instance == null) {
-                // ÔÚµ±Ç°Ïß³Ì¶ÔÏóÎª¿ÕÊ±²Å½øÐÐÏß³Ì³õÊ¼»¯²Ù×÷£¬Í¬Ê±³õÊ¼»¯¶ÓÁÐ
-                instance = new ThreadManageUtil();
-                requestList = new ArrayList<ThreadObject>();
-                new Thread(instance).start();
-            }
-            insertReqList(request);
-//        }
-    }
+	/**
+	 * 
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ß³ï¿½
+	 * ï¿½ï¿½ï¿½Ãµï¿½ï¿½ß³Ì¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¶ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¶ï¿½ï¿½ß³ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Âµï¿½ï¿½ß³ï¿½
+	 * 
+	 * @param request
+	 *            ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	 * @return ï¿½ï¿½
+	 * @exception/throws ï¿½ï¿½
+	 */
+	public static void sendRequest(ThreadObject request) {
+		// ï¿½ï¿½ï¿½ß³ï¿½
+		// if (request.isMultiThread()) {
+		// ThreadManageUtil downloadHttp = new ThreadManageUtil();
+		// downloadHttp.isMultiThread = true;
+		// downloadHttp.currentRequest = request;
+		// new Thread(downloadHttp).start();
+		// }
+		// else {
+		// ï¿½ï¿½ï¿½ß³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¶ï¿½
+		if (instance == null) {
+			// ï¿½Úµï¿½Ç°ï¿½ß³Ì¶ï¿½ï¿½ï¿½Îªï¿½ï¿½Ê±ï¿½Å½ï¿½ï¿½ï¿½ï¿½ß³Ì³ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¬Ê±ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			instance = new ThreadManageUtil();
+			requestList = new ArrayList<ThreadObject>();
+			new Thread(instance).start();
+		}
+		insertReqList(request);
+		// }
+	}
 
-    /**
-     * 
-     * ÇëÇóÌí¼Ó·½·¨
-     * 
-     * @param request
-     *            ÐèÒªÌí¼ÓµÄÇëÇó
-     * @return ÎÞ
-     * @exception/throws ÎÞ
-     * @see ÎÞ
-     */
-    private static void insertReqList(ThreadObject request) {
-        synchronized (object) {
-            requestList.add(request);
-            object.notify();
-        }
-    }
+	/**
+	 * 
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó·ï¿½ï¿½ï¿½
+	 * 
+	 * @param request
+	 *            ï¿½ï¿½Òªï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½
+	 * @return ï¿½ï¿½
+	 * @exception/throws ï¿½ï¿½
+	 * @see ï¿½ï¿½
+	 */
+	private static void insertReqList(ThreadObject request) {
+		synchronized (object) {
+			requestList.add(request);
+			object.notify();
+		}
+	}
 
 }

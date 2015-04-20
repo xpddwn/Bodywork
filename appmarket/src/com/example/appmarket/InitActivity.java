@@ -8,36 +8,38 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.appmarket.sqlite.manager.ClientDataBase;
+
 /**
  * 
- * ×ö³õÊ¼»¯µÄactivity
+ * ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½activity
+ * 
  * @author tuomao
- *
+ * 
  */
 public class InitActivity extends Activity {
 
 	private Context mContext;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_init);
-		mContext=this;
+		mContext = this;
 		initDataBase();
 		startMainActivity();
 	}
-	
+
 	/**
 	 * 
-	 * ³õÊ¼»¯Êý¾Ý¿â
+	 * ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½
 	 */
-	public void initDataBase(){
-		ClientDataBase dataBase=new ClientDataBase(mContext);
+	public void initDataBase() {
+		ClientDataBase dataBase = new ClientDataBase(mContext);
 		dataBase.openDatabase();
 		dataBase.closeDatabase();
 	}
-	
-	public void startMainActivity(){
+
+	public void startMainActivity() {
 		Intent intent = new Intent();
 		intent.setClass(mContext, MainActivity.class);
 		startActivity(intent);

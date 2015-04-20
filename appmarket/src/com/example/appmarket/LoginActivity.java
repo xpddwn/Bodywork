@@ -28,22 +28,21 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 public class LoginActivity extends Activity {
 	private ImageButton back;
 	private TextView register;
 	private Button login;
-	
+
 	private EditText login_nickname;
 	private EditText login_password;
-	
+
 	private Intent RegisterIntent;
 	private ProgressDialog CircleDialog;
 	private int status = 0;
-	
+
 	private String nickname;
 	private String password;
-	
+
 	private final String tag = "login";
 	private SharedPreferences mysp;
 	private Editor myeditor;
@@ -53,93 +52,93 @@ public class LoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.login);
-		
+
 		mysp = MyAppMarket.mysp;
 		myeditor = mysp.edit();
-		
-		back = (ImageButton)findViewById(R.id.back);
+
+		back = (ImageButton) findViewById(R.id.back);
 		back.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				LoginActivity.this.finish();
 			}
 		});
-		
-		register = (TextView)findViewById(R.id.user_register);
+
+		register = (TextView) findViewById(R.id.user_register);
 		register.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				RegisterIntent = new Intent(LoginActivity.this, RegisterActivity.class);
+				RegisterIntent = new Intent(LoginActivity.this,
+						RegisterActivity.class);
 				startActivity(RegisterIntent);
 			}
 		});
-		
-		login_nickname = (EditText)findViewById(R.id.nickname);
-		login_password = (EditText)findViewById(R.id.passport);
-		
-		if(!mysp.getString("username", "").equalsIgnoreCase("")){
+
+		login_nickname = (EditText) findViewById(R.id.nickname);
+		login_password = (EditText) findViewById(R.id.passport);
+
+		if (!mysp.getString("username", "").equalsIgnoreCase("")) {
 			login_nickname.setText(mysp.getString("username", ""));
 		}
-		
-		if(!mysp.getString("papapa", "").equalsIgnoreCase("")){
+
+		if (!mysp.getString("papapa", "").equalsIgnoreCase("")) {
 			login_password.setText(mysp.getString("papapa", ""));
 		}
-		
-		login = (Button)findViewById(R.id.btn_login);
+
+		login = (Button) findViewById(R.id.btn_login);
 		login.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				nickname = login_nickname.getText().toString();
 				password = login_password.getText().toString();
-				
+
 				method();
-				
-				CircleDialog = ProgressDialog.show(LoginActivity.this, null,"ÕýÔÚÌá½»",true,false);
-				
+
+				CircleDialog = ProgressDialog.show(LoginActivity.this, null,
+						"ï¿½ï¿½ï¿½ï¿½ï¿½á½»", true, false);
+
 				Thread myThread = new Thread(new Runnable() {
-					
+
 					@Override
 					public void run() {
 						// TODO Auto-generated method stub
-						while(true){
-							if(status == 1)
-							{
-								//save the userinfo by sharedPreference
+						while (true) {
+							if (status == 1) {
+								// save the userinfo by sharedPreference
 								myeditor.putString("username", nickname);
 								myeditor.putString("papapa", password);
 								myeditor.commit();
-								
-								MyAppMarket.setRegister();//set user have registered
-								
+
+								MyAppMarket.setRegister();// set user have
+															// registered
+
 								Message msg = new Message();
 								msg.what = 1;
 								mHandler.sendMessage(msg);
 								status = 0;
 								break;
-							}else if(status ==2)
-							{
+							} else if (status == 2) {
 								Message msg = new Message();
 								msg.what = 2;
 								mHandler.sendMessage(msg);
 								status = 0;
 								break;
-							}else if(status == 3)
-							{
+							} else if (status == 3) {
 								Message msg = new Message();
 								msg.what = 3;
 								mHandler.sendMessage(msg);
 								status = 0;
 								break;
-							}else{
+							} else {
 								continue;
 							}
-								
+
 						}
 					}
 				});
@@ -151,12 +150,12 @@ public class LoginActivity extends Activity {
 	protected void method() {
 		// TODO Auto-generated method stub
 		RequestParams login_request = new RequestParams();
-		login_request.put("username",nickname);
+		login_request.put("username", nickname);
 		login_request.put("password", password);
-		
-		System.out.println("username:"+nickname+"   password:"+password);
-		
-		HttpUtil.post(tag, login_request, new JsonHttpResponseHandler(){
+
+		System.out.println("username:" + nickname + "   password:" + password);
+
+		HttpUtil.post(tag, login_request, new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(JSONObject jsonobject) {
 				// TODO Auto-generated method stub
@@ -173,22 +172,21 @@ public class LoginActivity extends Activity {
 				System.out.println("Setting onsuccess" + statuscode.toString());
 				if (statuscode.equalsIgnoreCase("0")) {
 					status = 1;
-				}
-				else if(statuscode.equalsIgnoreCase("1")||statuscode.equalsIgnoreCase("2")){
+				} else if (statuscode.equalsIgnoreCase("1")
+						|| statuscode.equalsIgnoreCase("2")) {
 					status = 3;
-				}
-				else if (statuscode.equalsIgnoreCase("100")) {
+				} else if (statuscode.equalsIgnoreCase("100")) {
 					status = 2;
 				}
 
 			}
 
-			public void onFailure(Throwable arg0) { // Ê§°Ü£¬µ÷ÓÃ
+			public void onFailure(Throwable arg0) { // Ê§ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½
 				System.out.println("onfailure");
 				status = 2;
 			}
 
-			public void onFinish() { // Íê³Éºóµ÷ÓÃ£¬Ê§°Ü£¬³É¹¦£¬¶¼Òªµô
+			public void onFinish() { // ï¿½ï¿½Éºï¿½ï¿½ï¿½Ã£ï¿½Ê§ï¿½Ü£ï¿½ï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½
 				System.out.println("Setting onfinish");
 			}
 
@@ -201,10 +199,10 @@ public class LoginActivity extends Activity {
 				System.out.println("onfailuremessage" + arg0 + arg1);
 			};
 		});
-		
+
 	}
-	
-	private Handler mHandler = new Handler(){
+
+	private Handler mHandler = new Handler() {
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case 1:
@@ -212,7 +210,7 @@ public class LoginActivity extends Activity {
 				CircleDialog.dismiss();
 				Thread.currentThread().interrupt();
 				Toast mytoast = Toast.makeText(getApplicationContext(),
-						"µÇÂ½³É¹¦", Toast.LENGTH_SHORT);
+						"ï¿½ï¿½Â½ï¿½É¹ï¿½", Toast.LENGTH_SHORT);
 				mytoast.setGravity(Gravity.CENTER_HORIZONTAL
 						| Gravity.CENTER_VERTICAL, 0, 0);
 				mytoast.show();
@@ -221,9 +219,9 @@ public class LoginActivity extends Activity {
 			case 2:
 				CircleDialog.dismiss();
 				new AlertDialog.Builder(LoginActivity.this)
-						.setTitle("¶Ô²»Æð")
-						.setMessage("ÏÖÔÚµÄÍøÂç²»¿ÉÓÃ£¬ÉÔºóÔÙÊÔ!")
-						.setNegativeButton("È·¶¨",
+						.setTitle("ï¿½Ô²ï¿½ï¿½ï¿½")
+						.setMessage("ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ï¿½ç²»ï¿½ï¿½ï¿½Ã£ï¿½ï¿½Ôºï¿½ï¿½ï¿½ï¿½ï¿½!")
+						.setNegativeButton("È·ï¿½ï¿½",
 								new DialogInterface.OnClickListener() {
 									@Override
 									public void onClick(DialogInterface dialog,
@@ -236,9 +234,9 @@ public class LoginActivity extends Activity {
 			case 3:
 				CircleDialog.dismiss();
 				new AlertDialog.Builder(LoginActivity.this)
-						.setTitle("¶Ô²»Æð")
-						.setMessage("ÓÃ»§Ãû²»´æÔÚ»òÃÜÂë´íÎó")
-						.setNegativeButton("È·¶¨",
+						.setTitle("ï¿½Ô²ï¿½ï¿½ï¿½")
+						.setMessage("ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½Ú»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")
+						.setNegativeButton("È·ï¿½ï¿½",
 								new DialogInterface.OnClickListener() {
 									@Override
 									public void onClick(DialogInterface dialog,

@@ -31,23 +31,22 @@ public class ApplicationManageFragment extends Fragment {
 	private ApplicationManageListadapter adapter;
 	private boolean havaLoadData = false;
 	private SyncImageLoader imageLoader;
-	private boolean isLoading = false;// ÊÇ·ñÕýÔÚ¼ÓÔØ
-	private int lastVisibleIndex;// ×îºóÒ»¸ö¿É¼ûµÄitem
-	private int flag;//0 Éý¼¶ 1Ð¶ÔØ  2°²×°
+	private boolean isLoading = false;// ï¿½Ç·ï¿½ï¿½ï¿½ï¿½Ú¼ï¿½ï¿½ï¿½
+	private int lastVisibleIndex;// ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½É¼ï¿½ï¿½item
+	private int flag;// 0 ï¿½ï¿½ 1Ð¶ï¿½ï¿½ 2ï¿½ï¿½×°
 	private ListView listView;
-	
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		view = inflater.inflate(R.layout.app_manage_frgment, container, false);
-		mContext = getActivity();// ÓÉgetActivity()»ñÈ¡ÆäÉÏÏÂÎÄ
+		mContext = getActivity();// ï¿½ï¿½getActivity()ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		flag = getArguments().getInt("flag");
 		iniData();
 		Log.e(TAG, "on create");
 		return view;
 	}
-	
+
 	public void iniData() {
 		pullToRefreshListView = (PullToRefreshListView) view
 				.findViewById(R.id.list);
@@ -64,13 +63,13 @@ public class ApplicationManageFragment extends Fragment {
 	public void onResume() {
 		super.onResume();
 		Log.e(TAG, "on resume");
-		//Èç¹ûÃ»ÓÐ¼ÓÔØÊý¾Ý£¬¾Í´ÓÍøÂç¼ÓÔØÊý¾Ý
+		// ï¿½ï¿½ï¿½Ã»ï¿½Ð¼ï¿½ï¿½ï¿½ï¿½ï¿½Ý£ï¿½ï¿½Í´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		if (!havaLoadData) {
 			infos.clear();
 			for (int i = 0; i < 10; i++) {
 				ApplicationInfo info = new ApplicationInfo();
-				info.app_name = "°®ÆæÒÕ" + i;
-				info.description = "ÒôÀÖ 12.5M";
+				info.app_name = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" + i;
+				info.description = "ï¿½ï¿½ï¿½ï¿½ 12.5M";
 				info.icon_url = "http://p6.qhimg.com/t013f443fd02b23599f.jpg";
 				infos.add(info);
 			}
@@ -79,13 +78,13 @@ public class ApplicationManageFragment extends Fragment {
 		}
 	}
 
-	// Íê³ÉÖ»È¥¼ÓÔØÏÔÊ¾µÄµÄÍ¼Æ¬
+	// ï¿½ï¿½ï¿½Ö»È¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½Äµï¿½Í¼Æ¬
 	private AbsListView.OnScrollListener onScrollListener = new AbsListView.OnScrollListener() {
 		@Override
 		public void onScrollStateChanged(AbsListView view, int scrollState) {
 			switch (scrollState) {
 			case AbsListView.OnScrollListener.SCROLL_STATE_FLING:
-				//Log.e(TAG, "fling");
+				// Log.e(TAG, "fling");
 				imageLoader.lock();
 				break;
 			case AbsListView.OnScrollListener.SCROLL_STATE_IDLE:
@@ -129,8 +128,8 @@ public class ApplicationManageFragment extends Fragment {
 			case 0:
 				Toast.makeText(mContext, "up", 1000).show();
 				ApplicationInfo info = new ApplicationInfo();
-				info.app_name = "°®ÆæÒÕ" + " down";
-				info.description = "ÒôÀÖ 12.5M";
+				info.app_name = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" + " down";
+				info.description = "ï¿½ï¿½ï¿½ï¿½ 12.5M";
 				info.icon_url = "http://p6.qhimg.com/t013f443fd02b23599f.jpg";
 				infos.add(info);
 				adapter.notifyDataSetChanged();
@@ -142,7 +141,7 @@ public class ApplicationManageFragment extends Fragment {
 		}
 	};
 
-	// ¼ÓÔØÍ¼Æ¬
+	// ï¿½ï¿½ï¿½ï¿½Í¼Æ¬
 	private void loadImage() {
 		int start = listView.getFirstVisiblePosition();
 		int end = listView.getLastVisiblePosition();
@@ -152,5 +151,5 @@ public class ApplicationManageFragment extends Fragment {
 		imageLoader.setLoadLimit(start, end);
 		imageLoader.unlock();
 	}
-	
+
 }

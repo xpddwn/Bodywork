@@ -11,7 +11,7 @@ import com.example.appmarket.constant.Constant;
 
 /**
  * 
- * Òì²½¼ÓÔØÍ¼Æ¬ ¿ÉÒÔ¿ØÖÆÄÇÐ©Í¼Æ¬¼ÓÔØ ÄÇÐ©Í¼Æ¬²»¼ÓÔØ
+ * ï¿½ì²½ï¿½ï¿½ï¿½ï¿½Í¼Æ¬ ï¿½ï¿½ï¿½Ô¿ï¿½ï¿½ï¿½ï¿½ï¿½Ð©Í¼Æ¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ð©Í¼Æ¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  * 
  * @author tuomao
  * 
@@ -29,7 +29,7 @@ public class SyncImageLoader {
 	private int mStopLoadLimit = 0;
 
 	final Handler handler = new Handler();
-	private boolean getFromLocal=false;
+	private boolean getFromLocal = false;
 
 	private static HashMap<String, SoftReference<Bitmap>> caches = new HashMap<String, SoftReference<Bitmap>>();
 
@@ -37,8 +37,8 @@ public class SyncImageLoader {
 		/**
 		 * 
 		 * @param indentify
-		 *            imageview Í¨¹ýsettagÉèÖÃÆäÎ¨Ò»µÄindentify
-		 *            µ±µ÷ÓÃ·µ»ØµÄÊ±ºò£¬Í¨¹ý¸ÃidentifyÕÒµ½¸Ãview
+		 *            imageview Í¨ï¿½ï¿½settagï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¨Ò»ï¿½ï¿½indentify
+		 *            ï¿½ï¿½ï¿½ï¿½ï¿½Ã·ï¿½ï¿½Øµï¿½Ê±ï¿½ï¿½Í¨ï¿½ï¿½ï¿½identifyï¿½Òµï¿½ï¿½ï¿½view
 		 * @param bitmap
 		 * 
 		 */
@@ -75,9 +75,9 @@ public class SyncImageLoader {
 	/**
 	 * 
 	 * 
-	 * ÒªÇóÍ¼Æ¬±¾µØ´æ´¢µÄÃû³ÆºÍÍøÂçÉÏ´æ´¢µÄÃû³ÆÊÇÒ»ÖÂµÄ
+	 * Òªï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½Ø´æ´¢ï¿½ï¿½ï¿½ï¿½Æºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï´æ´¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½Âµï¿½
 	 * 
-	 * ÏÈ³¢ÊÔ´Ó±¾µØ¼ÓÔØÊý¾Ý
+	 * ï¿½È³ï¿½ï¿½Ô´Ó±ï¿½ï¿½Ø¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 * @param imageUrl
 	 * @return
@@ -89,21 +89,21 @@ public class SyncImageLoader {
 			}
 			Bitmap bitmap = null;
 			if (caches.containsKey(imageUrl)) {
-				// È¡³öÈíÒýÓÃ
+				// È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				SoftReference<Bitmap> rf = caches.get(imageUrl);
-				// Í¨¹ýÈíÒýÓÃ£¬»ñÈ¡Í¼Æ¬
+				// Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã£ï¿½ï¿½ï¿½È¡Í¼Æ¬
 				bitmap = rf.get();
-				if (bitmap != null) {// »º´æÖ®ÖÐ´æÔÚ¸Ãbitmapze
+				if (bitmap != null) {// ï¿½ï¿½ï¿½ï¿½Ö®ï¿½Ð´ï¿½ï¿½Ú¸ï¿½bitmapze
 					return bitmap;
 				}
 			}
-			if(getFromLocal){
+			if (getFromLocal) {
 				String name = imageUrl.substring(imageUrl.lastIndexOf("/") + 1,
 						imageUrl.length());
-				// ´Ó±¾µØ¼ÓÔØÍ¼Æ¬
+				// ï¿½Ó±ï¿½ï¿½Ø¼ï¿½ï¿½ï¿½Í¼Æ¬
 				String pathString = Constant.SDCARD_IMAGE_PATH + name;
 				bitmap = BitmapFactory.decodeFile(pathString);
-				if (bitmap != null) {// ±¾µØ²»´æÔÚ¸ÃÍ¼Æ¬
+				if (bitmap != null) {// ï¿½ï¿½ï¿½Ø²ï¿½ï¿½ï¿½ï¿½Ú¸ï¿½Í¼Æ¬
 					caches.put(imageUrl, new SoftReference<Bitmap>(bitmap));
 					return bitmap;
 				}
@@ -111,7 +111,7 @@ public class SyncImageLoader {
 		} catch (Exception e) {
 			e.printStackTrace();
 			// TODO: handle exception
-		}catch (OutOfMemoryError e) {
+		} catch (OutOfMemoryError e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
@@ -146,7 +146,7 @@ public class SyncImageLoader {
 					if ((mAllowLoad && firstLoad)
 							|| (mAllowLoad && mPosition <= mStopLoadLimit && mPosition >= mStartLoadLimit)) {
 						bitmap = loadImage(mImageUrl, mPosition, mListener);
-						if (bitmap == null) {// Í¼Æ¬Î´ÄÜ¼ÓÔØ³É¹¦
+						if (bitmap == null) {// Í¼Æ¬Î´ï¿½Ü¼ï¿½ï¿½Ø³É¹ï¿½
 							handler.post(new Runnable() {
 
 								@Override

@@ -8,23 +8,23 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.appmarket.sqlite.model.ApplicationInfo;
 
-public class AppInfoService extends BaseClientDataBaseService{
+public class AppInfoService extends BaseClientDataBaseService {
 
 	private Context mContext;
-	private SQLiteDatabase db;// ²Ù×÷Êý¾Ý
-	
+	private SQLiteDatabase db;// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+
 	public AppInfoService(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
 	}
-	
-	
+
 	/**
 	 * 
-	 * »ñÈ¡°²×°µÄÓ¦ÓÃÁÐ±í
+	 * ï¿½ï¿½È¡ï¿½ï¿½×°ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½Ð±ï¿½
+	 * 
 	 * @return
 	 */
-	public ArrayList<ApplicationInfo> getInstalledApp(){ 
+	public ArrayList<ApplicationInfo> getInstalledApp() {
 		if (!db.isOpen()) {
 			db = openDatabase();
 		}
@@ -50,12 +50,13 @@ public class AppInfoService extends BaseClientDataBaseService{
 		}
 		return applicationInfos;
 	}
-	
+
 	/**
-	 * »ñÈ¡¿É°²×°µÄÓ¦ÓÃÁÐ±í
+	 * ï¿½ï¿½È¡ï¿½É°ï¿½×°ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½Ð±ï¿½
+	 * 
 	 * @return
 	 */
-	public ArrayList<ApplicationInfo> getCanIntallApp(){
+	public ArrayList<ApplicationInfo> getCanIntallApp() {
 		if (!db.isOpen()) {
 			db = openDatabase();
 		}
@@ -81,54 +82,66 @@ public class AppInfoService extends BaseClientDataBaseService{
 		}
 		return applicationInfos;
 	}
-	
+
 	/**
 	 * 
-	 * ´«ÈëÒ»¸öApplication£¬¸üÐÂËüµÄÐÅÏ¢
+	 * ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Applicationï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
+	 * 
 	 * @param info
 	 * @return
 	 */
-	public boolean updateApplicationInfo(ApplicationInfo info){
-		String sqlString="update app set category_id=?,app_name=?, icon_url=?," +
-				"description=?,size=?,version=?,install_state=?," +
-				"apk_path=? where app_id=?";
+	public boolean updateApplicationInfo(ApplicationInfo info) {
+		String sqlString = "update app set category_id=?,app_name=?, icon_url=?,"
+				+ "description=?,size=?,version=?,install_state=?,"
+				+ "apk_path=? where app_id=?";
 		Object[] objects = { info.category_id, info.app_name, info.icon_url,
 				info.description, info.size, info.version, info.install_state,
-				info.apk_path,info.app_id};
-		return exeSql(sqlString,objects);		
+				info.apk_path, info.app_id };
+		return exeSql(sqlString, objects);
 	}
-	
+
 	/**
 	 * 
-	 * ÍùappÀïÃæÌí¼ÓÒ»Ìõ¼ÇÂ¼
+	 * ï¿½ï¿½appï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Â¼
+	 * 
 	 * @param info
 	 * @return
 	 */
-	public boolean insertApplicationInfo(ApplicationInfo info){
-		String sqlString="insert into app(appid,category_id,app_name,icon_url," +
-				"description,size,version,install_state,apk_path" +
-				" values(?,?,?,?,?,?,?,?,?)";
-		Object[] objects = {info.app_id, info.category_id, info.app_name, info.icon_url,
-				info.description, info.size, info.version, info.install_state,info.apk_path};
-		return exeSql(sqlString,objects);
+	public boolean insertApplicationInfo(ApplicationInfo info) {
+		String sqlString = "insert into app(appid,category_id,app_name,icon_url,"
+				+ "description,size,version,install_state,apk_path"
+				+ " values(?,?,?,?,?,?,?,?,?)";
+		Object[] objects = { info.app_id, info.category_id, info.app_name,
+				info.icon_url, info.description, info.size, info.version,
+				info.install_state, info.apk_path };
+		return exeSql(sqlString, objects);
 	}
-	
+
 	/**
 	 * 
-	 * ´ÓcursorÀïÃæ¼ÓÔØappµÄÐÅÏ¢
+	 * ï¿½ï¿½cursorï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½appï¿½ï¿½ï¿½ï¿½Ï¢
+	 * 
 	 * @param cursor
 	 * @return
 	 */
-	public ApplicationInfo loadApplcationInfo(Cursor cursor){
-		ApplicationInfo info=new ApplicationInfo();
-		info.app_id=cursor.getInt(cursor.getColumnIndex(ApplicationInfo.FIELD_APP_ID));
-		info.category_id=cursor.getInt(cursor.getColumnIndex(ApplicationInfo.FIELD_CATRGORY_ID));
-		info.app_name=cursor.getString(cursor.getColumnIndex(ApplicationInfo.FIELD_APP_NAME));
-		info.description=cursor.getString(cursor.getColumnIndex(ApplicationInfo.FIELD_DESCRIPPTION));
-		info.icon_url=cursor.getString(cursor.getColumnIndex(ApplicationInfo.FIELD_ICON_URL));
-		info.install_state=cursor.getInt(cursor.getColumnIndex(ApplicationInfo.FIELD_INSTALL_STATE));
-		info.size=cursor.getFloat(cursor.getColumnIndex(ApplicationInfo.FIELD_SIZE));
-		info.version=cursor.getString(cursor.getColumnIndex(ApplicationInfo.FIELD_VERSION));
+	public ApplicationInfo loadApplcationInfo(Cursor cursor) {
+		ApplicationInfo info = new ApplicationInfo();
+		info.app_id = cursor.getInt(cursor
+				.getColumnIndex(ApplicationInfo.FIELD_APP_ID));
+		info.category_id = cursor.getInt(cursor
+				.getColumnIndex(ApplicationInfo.FIELD_CATRGORY_ID));
+		info.app_name = cursor.getString(cursor
+				.getColumnIndex(ApplicationInfo.FIELD_APP_NAME));
+		info.description = cursor.getString(cursor
+				.getColumnIndex(ApplicationInfo.FIELD_DESCRIPPTION));
+		info.icon_url = cursor.getString(cursor
+				.getColumnIndex(ApplicationInfo.FIELD_ICON_URL));
+		info.install_state = cursor.getInt(cursor
+				.getColumnIndex(ApplicationInfo.FIELD_INSTALL_STATE));
+		info.size = cursor.getFloat(cursor
+				.getColumnIndex(ApplicationInfo.FIELD_SIZE));
+		info.version = cursor.getString(cursor
+				.getColumnIndex(ApplicationInfo.FIELD_VERSION));
 		return info;
 	}
 }

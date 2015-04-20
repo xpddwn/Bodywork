@@ -8,27 +8,24 @@ import com.example.appmarket.sqlite.manager.ClientDataBase;
 public abstract class BaseClientDataBaseService {
 	private SQLiteDatabase database = null;
 	private Context mContext;
-	
+
 	public BaseClientDataBaseService(Context context) {
 		mContext = context;
-		database=openDatabase();
+		database = openDatabase();
 	}
-	
-	
+
 	/**
-	 * ¹¦ÄÜ£º´ò¿ªÊý¾Ý¿â
+	 * ï¿½ï¿½ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½
 	 */
-	
+
 	public SQLiteDatabase openDatabase() {
 		return SQLiteDatabase.openOrCreateDatabase(ClientDataBase.DB_PATH + "/"
 				+ ClientDataBase.DB_NAME, null);
 	}
-	
-	
-	
+
 	/**
 	 * 
-	 * °ü×°µÄ¸¨ÖúÖ´ÐÐÊý¾Ý¿â²Ù×÷
+	 * ï¿½ï¿½×°ï¿½Ä¸ï¿½ï¿½ï¿½Ö´ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 */
 	public boolean exeSql(String sqlString) {
@@ -50,14 +47,14 @@ public abstract class BaseClientDataBaseService {
 		}
 		return flag;
 	}
-	
-	public boolean exeSql(String sqlString,Object[] objects) {
+
+	public boolean exeSql(String sqlString, Object[] objects) {
 		boolean flag;
 		if (!database.isOpen()) {
 			database = openDatabase();
 		}
 		try {
-			database.execSQL(sqlString,objects);
+			database.execSQL(sqlString, objects);
 			database.close();
 			flag = true;
 		} catch (Exception e) {
@@ -74,7 +71,6 @@ public abstract class BaseClientDataBaseService {
 	public SQLiteDatabase getDatabase() {
 		return database;
 	}
-
 
 	public void setDatabase(SQLiteDatabase database) {
 		this.database = database;

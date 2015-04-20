@@ -8,27 +8,27 @@ import android.util.Log;
 import com.example.appmarket.R;
 import com.example.appmarket.constant.Constant;
 
-public class ClientDataBase extends BaseDataBaseManager{
+public class ClientDataBase extends BaseDataBaseManager {
 
-	public static final String TAG="client database";
-	public static final int VERSION=3;
-	public static final String DB_NAME="appmarket.sqlite";
-	public static final String DB_PATH="/data"
-	  	      + Environment.getDataDirectory().getAbsolutePath() + "/"
-	  	      + Constant.PACKAGE_NAME;
-	
+	public static final String TAG = "client database";
+	public static final int VERSION = 3;
+	public static final String DB_NAME = "appmarket.sqlite";
+	public static final String DB_PATH = "/data"
+			+ Environment.getDataDirectory().getAbsolutePath() + "/"
+			+ Constant.PACKAGE_NAME;
+
 	private Context mContext;
+
 	public ClientDataBase(Context context) {
-		super(context,R.raw.appmarket,DB_NAME,VERSION,DB_PATH);
+		super(context, R.raw.appmarket, DB_NAME, VERSION, DB_PATH);
 		// TODO Auto-generated constructor stub
-		mContext=context;
+		mContext = context;
 	}
-	
+
 	@Override
 	protected void onUpdate(SQLiteDatabase db) {
 		// TODO Auto-generated method stub
-		Log.e(TAG, "version="+db.getVersion());
+		Log.e(TAG, "version=" + db.getVersion());
 	}
-	
-	
+
 }
