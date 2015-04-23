@@ -29,6 +29,15 @@
     <string name="find_passport">找回密码</string>
     <string name="user_register">注册账号</string>
     <string name="update_all">全部更新</string>
+    
+    <!-- 刷新 -->
+    <string name="xlistview_header_hint_normal">下拉刷新</string>
+    <string name="xlistview_header_hint_ready">松开刷新数据</string>
+    <string name="xlistview_header_hint_loading">正在加载...</string>
+    <string name="xlistview_header_last_time">上次更新时间：</string>
+    <string name="xlistview_footer_hint_normal">查看更多</string>
+    <string name="xlistview_footer_hint_ready">松开载入更多</string>
+    
     <string name="title_activity_application_manage">ApplicationManage</string>
     <string name="title_activity_application_classify">ApplicationClassify</string>
     <string name="title_activity_application_login">UserLogin</string>

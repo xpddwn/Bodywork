@@ -7,19 +7,21 @@ public class AppMarket {
 	private String version;
 	private long download_count;
 	private String description;
+	private long app_id;
 
 	public AppMarket() {
 		// ȱʡ
 	}
 
 	public AppMarket(String app_name, String icon_url, double size,
-			String version, long download_count, String description) {
+			String version, long download_count, String description,long app_id) {
 		this.app_name = app_name;
 		this.icon_url = icon_url;
 		this.size = size;
 		this.version = version;
 		this.download_count = download_count;
 		this.description = description;
+		this.app_id = app_id;
 	}
 
 	public void setapp_name(String app_name) {
@@ -68,5 +70,9 @@ public class AppMarket {
 
 	public String getdescription() {
 		return description;
+	}
+	
+	public long getapp_id() {
+		return app_id;
 	}
 }

@@ -5,7 +5,7 @@
     android:orientation="horizontal" 
     android:background="@color/bg">
     
-    <com.makeramen.roundedimageview.RoundedImageView
+ <!--     <com.makeramen.roundedimageview.RoundedImageView
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="65dp"
         android:layout_height="65dp"
@@ -16,7 +16,18 @@
         app:riv_mutate_background="true"
         app:riv_tile_mode="repeat"
         android:id="@+id/picture"
+        android:src="@drawable/car"/>  -->
+        
+    <ImageView 
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical"
+        android:scaleType="fitCenter"
+        android:id="@+id/picture"
         android:src="@drawable/car"/>
+    
    <RelativeLayout 
        android:layout_width="fill_parent"
        android:layout_height="65dp"

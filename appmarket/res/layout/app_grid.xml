@@ -29,15 +29,13 @@
             android:textSize="22dp" />
     </RelativeLayout>
 
-    <com.handmark.pulltorefresh.library.PullToRefreshGridView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/grid"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/title"
-        android:numColumns="2"
-        app:ptrMode="pullFromEnd" 
-        android:horizontalSpacing="1dip" 
-        android:verticalSpacing="1dip"/>
+    <com.example.appmarket.view.XListView
+        android:id="@+id/listtest1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="#D4D4D4"  
+        android:cacheColorHint="#00000000"  
+        android:fadeScrollbars="true"
+        android:dividerHeight="0.7dp"/>
 
 </LinearLayout>

@@ -1,56 +1,40 @@
 package com.example.appmarket;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
-import org.json.JSONObject;
+import java.util.Date;
+import java.util.List;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
-import android.widget.AbsListView;
-import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.appmarket.adapter.ApplicationClassifyGridadapter;
-import com.example.appmarket.configs.MyAppMarket;
-import com.example.appmarket.sqlite.model.ApplicationInfo;
-import com.example.appmarket.util.HttpUtil;
-import com.example.appmarket.util.JsonUtil;
-import com.example.appmarket.util.SyncImageLoader;
-import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
-import com.handmark.pulltorefresh.library.PullToRefreshGridView;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
+import com.example.appmarket.dal.AppMarketService;
+import com.example.appmarket.entity.AppMarket;
+import com.example.appmarket.view.XListView;
+import com.example.appmarket.view.XListView.IXListViewListener;
 
-public class ApplicationClassify extends Activity {
+public class ApplicationClassify extends Activity implements IXListViewListener{
 	private final String TAG = "ApplicationClassify";
-	private Context mcontext;
 	private TextView title;
-	private PullToRefreshGridView pullToRefreshGridview;
-	private ArrayList<ApplicationInfo> infos = new ArrayList<ApplicationInfo>();
+	private List<AppMarket> infos = new ArrayList<AppMarket>();
 	private ApplicationClassifyGridadapter adapter;
-	private boolean havaLoadData = false;
-	private SyncImageLoader imageLoader;
-	private boolean isLoading = false;// 鏄惁姝ｅ湪鍔犺浇
-	private int lastVisibleIndex;// 鏈�鍚庝竴涓彲瑙佺殑item
-	private GridView gridview;
+	private XListView gridview;
+	private Thread myThread;
 
 	private ImageButton back;
 	private String name;
 	private int start = 0;
-	private Handler mHandler;
+	private String freshtime = null;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -58,7 +42,16 @@ public class ApplicationClassify extends Activity {
 		setContentView(R.layout.app_grid);
 		Bundle bundle = this.getIntent().getExtras();
 		name = bundle.getString("name");
-
+		
+		initview();
+		gridview = (XListView) this.findViewById(R.id.listtest1);
+		gridview.setPullLoadEnable(true);
+		gridview.setXListViewListener(this);
+		onRefresh();
+		setdata();
+	}
+	
+	public void initview(){
 		title = (TextView) findViewById(R.id.app_classtype);
 
 		if (name.contentEquals("life")) {
@@ -84,140 +77,45 @@ public class ApplicationClassify extends Activity {
 				ApplicationClassify.this.finish();
 			}
 		});
-		mcontext = this;
-		pullToRefreshGridview = (PullToRefreshGridView) findViewById(R.id.grid);
-		gridview = pullToRefreshGridview.getRefreshableView();
-		imageLoader = new SyncImageLoader();
-		setdata();
-		pullToRefreshGridview.setOnScrollListener(onScrollListener);
-		pullToRefreshGridview.setOnRefreshListener(onRefreshListener2);
-
+		
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		Log.e(TAG, "on resume");
-		System.out.println("system onresume");
-		if (!havaLoadData) {
-			handler.sendEmptyMessage(0);
+		if(infos != null)
+		{
+			infos.clear();
 		}
-	}
-
+	}	
+	
 	private void getdata(String tag, String start) {
 		// TODO Auto-generated method stub
-		try {
-			RequestParams params = new RequestParams();
-			String username = MyAppMarket.getUsername();
-			String password = MyAppMarket.getpapapa();
-			
-			if (tag.equalsIgnoreCase("life")) {
-				params.put("username", username);
-				params.put("password", password);
-				params.put("category_id", "2");
-				params.put("start", start);
-				params.put("length", "12");
-			} else if (tag.equalsIgnoreCase("car")) {
-				params.put("username", username);
-				params.put("password", password);
-				params.put("category_id", "3");
-				params.put("start", start);
-				params.put("length", "12");
-			} else if (tag.equalsIgnoreCase("new")) {
-				params.put("username", username);
-				params.put("password", password);
-				params.put("category_id", "4");
-				params.put("start", start);
-				params.put("length", "12");
-			} else if (tag.equalsIgnoreCase("movie")) {
-				params.put("username", username);
-				params.put("password", password);
-				params.put("category_id", "5");
-				params.put("start", start);
-				params.put("length", "12");
-			} else if (tag.equalsIgnoreCase("social")) {
-				params.put("username", username);
-				params.put("password", password);
-				params.put("category_id", "6");
-				params.put("start", start);
-				params.put("length", "12");
-			} else if (tag.equalsIgnoreCase("tool")) {
-				params.put("username", username);
-				params.put("password", password);
-				params.put("category_id", "7");
-				params.put("start", start);
-				params.put("length", "12");
-			}
-			
-			HttpUtil.post("app", params, new JsonHttpResponseHandler() {
-				@Override
-				protected void handleFailureMessage(Throwable arg0, String arg1) {
-					super.handleFailureMessage(arg0, arg1);
-					System.out.println("onfailure");
-			
-				};
-
-				@Override
-				public void onFailure(Throwable arg0, JSONObject arg1) {
-					// TODO Auto-generated method stub
-					super.onFailure(arg0, arg1);
-					System.out.println("onfailure");
-				}
-
-				@Override
-				public void onSuccess(JSONObject jsonobject) {
-					// TODO Auto-generated method stub
-					super.onSuccess(jsonobject);
-					try {
-						JsonObject object=JsonUtil.stringToJsonObject(jsonobject.toString());
-						int statuscode = object.get("status").getAsInt();
-						ArrayList<ApplicationInfo> minfos=JsonUtil.jsonToComplexBean(object.get("apps").toString(), 
-								new TypeToken<ArrayList<ApplicationInfo>>() {}.getType() );
-						infos.clear();
-						infos.addAll(minfos);
-						havaLoadData=true;
-						handler.sendEmptyMessage(1);
-					} catch (Exception e) {
-						// TODO: handle exception
-					}
-				}
-			});
-		} catch (Exception e) {
+		try{
+			infos = AppMarketService.getJSONlistshops(tag, start);
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
 
 	private void setdata() {
-		adapter = new ApplicationClassifyGridadapter(mcontext, infos, gridview,
-				imageLoader);
+		adapter = new ApplicationClassifyGridadapter(this, infos, gridview);
 		gridview.setAdapter(adapter);
 		System.out.println("test");
 	}
-	
-	private Handler handler = new Handler() {
-		@Override
-		public void handleMessage(android.os.Message msg) {
-			super.handleMessage(msg);
-			switch (msg.what) {
-			case 0:
-				getdata(name, String.valueOf(start));
-				break;
-			case 1:
-				adapter.notifyDataSetChanged();
-				break;
-			}
-		}
-	};
 
 	private Handler mHandler1 = new Handler() {
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case 1:
+				myThread.interrupt();
 				setdata();
-				havaLoadData = true;
-				adapter.notifyDataSetChanged();
+				XListView.setfooterhide(1);
+				System.out.println("set 1");
+				onLoad();
 				break;
 			case 2:
+				myThread.interrupt();
 				Toast mytoast = Toast.makeText(getApplicationContext(),
 						"失败了，等会再试试，或者检查一下网络", Toast.LENGTH_SHORT);
 				mytoast.setGravity(Gravity.CENTER_HORIZONTAL
@@ -227,62 +125,128 @@ public class ApplicationClassify extends Activity {
 			}
 		}
 	};
-
 	
+	public void gettime() {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日   HH:mm");
+		Date curDate = new Date(System.currentTimeMillis());// 获取当前时间
+		freshtime = formatter.format(curDate);
+	}
 	
-
-	private AbsListView.OnScrollListener onScrollListener = new AbsListView.OnScrollListener() {
-		@Override
-		public void onScrollStateChanged(AbsListView view, int scrollState) {
-			switch (scrollState) {
-			case AbsListView.OnScrollListener.SCROLL_STATE_FLING:
-				// Log.e(TAG, "fling");
-				imageLoader.lock();
-				break;
-			case AbsListView.OnScrollListener.SCROLL_STATE_IDLE:
-				loadImage();
-				break;
-			case AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL:
-				imageLoader.lock();
-				break;
-			default:
-				break;
+	public void restartthread() {
+		if(myThread != null)	
+		{	if (myThread.isAlive()) {
+				myThread.interrupt();
 			}
+			myThread = newThread();
+			myThread.start();
+		}
+		else{
+			myThread = newThread();
+			myThread.start();
+		}
 		}
 
-		@Override
-		public void onScroll(AbsListView view, int firstVisibleItem,
-				int visibleItemCount, int totalItemCount) {
-			lastVisibleIndex = firstVisibleItem + visibleItemCount - 1;
-			// TODO Auto-generated method stub
-		}
-	};
+	public Thread newThread() {
+		Thread myThread = new Thread(new Runnable() {
 
-	private OnRefreshListener2<GridView> onRefreshListener2 = new OnRefreshListener2<GridView>() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				while (true) {
+					if (AppMarketService.getStatus() == 1) {
+						System.out.println(" decide status = 1");
+						Message msg = new Message();
+						msg.what = 1;
+						mHandler1.sendMessage(msg);
+						AppMarketService.setStatus();
+						break;
+					} else if (AppMarketService.getStatus() == 2) {
+						Message msg = new Message();
+						msg.what = 2;
+						mHandler1.sendMessage(msg);
+						AppMarketService.setStatus();
+						break;
+					}
 
-		@Override
-		public void onPullDownToRefresh(PullToRefreshBase<GridView> refreshView) {
-			// TODO Auto-generated method stub
-			Toast.makeText(mcontext, "down", 1000).show();
-			pullToRefreshGridview.onRefreshComplete();
+					else {
+						continue;
+					}
+
+				}
+			}
+		});
+		return myThread;
+	}
+	
+	@Override
+	public void onRefresh() {
+		// TODO Auto-generated method stub
+		XListView.setfooterhide(0);
+		AppMarketService.setStatus();
+		if (infos != null) {
+			infos.clear();
 		}
 
-		@Override
-		public void onPullUpToRefresh(PullToRefreshBase<GridView> refreshView) {
-			// TODO Auto-generated method stub
-			getdata(name, String.valueOf(8 * (start++)));
-		}
-	};
+		restartthread();
+		gettime();
+		getdata(name, String.valueOf(start));
+	}
 
-	// 加载图片
-	private void loadImage() {
-		int start = gridview.getFirstVisiblePosition();
-		int end = gridview.getLastVisiblePosition();
-		if (end >= gridview.getCount()) {
-			end = gridview.getCount() - 1;
+	@Override
+	public void onLoadMore() {
+		// TODO Auto-generated method stub
+		int mypos = infos.size();
+		if (mypos==8) {
+			getdata(name, String.valueOf(8*(start++)));
+		} else {
+			gridview.stopLoadMore();
 		}
-		imageLoader.setLoadLimit(start, end);
-		imageLoader.unlock();
+		adapter.refreshData(infos);
+		onLoad();
+	}
+	
+	private void onLoad() {
+		gridview.stopRefresh();
+		gridview.stopLoadMore();
+		gridview.setRefreshTime(freshtime);
+	}
+	
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		if(infos != null)
+		System.out.println("ClassifyActivity OnDestroy");
+	}
+	
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		if(infos != null)
+		System.out.println("ClassifyActivity OnPause");
+	}
+
+	@Override
+	protected void onRestart() {
+		// TODO Auto-generated method stub
+		super.onRestart();
+		if(infos != null)
+		System.out.println("ClassifyActivity OnRestart");
+	}
+
+	@Override
+	protected void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+		System.out.println("ClassifyActivity OnStart");
+	}
+
+	@Override
+	protected void onStop() {
+		// TODO Auto-generated method stub
+		super.onStop();
+		System.out.println("ClassifyActivity OnStop");
 	}
 
 }

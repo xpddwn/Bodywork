@@ -1,11 +1,14 @@
 package com.example.appmarket.dal;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.example.appmarket.configs.MyAppMarket;
+import com.example.appmarket.entity.AppMarket;
 import com.example.appmarket.sqlite.model.ApplicationInfo;
 import com.example.appmarket.util.HttpUtil;
 import com.example.appmarket.util.JsonUtil;
@@ -19,6 +22,7 @@ public class AppMarketService {
 	public static int status = 0;
 
 	private static final String flag = "app";
+	private static List<AppMarket> applist=new ArrayList<AppMarket>();
 
 	public static int getStatus() {
 
@@ -29,12 +33,11 @@ public class AppMarketService {
 		status = 0;
 	}
 
-	public static ArrayList<ApplicationInfo> getJSONlistshops(String tag, String start)
+	public static List<AppMarket> getJSONlistshops(String tag, String start)
 			throws Exception {
 		RequestParams params = new RequestParams();
 		String username = MyAppMarket.getUsername();
 		String password = MyAppMarket.getpapapa();
-		final ArrayList<ApplicationInfo> applist=new ArrayList<ApplicationInfo>();
 		
 		if (tag.equalsIgnoreCase("life")) {
 			params.put("username", username);
@@ -94,15 +97,39 @@ public class AppMarketService {
 			public void onSuccess(JSONObject jsonobject) {
 				// TODO Auto-generated method stub
 				super.onSuccess(jsonobject);
+				String statuscode = null;
 				try {
-					JsonObject object=JsonUtil.stringToJsonObject(jsonobject.toString());
-					int statuscode = object.get("status").getAsInt();
-					ArrayList<ApplicationInfo> infos=JsonUtil.jsonToComplexBean(object.get("apps").toString(), 
-							new TypeToken<ArrayList<ApplicationInfo>>() {}.getType() );
-					applist.addAll(infos);
-					applist.get(0);
-				} catch (Exception e) {
-					// TODO: handle exception
+					statuscode = jsonobject.getString("status");
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				try {
+					appitems = jsonobject.getJSONArray("apps");
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				int count = appitems.length();
+
+				for (int i = 0; i < count; i++) {
+					try {
+						JSONObject items = appitems.getJSONObject(i);
+						String app_name = items.getString("app_name");
+						String icon_url = items.getString("icon_url");
+						double size = items.getDouble("size");
+						String version = items.getString("version");
+						long download_count = items.getLong("download_count");
+						String description = items.getString("description");
+						long app_id = items.getLong("app_id");
+
+						applist.add(new AppMarket(app_name, icon_url, size,
+								version, download_count, description,app_id));
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		});
