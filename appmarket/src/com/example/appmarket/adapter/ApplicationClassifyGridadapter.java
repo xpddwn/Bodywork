@@ -15,6 +15,8 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import cn.trinea.android.common.service.impl.ImageCache;
+import cn.trinea.android.common.service.impl.ImageCache.OnImageCallbackListener;
 
 import com.example.appmarket.R;
 import com.example.appmarket.configs.MyAppMarket;
@@ -27,8 +29,6 @@ import com.example.appmarket.view.XListView;
 import com.google.gson.JsonObject;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-//import com.zhan_dui.download.DownloadManager;
-//import com.zhan_dui.download.DownloadMission;
 
 public class ApplicationClassifyGridadapter extends BaseAdapter {
 	private static ImageCache ICON_CACHE = MyAppMarket.getImageCache();
@@ -39,7 +39,7 @@ public class ApplicationClassifyGridadapter extends BaseAdapter {
 	private ViewHolder viewHolder;
 	private XListView gridview;
 	private int mChildCount;
-	
+
 	static {
 		OnImageCallbackListener imageCallBack = new OnImageCallbackListener() {
 
@@ -116,13 +116,14 @@ public class ApplicationClassifyGridadapter extends BaseAdapter {
 
 		}
 		viewHolder.nameTextView.setText(info.getapp_name());
-		viewHolder.descriptionTextView.setText(String.valueOf(info.getsize())+"M");
+		viewHolder.descriptionTextView.setText(String.valueOf(info.getsize())
+				+ "M");
 		viewHolder.operationButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				new Thread(new Runnable() {
-					
+
 					@Override
 					public void run() {
 						// TODO Auto-generated method stub
@@ -133,57 +134,66 @@ public class ApplicationClassifyGridadapter extends BaseAdapter {
 						params.put("password", password);
 						params.put("app_id", String.valueOf(info.getapp_id()));
 						try {
-							HttpUtil.post("download_app", params, new JsonHttpResponseHandler() {
-								@Override
-								protected void handleFailureMessage(Throwable arg0, String arg1) {
-									super.handleFailureMessage(arg0, arg1);
-									
-							
-								};
+							HttpUtil.post("download_app", params,
+									new JsonHttpResponseHandler() {
+										@Override
+										protected void handleFailureMessage(
+												Throwable arg0, String arg1) {
+											super.handleFailureMessage(arg0,
+													arg1);
 
-								@Override
-								public void onFailure(Throwable arg0, JSONObject arg1) {
-									// TODO Auto-generated method stub
-									super.onFailure(arg0, arg1);
-									
-								}
+										};
 
-								@Override
-								public void onSuccess(JSONObject jsonobject) {
-									// TODO Auto-generated method stub
-									super.onSuccess(jsonobject);
-									try {
-										JsonObject object=JsonUtil.stringToJsonObject(jsonobject.toString());
-										int statuscode = object.get("status").getAsInt();
-										String url=object.get("app_url").getAsString();
-//										DownloadMission downloadMission=new DownloadMission(url, Constant.SDCARD_APK_PATH, info.app_name+".apk");
-//										DownloadManager.getInstance().addMission(downloadMission);
-//										if(downloadMission.isFinished()){
-//											new Thread(new Runnable() {
-//												@Override
-//												public void run() {
-//													// TODO Auto-generated method stub
-//													info.apk_path=Constant.SDCARD_APK_PATH+info.app_name+".apk";
-//													int result=PackageUtils.installSilent(mContext, info.apk_path,"-r");
-//													if (result==PackageUtils.INSTALL_SUCCEEDED) {
-//														AppInfoService service=new AppInfoService(mContext);
-//														service.insertApplicationInfo(info);
-//														System.out.println("install scuccess");
-//													}else{
-//														System.out.println("install fail");
-//													}
-//												}
-//											});
-//										}
-									} catch (Exception e) {
-										// TODO: handle exception
-									}
-								}
-							});
+										@Override
+										public void onFailure(Throwable arg0,
+												JSONObject arg1) {
+											// TODO Auto-generated method stub
+											super.onFailure(arg0, arg1);
+
+										}
+
+										@Override
+										public void onSuccess(
+												JSONObject jsonobject) {
+											// TODO Auto-generated method stub
+											super.onSuccess(jsonobject);
+											try {
+												JsonObject object = JsonUtil
+														.stringToJsonObject(jsonobject
+																.toString());
+												int statuscode = object.get(
+														"status").getAsInt();
+												String url = object.get(
+														"app_url")
+														.getAsString();
+												//										DownloadMission downloadMission=new DownloadMission(url, Constant.SDCARD_APK_PATH, info.app_name+".apk");
+												//										DownloadManager.getInstance().addMission(downloadMission);
+												//										if(downloadMission.isFinished()){
+												//											new Thread(new Runnable() {
+												//												@Override
+												//												public void run() {
+												//													// TODO Auto-generated method stub
+												//													info.apk_path=Constant.SDCARD_APK_PATH+info.app_name+".apk";
+												//													int result=PackageUtils.installSilent(mContext, info.apk_path,"-r");
+												//													if (result==PackageUtils.INSTALL_SUCCEEDED) {
+												//														AppInfoService service=new AppInfoService(mContext);
+												//														service.insertApplicationInfo(info);
+												//														System.out.println("install scuccess");
+												//													}else{
+												//														System.out.println("install fail");
+												//													}
+												//												}
+												//											});
+												//										}
+											} catch (Exception e) {
+												// TODO: handle exception
+											}
+										}
+									});
 						} catch (Exception e) {
 							// TODO: handle exception
 						}
-						
+
 					}
 				}).start();
 			}
@@ -209,7 +219,7 @@ public class ApplicationClassifyGridadapter extends BaseAdapter {
 		TextView descriptionTextView;
 		Button operationButton;
 	}
-	
+
 	public void refreshData(List<AppMarket> listItems) {
 		this.applicationInfo = listItems;
 		// YoukongService.setStatus();
