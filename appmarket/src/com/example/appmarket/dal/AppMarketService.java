@@ -18,11 +18,9 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 public class AppMarketService {
-	public static JSONArray appitems = null;
 	public static int status = 0;
 
 	private static final String flag = "app";
-	private static List<AppMarket> applist=new ArrayList<AppMarket>();
 
 	public static int getStatus() {
 
@@ -38,6 +36,7 @@ public class AppMarketService {
 		RequestParams params = new RequestParams();
 		String username = MyAppMarket.getUsername();
 		String password = MyAppMarket.getpapapa();
+		final List<AppMarket> applist=new ArrayList<AppMarket>();
 		
 		if (tag.equalsIgnoreCase("life")) {
 			params.put("username", username);
@@ -51,7 +50,7 @@ public class AppMarketService {
 			params.put("category_id", "3");
 			params.put("start", start);
 			params.put("length", "12");
-		} else if (tag.equalsIgnoreCase("new")) {
+		} else if (tag.equalsIgnoreCase("news")) {
 			params.put("username", username);
 			params.put("password", password);
 			params.put("category_id", "4");
@@ -98,6 +97,7 @@ public class AppMarketService {
 				// TODO Auto-generated method stub
 				super.onSuccess(jsonobject);
 				String statuscode = null;
+				JSONArray appitems = new JSONArray();
 				try {
 					statuscode = jsonobject.getString("status");
 				} catch (JSONException e) {
@@ -113,6 +113,9 @@ public class AppMarketService {
 				}
 
 				int count = appitems.length();
+				if(count>=1){
+					status = 1;
+				}
 
 				for (int i = 0; i < count; i++) {
 					try {
