@@ -47,8 +47,12 @@ public class ApplicationClassify extends Activity implements IXListViewListener{
 		gridview = (XListView) this.findViewById(R.id.listtest1);
 		gridview.setPullLoadEnable(true);
 		gridview.setXListViewListener(this);
+		infos.clear();
 		onRefresh();
 		setdata();
+		
+		
+		System.out.println("system oncreate");
 	}
 	
 	public void initview(){
@@ -215,7 +219,6 @@ public class ApplicationClassify extends Activity implements IXListViewListener{
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-		if(infos != null)
 		System.out.println("ClassifyActivity OnDestroy");
 	}
 	
@@ -239,6 +242,11 @@ public class ApplicationClassify extends Activity implements IXListViewListener{
 	protected void onStart() {
 		// TODO Auto-generated method stub
 		super.onStart();
+		if(infos != null)
+		{
+			System.out.println("infos isn't empty");
+			infos.clear();
+		}
 		System.out.println("ClassifyActivity OnStart");
 	}
 
