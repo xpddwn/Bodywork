@@ -1,9 +1,12 @@
 package com.example.appmarket.adapter;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +18,15 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import cn.trinea.android.common.service.impl.ImageCache;
+import cn.trinea.android.common.service.impl.ImageCache.OnImageCallbackListener;
+
 import com.example.appmarket.R;
+import com.example.appmarket.configs.MyAppMarket;
+import com.example.appmarket.entity.AppMarket;
 import com.example.appmarket.sqlite.model.ApplicationInfo;
+import com.example.appmarket.util.BitmapUtil;
+import com.example.appmarket.util.ObjectUtils;
 import com.example.appmarket.util.SyncImageLoader;
 import com.example.appmarket.util.SyncImageLoader.OnImageLoadListener;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -30,21 +40,45 @@ import com.makeramen.roundedimageview.RoundedImageView;
  */
 public class ApplicationManageListadapter extends BaseAdapter {
 	private static final String TAG = "ApplicationManageListadapter";
+	private static ImageCache ICON_CACHE = MyAppMarket.getImageCache();
 	private Context mContext;
-	private ArrayList<ApplicationInfo> applicationInfos;
+	private List<AppMarket> applicationInfos;
 	private LayoutInflater mInflater;
 	private ViewHolder viewHolder;
-	private SyncImageLoader imageLoader;
 	private ListView listView;
 	private int flag;
+	
+	static {
+		OnImageCallbackListener imageCallBack = new OnImageCallbackListener() {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onImageLoaded(String imageUrl, Drawable imageDrawable,
+					View view, boolean isInCache) {
+				// TODO Auto-generated method stub
+				if (view != null && imageDrawable != null) {
+					ImageView imageView = (ImageView) view;
+					String imageurltag = (String) imageView.getTag();
+
+					Bitmap mypic = BitmapUtil.drawableToBitmap(imageDrawable);
+
+					Bitmap cornorpic = BitmapUtil.drawRoundBitmap(mypic, 12);
+					if (ObjectUtils.isEquals(imageurltag, imageUrl)) {
+						// imageView.setImageDrawable(imageDrawable);
+						imageView.setImageBitmap(cornorpic);
+					}
+				}
+			}
+		};
+		ICON_CACHE.setOnImageCallbackListener(imageCallBack);
+	}
 
 	public ApplicationManageListadapter(Context context,
-			ArrayList<ApplicationInfo> applicationInfos, ListView listView,
-			SyncImageLoader imageLoader, int flag) {
+			List<AppMarket> applicationInfos, ListView listView, int flag) {
 		mContext = context;
 		mInflater = (LayoutInflater) mContext
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		this.imageLoader = imageLoader;
 		this.listView = listView;
 		this.applicationInfos = applicationInfos;
 		this.flag = flag;
@@ -67,7 +101,7 @@ public class ApplicationManageListadapter extends BaseAdapter {
 
 	public View getView(int position, View convertview, ViewGroup arg2) {
 		// TODO Auto-generated method stub
-		ApplicationInfo applicationInfo = applicationInfos.get(position);
+		AppMarket applicationInfo = applicationInfos.get(position);
 		if (convertview == null) {
 			convertview = mInflater.inflate(R.layout.manage__list_item, null);
 			findView(convertview);
@@ -81,7 +115,7 @@ public class ApplicationManageListadapter extends BaseAdapter {
 
 	public void findView(View arg1) {
 		viewHolder = new ViewHolder();
-		viewHolder.pictureImageView = (RoundedImageView) arg1
+		viewHolder.pictureImageView = (ImageView) arg1
 				.findViewById(R.id.picture);
 		viewHolder.nameTextView = (TextView) arg1.findViewById(R.id.name);
 		viewHolder.descriptionTextView = (TextView) arg1
@@ -89,26 +123,21 @@ public class ApplicationManageListadapter extends BaseAdapter {
 		viewHolder.operationButton = (Button) arg1.findViewById(R.id.operation);
 	}
 
-	public void setView(int position, ApplicationInfo info) {
-		try {
-			Bitmap bitmap = imageLoader.getBitmapFromLocal(info.icon_url);
-			if (bitmap == null) {
-				viewHolder.pictureImageView.setImageResource(R.drawable.car);
-				imageLoader.showImageAsyn(position, info.icon_url,
-						imageLoadListener);
-			} else {
-				viewHolder.pictureImageView.setImageBitmap(bitmap);
-			}
-		} catch (Exception e) {
-			Log.e(TAG, e.toString());
-			// TODO: handle exception
-		} catch (OutOfMemoryError e) {
-			// TODO: handle exception
-			Log.e(TAG, e.toString());
-		}
+	public void setView(int position, AppMarket info) {
 		viewHolder.pictureImageView.setTag(position);
-		viewHolder.nameTextView.setText(info.app_name);
-		viewHolder.descriptionTextView.setText(info.description);
+		viewHolder.pictureImageView.setTag(info.geticon_url());
+		if (ICON_CACHE.get(info.geticon_url(), viewHolder.pictureImageView) == false) {
+			viewHolder.pictureImageView.setImageResource(R.drawable.car);
+		} else {
+
+		}
+		
+		viewHolder.nameTextView.setText(info.getapp_name());
+		DecimalFormat decimalFormat=new DecimalFormat(".00");//构造方法的字符格式这里如果小数不足2位,会以0补足.
+		String p=decimalFormat.format(info.getsize());
+		
+		viewHolder.descriptionTextView.setText(p+"M");
+		
 		if (flag == 0) {
 			viewHolder.operationButton.setText("更新");
 		} else if (flag == 1) {
@@ -134,34 +163,14 @@ public class ApplicationManageListadapter extends BaseAdapter {
 	}
 
 	class ViewHolder {
-		RoundedImageView pictureImageView;
+		ImageView pictureImageView;
 		TextView nameTextView;
 		TextView descriptionTextView;
 		Button operationButton;
 	}
 
-	private OnImageLoadListener imageLoadListener = new OnImageLoadListener() {
-
-		@Override
-		public void onImageLoad(int indentify, Bitmap bitmap) {
-			// TODO Auto-generated method stub
-			ImageView view = (ImageView) listView.findViewWithTag(indentify);
-			if (view != null) {
-				view.setImageBitmap(bitmap);
-			} else {
-				Log.e(TAG, "not find imageview by tag");
-			}
-		}
-
-		@Override
-		public void onError(int identify) {
-			// TODO Auto-generated method stub
-			ImageView view = (ImageView) listView.findViewWithTag(identify);
-			if (view != null) {
-				// Log.e(TAG, "cat not load image");
-			} else {
-				// Log.e(TAG, "not find imageview by tag");
-			}
-		}
-	};
+	public void refreshData(List<AppMarket> infos) {
+		// TODO Auto-generated method stub
+		
+	}
 }

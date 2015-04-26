@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:orientation="horizontal" >
-   <com.makeramen.roundedimageview.RoundedImageView
+  <!--  <com.makeramen.roundedimageview.RoundedImageView
         android:layout_width="65dp"
         android:layout_height="65dp"
         android:layout_marginLeft="10dp"
@@ -15,7 +15,16 @@
         app:riv_mutate_background="true"
         app:riv_tile_mode="repeat"
         android:id="@+id/picture"
+        android:src="@drawable/car"/> -->
+   <ImageView 
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginLeft="10dp"
+        android:gravity="center_vertical"
+        android:scaleType="fitCenter"
+        android:id="@+id/picture"
         android:src="@drawable/car"/>
+   
    <RelativeLayout 
        android:layout_width="fill_parent"
        android:layout_height="65dp"
@@ -41,8 +50,8 @@
            android:textColor="@color/font"
            android:text="12.5M"/>
        <Button 
-           android:layout_width="60dp"
-           android:layout_height="30dp"
+           android:layout_width="75dp"
+           android:layout_height="40dp"
            android:text="@string/update"
            android:layout_centerVertical="true"
            android:textSize="13sp"

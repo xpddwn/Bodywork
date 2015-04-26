@@ -53,11 +53,11 @@
            android:textColor="@color/font"
            android:text="12.5M"/>
        <Button 
-           android:layout_width="60dp"
-           android:layout_height="30dp"
+           android:layout_width="75dp"
+           android:layout_height="40dp"
            android:text="@string/install"
            android:layout_centerVertical="true"
-           android:textSize="13sp"
+           android:textSize="15sp"
            android:id="@+id/operation"
            android:textColor="@color/intsall_bt_text"
            android:background="@drawable/install_bt"

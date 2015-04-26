@@ -1,43 +1,43 @@
 package com.example.appmarket;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.appmarket.adapter.ApplicationManageListadapter;
-import com.example.appmarket.configs.MyAppMarket;
-import com.example.appmarket.sqlite.model.ApplicationInfo;
-import com.example.appmarket.util.HttpUtil;
-import com.example.appmarket.util.SyncImageLoader;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.loopj.android.http.RequestParams;
+import com.example.appmarket.dal.AppMarketService;
+import com.example.appmarket.entity.AppMarket;
+import com.example.appmarket.view.XListView;
+import com.example.appmarket.view.XListView.IXListViewListener;
 
-public class ApplicationManageFragment extends Fragment {
+public class ApplicationManageFragment extends Fragment implements
+		IXListViewListener {
 
 	private static final String TAG = "ApplicationManageFragment";
 	private Context mContext;
 	private View view;
-	private PullToRefreshListView pullToRefreshListView;
-	private ArrayList<ApplicationInfo> infos = new ArrayList<ApplicationInfo>();
+	private List<AppMarket> infos = new ArrayList<AppMarket>();
 	private ApplicationManageListadapter adapter;
-	private boolean havaLoadData = false;
-	private SyncImageLoader imageLoader;
-	private boolean isLoading = false;// 是否正在加载
-	private int lastVisibleIndex;// 最后一个可见的item
-	private int flag;// 0 更新  1安装  2卸载
-	private ListView listView;
+	private int flag;// 0 更新 1安装 2卸载
+	private XListView listView;
+
+	private Thread myThread;
+	private String freshtime;
+	private int start = 0;
+	private String name;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,102 +51,176 @@ public class ApplicationManageFragment extends Fragment {
 	}
 
 	public void iniData() {
-		pullToRefreshListView = (PullToRefreshListView) view
-				.findViewById(R.id.list);
-		listView = pullToRefreshListView.getRefreshableView();
-		imageLoader = new SyncImageLoader();
-		adapter = new ApplicationManageListadapter(mContext, infos, listView,
-				imageLoader, flag);
-		listView.setAdapter(adapter);
-		pullToRefreshListView.setOnScrollListener(onScrollListener);
-		pullToRefreshListView.setOnRefreshListener(onRefreshListener2);
+		switch(flag){
+		case 0:
+			name = "update";
+			break;
+		case 1:
+			name = "install";
+			break;
+		case 2:
+			name = "uninstall";
+			break;
+		default:
+			break;
+		}
+		listView = (XListView) view.findViewById(R.id.listtest);
+		listView.setPullLoadEnable(true);
+		listView.setXListViewListener(this);
+		onRefresh();
+		setdata();
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
 		Log.e(TAG, "on resume");
-		
-		if (!havaLoadData) {
-			infos.clear();
-			
-			havaLoadData = true;
-			adapter.notifyDataSetChanged();
-		}
 	}
 
-	
-	private AbsListView.OnScrollListener onScrollListener = new AbsListView.OnScrollListener() {
-		@Override
-		public void onScrollStateChanged(AbsListView view, int scrollState) {
-			switch (scrollState) {
-			case AbsListView.OnScrollListener.SCROLL_STATE_FLING:
-				// Log.e(TAG, "fling");
-				imageLoader.lock();
-				break;
-			case AbsListView.OnScrollListener.SCROLL_STATE_IDLE:
-				loadImage();
-				break;
-			case AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL:
-				imageLoader.lock();
-				break;
-			default:
-				break;
-			}
-		}
-
-		@Override
-		public void onScroll(AbsListView view, int firstVisibleItem,
-				int visibleItemCount, int totalItemCount) {
-			lastVisibleIndex = firstVisibleItem + visibleItemCount - 1;
-			// TODO Auto-generated method stub
-		}
-	};
-	private OnRefreshListener2<ListView> onRefreshListener2 = new OnRefreshListener2<ListView>() {
-
-		@Override
-		public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-			// TODO Auto-generated method stub
-			Toast.makeText(mContext, "down", 1000).show();
-			pullToRefreshListView.onRefreshComplete();
-		}
-
-		@Override
-		public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-			// TODO Auto-generated method stub
-			handler.sendEmptyMessage(0);
-		}
-	};
 	private Handler handler = new Handler() {
 		@Override
 		public void handleMessage(android.os.Message msg) {
 			super.handleMessage(msg);
 			switch (msg.what) {
-			case 0:
-				Toast.makeText(mContext, "up", 1000).show();
-				ApplicationInfo info = new ApplicationInfo();
-				info.app_name = "" + " down";
-				info.description = "音乐 12.5M";
-				info.icon_url = "http://p6.qhimg.com/t013f443fd02b23599f.jpg";
-				infos.add(info);
-				adapter.notifyDataSetChanged();
-				pullToRefreshListView.onRefreshComplete();
+			case 1:
+				myThread.interrupt();
+				setdata();
+				XListView.setfooterhide(1);
+				System.out.println("set 1");
+				onLoad();
 				break;
-			default:
+			case 2:
+				myThread.interrupt();
+				Toast mytoast = Toast.makeText(mContext.getApplicationContext(),
+						"失败了，等会再试试，或者检查一下网络", Toast.LENGTH_SHORT);
+				mytoast.setGravity(Gravity.CENTER_HORIZONTAL
+						| Gravity.CENTER_VERTICAL, 0, 0);
+				mytoast.show();
 				break;
+			case 3:
+				myThread.interrupt();
+				Toast mytoast2 = Toast.makeText(mContext.getApplicationContext(),
+						"已经到底啦", Toast.LENGTH_SHORT);
+				mytoast2.setGravity(Gravity.CENTER_HORIZONTAL
+						| Gravity.CENTER_VERTICAL, 0, 0);
+				mytoast2.show();
+				break;	
 			}
 		}
 	};
 
-	// 加载图片信息
-	private void loadImage() {
-		int start = listView.getFirstVisiblePosition();
-		int end = listView.getLastVisiblePosition();
-		if (end >= listView.getCount()) {
-			end = listView.getCount() - 1;
+	@Override
+	public void onRefresh() {
+		// TODO Auto-generated method stub
+		XListView.setfooterhide(0);
+		AppMarketService.setStatus();
+		if (infos != null) {
+			infos.clear();
 		}
-		imageLoader.setLoadLimit(start, end);
-		imageLoader.unlock();
+
+		restartthread();
+		gettime();
+		getdata(name, "0");
+	}
+
+	protected void setdata() {
+		// TODO Auto-generated method stub
+		adapter = new ApplicationManageListadapter(mContext, infos, listView,
+				flag);
+		listView.setAdapter(adapter);
+	}
+
+	private void getdata(String name, String start) {
+		// TODO Auto-generated method stub
+		try{
+			infos = AppMarketService.getJSONlistshops(name, start);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+
+	private void gettime() {
+		// TODO Auto-generated method stub
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日   HH:mm");
+		Date curDate = new Date(System.currentTimeMillis());// 获取当前时间
+		freshtime = formatter.format(curDate);
+	}
+
+	public void restartthread() {
+		if (myThread != null) {
+			if (myThread.isAlive()) {
+				myThread.interrupt();
+			}
+			myThread = newThread();
+			myThread.start();
+		} else {
+			myThread = newThread();
+			myThread.start();
+		}
+	}
+
+	@Override
+	public void onLoadMore() {
+		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
+		int mypos = infos.size();
+		System.out.println("infos" + mypos);
+		if (mypos == 8) {
+			getdata(name, String.valueOf(1 * (start++)));
+		} else {
+			Toast mytoast = Toast.makeText(mContext.getApplicationContext(),
+					"已经到底，没有更多应用加载", Toast.LENGTH_SHORT);
+			mytoast.setGravity(Gravity.CENTER_HORIZONTAL
+					| Gravity.CENTER_VERTICAL, 0, 0);
+			mytoast.show();
+			listView.stopLoadMore();
+		}
+		adapter.refreshData(infos);
+		onLoad();
+	}
+	
+	private void onLoad() {
+		listView.stopRefresh();
+		listView.stopLoadMore();
+		listView.setRefreshTime(freshtime);
+	}
+	
+	public Thread newThread() {
+		Thread myThread = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				while (true) {
+					if (AppMarketService.getStatus() == 1) {
+						System.out.println(" decide status = 1");
+						Message msg = new Message();
+						msg.what = 1;
+						handler.sendMessage(msg);
+						AppMarketService.setStatus();
+						break;
+					} else if (AppMarketService.getStatus() == 2) {
+						Message msg = new Message();
+						msg.what = 2;
+						handler.sendMessage(msg);
+						AppMarketService.setStatus();
+						break;
+					} else if (AppMarketService.getStatus() == 3) {
+						Message msg = new Message();
+						msg.what = 3;
+						handler.sendMessage(msg);
+						AppMarketService.setStatus();
+						break;
+					}
+
+					else {
+						continue;
+					}
+
+				}
+			}
+		});
+		return myThread;
 	}
 
 }
