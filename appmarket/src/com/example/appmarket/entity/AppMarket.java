@@ -1,16 +1,29 @@
 package com.example.appmarket.entity;
 
 public class AppMarket {
-	private String app_name;
-	private String icon_url;
-	private double size;
-	private String version;
-	private long download_count;
-	private String description;
-	private long app_id;
+	public String app_name;
+	public String icon_url;
+	public double size;
+	public String version;
+	public long download_count;
+	public String description;
+	public long app_id;
+	public int install_state;
+	public String apk_path;
+	public int category_id;
 
-	public AppMarket() {
-		// ȱʡ
+
+	public static final String FIELD_TABLE_NAME = "app";
+	public static final String FIELD_APP_ID = "app_id";
+	public static final String FIELD_CATRGORY_ID = "category_id";
+	public static final String FIELD_APP_NAME = "app_name";
+	public static final String FIELD_ICON_URL = "icon_url";
+	public static final String FIELD_DESCRIPPTION = "description";
+	public static final String FIELD_SIZE = "size";
+	public static final String FIELD_VERSION = "version";
+	public static final String FIELD_INSTALL_STATE = "install_state";
+	public AppMarket(){
+		
 	}
 
 	public AppMarket(String app_name, String icon_url, double size,

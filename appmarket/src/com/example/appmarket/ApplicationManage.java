@@ -33,13 +33,26 @@ public class ApplicationManage extends FragmentActivity {
 		setContentView(R.layout.activity_application_manage);
 		mContext = this;
 		fragments = new ArrayList<Fragment>();
-		for (int i = 0; i < 3; i++) {
-			ApplicationManageFragment fragement = new ApplicationManageFragment();
-			Bundle bundle = new Bundle();
-			bundle.putInt("flag", i);
-			fragement.setArguments(bundle);
-			fragments.add(fragement);
-		}
+		UpdateManageFragment fragement = new UpdateManageFragment();
+		Bundle bundle = new Bundle();
+		bundle.putInt("flag", 0);
+		fragement.setArguments(bundle);
+		
+		UninstallFragment installFragment=new UninstallFragment();
+		Bundle bundle2 = new Bundle();
+		bundle2.putInt("flag", 1);
+		installFragment.setArguments(bundle2);
+		
+		UninstallFragment uninstallFragment=new UninstallFragment();
+		Bundle bundle1 = new Bundle();
+		bundle1.putInt("flag", 2);
+		uninstallFragment.setArguments(bundle1);
+		
+		
+		
+		fragments.add(fragement);
+		fragments.add(uninstallFragment);
+		fragments.add(installFragment);
 		findView();
 		setView();
 	}

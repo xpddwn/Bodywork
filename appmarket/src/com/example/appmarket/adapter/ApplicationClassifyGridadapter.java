@@ -1,4 +1,5 @@
 package com.example.appmarket.adapter;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,7 +16,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.PowerManager;
@@ -26,6 +29,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import cn.trinea.android.common.service.impl.ImageCache;
@@ -33,11 +37,15 @@ import cn.trinea.android.common.service.impl.ImageCache.OnImageCallbackListener;
 
 import com.example.appmarket.R;
 import com.example.appmarket.configs.MyAppMarket;
+import com.example.appmarket.constant.Constant;
 import com.example.appmarket.entity.AppMarket;
+import com.example.appmarket.sqlite.model.ApplicationInfo;
+import com.example.appmarket.sqlite.service.AppInfoService;
 import com.example.appmarket.util.BitmapUtil;
 import com.example.appmarket.util.HttpUtil;
 import com.example.appmarket.util.JsonUtil;
 import com.example.appmarket.util.ObjectUtils;
+import com.example.appmarket.util.PackageUtils;
 import com.example.appmarket.view.XListView;
 import com.google.gson.JsonObject;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -53,7 +61,6 @@ public class ApplicationClassifyGridadapter extends BaseAdapter {
 	private XListView gridview;
 	private int mChildCount;
 	private ProgressDialog mProgressDialog;
-	private String url;
 	
 	static {
 		OnImageCallbackListener imageCallBack = new OnImageCallbackListener() {
@@ -107,7 +114,7 @@ public class ApplicationClassifyGridadapter extends BaseAdapter {
 		// TODO Auto-generated method stub
 		return position;
 	}
-
+	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
@@ -123,7 +130,7 @@ public class ApplicationClassifyGridadapter extends BaseAdapter {
 		return convertView;
 	}
 
-	public void setview(int position, final AppMarket info) {
+	public void setview(final int position, final AppMarket info) {
 		viewHolder.pictureImageView.setTag(info.geticon_url());
 		if (ICON_CACHE.get(info.geticon_url(), viewHolder.pictureImageView) == false) {
 			viewHolder.pictureImageView.setImageResource(R.drawable.car);
@@ -131,19 +138,16 @@ public class ApplicationClassifyGridadapter extends BaseAdapter {
 
 		}
 		viewHolder.nameTextView.setText(info.getapp_name());
-		
 		DecimalFormat decimalFormat=new DecimalFormat(".00");//构造方法的字符格式这里如果小数不足2位,会以0补足.
 		String p=decimalFormat.format(info.getsize());
-		
 		viewHolder.descriptionTextView.setText(p+"M");
+		viewHolder.operationButton.setTag(position);
 		viewHolder.operationButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				viewHolder.operationButton.setText("正在下载");
-				
+				((Button)arg0).setText("正在下载");
 				new Thread(new Runnable() {
-					
 					@Override
 					public void run() {
 						// TODO Auto-generated method stub
@@ -160,7 +164,6 @@ public class ApplicationClassifyGridadapter extends BaseAdapter {
 									super.handleFailureMessage(arg0, arg1);
 									
 								};
-
 								@Override
 								public void onFailure(Throwable arg0, JSONObject arg1) {
 									// TODO Auto-generated method stub
@@ -175,41 +178,16 @@ public class ApplicationClassifyGridadapter extends BaseAdapter {
 									try {
 										JsonObject object=JsonUtil.stringToJsonObject(jsonobject.toString());
 										int statuscode = object.get("status").getAsInt();
-										url=object.get("app_url").getAsString();
-										
-										handler.sendEmptyMessage(3);
-										/*new Thread(new Runnable() {
-											
-											@Override
-											public void run() {
-												// TODO Auto-generated method stub
-												File apkfile=FileUtil.downFile(url, Constant.SDCARD_APK_PATH, info.getapp_name());
-												if(apkfile!=null){
-													viewHolder.operationButton.setText("正在安装");
-													int result=PackageUtils.installSilent(mContext, apkfile.getAbsolutePath(),"-r");
-													if (result==PackageUtils.INSTALL_SUCCEEDED) {
-														viewHolder.operationButton.setText("安装完成");
-														AppInfoService service=new AppInfoService(mContext);
-														ApplicationInfo applicationInfo=new ApplicationInfo();
-														applicationInfo.apk_path=apkfile.getAbsolutePath ();
-														applicationInfo.app_id=info.getapp_id();
-														applicationInfo.app_name=info.getapp_name();
-														applicationInfo.description=info.getdescription();
-														applicationInfo.icon_url=info.geticon_url();
-														applicationInfo.install_state=1;
-														applicationInfo.size=info.getsize();
-														applicationInfo.version=info.getversion();														
-														service.insertApplicationInfo(applicationInfo);
-														System.out.println("install scuccess");
-													}else{
-														handler.sendEmptyMessage(0);
-														System.out.println("install fail");
-													}
-												}else{
-													handler.sendEmptyMessage(1);
-												}
-											}
-										}).start();*/
+										String url=object.get("app_url").getAsString();
+										Bundle bundle=new Bundle();
+										bundle.putString("url", url);
+										bundle.putInt("tag", position);
+										bundle.putString("name", info.getapp_name());
+										Message message=new Message();
+										message.what=0;
+										message.obj=info;
+										message.setData(bundle);
+										handler2.sendMessage(message);
 									} catch (Exception e) {
 										// TODO: handle exception
 									}
@@ -224,36 +202,62 @@ public class ApplicationClassifyGridadapter extends BaseAdapter {
 			}
 		});
 	}
-	private Handler handler = new Handler() {
+	private Handler handler2=new Handler(){
 		@Override
-		public void handleMessage(android.os.Message msg) {
+		public void handleMessage(android.os.Message msg){
 			switch (msg.what) {
-			case 1:
-				viewHolder.operationButton.setText("安装失败");
-				break;
-			case 2:
-				viewHolder.operationButton.setText("下载失败");
-				break;
-			case 3:
+			case 0:
 				mProgressDialog = new ProgressDialog(mContext);
 				mProgressDialog.setMessage("A message");
 				mProgressDialog.setIndeterminate(true);
 				mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 				mProgressDialog.setCancelable(true);
-
+				
 				// execute this when the downloader must be fired
-				final DownloadTask downloadTask = new DownloadTask(mContext);
-				downloadTask.execute(url);
+				AppMarket infoAppMarket=(AppMarket)msg.obj;
+				final DownloadTask downloadTask = new DownloadTask(mContext,infoAppMarket,msg.arg1);
+				downloadTask.execute(msg.getData().getString("url"));
 
-				mProgressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+				/*mProgressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
 				    @Override
 				    public void onCancel(DialogInterface dialog) {
 				        downloadTask.cancel(true);
 				    }
-				});
+				});*/
 				break;
 			default:
 				break;
+			}
+		}
+	};
+	
+	private Handler handler = new Handler() {
+		@Override
+		public void handleMessage(android.os.Message msg){
+			int tag=msg.arg1;
+			View view= gridview.findViewWithTag(tag);
+			Button button;
+			if(view!=null){
+				button=(Button)view;
+				switch (msg.what) {
+				case 1:
+					button.setText("安装失败");
+					break;
+				case 2:
+					button.setText("下载失败");
+					break;
+				case 4:
+					button.setText("正在安装");
+					break;
+				case 5:
+					button.setText("安装成功");
+					break;
+				case 6:
+					button.setText("正在下载");
+					break;
+				default:
+					break;
+				}
 			}
 		}
 	};
@@ -291,57 +295,70 @@ public class ApplicationClassifyGridadapter extends BaseAdapter {
 		super.notifyDataSetChanged();
 		System.out.println("数据已经更新");
 		gridview.stopLoadMore();
-		mChildCount = getCount();
-		
+		mChildCount = getCount();	
 	}
 
 	class DownloadTask extends AsyncTask<String, Integer, String> {
 
 	    private Context context;
 	    private PowerManager.WakeLock mWakeLock;
+	    private AppMarket info;
+	    private int tag;
 
-	    public DownloadTask(Context context) {
+	    public DownloadTask(Context context,AppMarket info,int tag) {
+	    	this.info=info;
 	        this.context = context;
+	        this.tag=tag;
 	    }
-
+	    
 	    @Override
 	    protected String doInBackground(String... sUrl) {
 	        InputStream input = null;
 	        OutputStream output = null;
 	        HttpURLConnection connection = null;
+	        String outfilepath=Constant.SDCARD_APK_PATH+info.getapp_name()+".apk";
+	        boolean flag=false;
 	        try {
-	            URL url = new URL(sUrl[0]);
+	            //URL url = new URL(sUrl[0]);
+	        	URL url=new URL("http://219.239.26.14/files/408300000636FC47/www.renrendai.com/mobile/apk/rrdlc_v2.0.1.apk");
 	            connection = (HttpURLConnection) url.openConnection();
 	            connection.connect();
 	            if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
 	                return "Server returned HTTP " + connection.getResponseCode()
 	                        + " " + connection.getResponseMessage();
 	            }
-
 	            // this will be useful to display download percentage
 	            // might be -1: server did not report the length
 	            int fileLength = connection.getContentLength();
+	            File apkFile=new File(outfilepath);
+	            if(apkFile.exists()&&apkFile.length()==fileLength){//apk文件已经下载完成了
+	            	
+	            }else{
+	            	 // download the file
+		            input = connection.getInputStream();
+		            File dir=new File(Constant.SDCARD_APK_PATH);
+		            if (!dir.exists()){
+		            	dir.mkdirs();
+		            }
+		            output = new FileOutputStream(outfilepath);
 
-	            // download the file
-	            input = connection.getInputStream();
-	            output = new FileOutputStream("/sdcard/file_name.extension");
-
-	            byte data[] = new byte[4096];
-	            long total = 0;
-	            int count;
-	            while ((count = input.read(data)) != -1) {
-	                // allow canceling with back button
-	                if (isCancelled()) {
-	                    input.close();
-	                    return null;
-	                }
-	                total += count;
-	                // publishing the progress....
-	                if (fileLength > 0) // only if total length is known
-	                    publishProgress((int) (total * 100 / fileLength));
-	                output.write(data, 0, count);
+		            byte data[] = new byte[4096];
+		            long total = 0;
+		            int count;
+		            while ((count = input.read(data)) != -1) {
+		                // allow canceling with back button
+		                if (isCancelled()) {
+		                    input.close();
+		                    return null;
+		                }
+		                total += count;
+		                // publishing the progress....
+		                if (fileLength > 0) // only if total length is known
+		                    publishProgress((int) (total * 100 / fileLength));
+		                output.write(data, 0, count);
+		            }
 	            }
-	            System.out.println("文件下载成功");
+	            flag=true;
 	        } catch (Exception e) {
 	        	System.out.println(e.toString());
 	            return e.toString();
@@ -356,11 +373,36 @@ public class ApplicationClassifyGridadapter extends BaseAdapter {
 
 	            if (connection != null)
 	                connection.disconnect();
+	            Message message=new Message();
+            	message.arg1=tag;
+            	message.what=4;
+	            if(flag){
+	            	handler.sendMessage(message);
+	            	Message message1=new Message();
+	             	message1.arg1=tag;
+		            int result=PackageUtils.installSilent(mContext, outfilepath,"-r");
+					if (result==PackageUtils.INSTALL_SUCCEEDED) {
+						AppInfoService service=new AppInfoService(mContext);
+						info.apk_path=outfilepath;
+						info.install_state=1;			
+						service.insertAppMarket(info);
+						System.out.println("install scuccess");
+						message1.what=5;
+						handler.sendMessage(message1);
+					}else{
+						message1.what=1;
+						handler.sendMessage(message1);
+						System.out.println("install fail");
+					}
+	            }else{
+	            	message.what=2;
+	            	handler.sendMessage(message);
+	            }
 	        }
 	        return null;
 	    }
 	    
-	    protected void onPreExecute() {
+	   /* protected void onPreExecute() {
 	        super.onPreExecute();
 	        // take CPU lock to prevent CPU from going off if the user 
 	        // presses the power button during download
@@ -388,6 +430,6 @@ public class ApplicationClassifyGridadapter extends BaseAdapter {
 	            Toast.makeText(context,"Download error: "+result, Toast.LENGTH_LONG).show();
 	        else
 	            Toast.makeText(context,"File downloaded", Toast.LENGTH_SHORT).show();
-	    }
+	    }*/
 	}
 }

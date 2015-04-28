@@ -23,7 +23,7 @@ import com.example.appmarket.entity.AppMarket;
 import com.example.appmarket.view.XListView;
 import com.example.appmarket.view.XListView.IXListViewListener;
 
-public class ApplicationManageFragment extends Fragment implements
+public class UpdateManageFragment extends Fragment implements
 		IXListViewListener {
 
 	private static final String TAG = "ApplicationManageFragment";
@@ -117,7 +117,7 @@ public class ApplicationManageFragment extends Fragment implements
 		if (infos != null) {
 			infos.clear();
 		}
-
+		
 		restartthread();
 		gettime();
 		getdata(name, "0");

@@ -27,6 +27,7 @@ import com.example.appmarket.entity.AppMarket;
 import com.example.appmarket.sqlite.model.ApplicationInfo;
 import com.example.appmarket.util.BitmapUtil;
 import com.example.appmarket.util.ObjectUtils;
+import com.example.appmarket.util.PackageUtils;
 import com.example.appmarket.util.SyncImageLoader;
 import com.example.appmarket.util.SyncImageLoader.OnImageLoadListener;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -156,7 +157,14 @@ public class ApplicationManageListadapter extends BaseAdapter {
 				} else if (flag == 1) {// 
 
 				} else if (flag == 2) {// 
-					
+					new Thread(new Runnable() {
+						
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							//PackageUtils.uninstallSilent(mContext, packageName)
+						}
+					}).start();
 				}
 			}
 		});
