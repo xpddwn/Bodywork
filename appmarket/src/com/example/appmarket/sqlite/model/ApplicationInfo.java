@@ -1,12 +1,12 @@
 package com.example.appmarket.sqlite.model;
 
 public class ApplicationInfo {
-	public int app_id;
+	public long app_id;
 	public int category_id;
 	public String app_name;
 	public String icon_url;
 	public String description;// 描述信息
-	public float size;
+	public double size;
 	public String version;// 
 	public int install_state;
 	public String apk_path;
@@ -21,10 +21,10 @@ public class ApplicationInfo {
 	public static final String FIELD_SIZE = "size";
 	public static final String FIELD_VERSION = "version";
 	public static final String FIELD_INSTALL_STATE = "install_state";
-	public int getApp_id() {
+	public long getApp_id() {
 		return app_id;
 	}
-	public void setApp_id(int app_id) {
+	public void setApp_id(long app_id) {
 		this.app_id = app_id;
 	}
 	public int getCategory_id() {
@@ -51,7 +51,7 @@ public class ApplicationInfo {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public float getSize() {
+	public double getSize() {
 		return size;
 	}
 	public void setSize(float size) {
