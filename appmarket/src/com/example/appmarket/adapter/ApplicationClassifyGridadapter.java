@@ -70,7 +70,7 @@ public class ApplicationClassifyGridadapter extends BaseAdapter {
 
 					Bitmap mypic = BitmapUtil.drawableToBitmap(imageDrawable);
 
-					Bitmap cornorpic = BitmapUtil.drawRoundBitmap(mypic, 5);
+					Bitmap cornorpic = BitmapUtil.drawRoundBitmap(mypic, 12);
 					if (ObjectUtils.isEquals(imageurltag, imageUrl)) {
 						// imageView.setImageDrawable(imageDrawable);
 						imageView.setImageBitmap(cornorpic);
@@ -289,8 +289,10 @@ public class ApplicationClassifyGridadapter extends BaseAdapter {
 	public void notifyDataSetChanged() {
 		// TODO Auto-generated method stub
 		super.notifyDataSetChanged();
+		System.out.println("数据已经更新");
 		gridview.stopLoadMore();
 		mChildCount = getCount();
+		
 	}
 
 	class DownloadTask extends AsyncTask<String, Integer, String> {

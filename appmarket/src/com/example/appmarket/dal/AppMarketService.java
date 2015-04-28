@@ -36,6 +36,7 @@ public class AppMarketService {
 		RequestParams params = new RequestParams();
 		String username = MyAppMarket.getUsername();
 		String password = MyAppMarket.getpapapa();
+		String length = "8";
 		final List<AppMarket> applist=new ArrayList<AppMarket>();
 		
 		if (tag.equalsIgnoreCase("life")) {
@@ -43,37 +44,43 @@ public class AppMarketService {
 			params.put("password", password);
 			params.put("category_id", "2");
 			params.put("start", start);
-			params.put("length", "12");
+			params.put("length", length);
 		} else if (tag.equalsIgnoreCase("car")) {
 			params.put("username", username);
 			params.put("password", password);
 			params.put("category_id", "3");
 			params.put("start", start);
-			params.put("length", "12");
+			params.put("length", length);
 		} else if (tag.equalsIgnoreCase("news")) {
 			params.put("username", username);
 			params.put("password", password);
 			params.put("category_id", "4");
 			params.put("start", start);
-			params.put("length", "12");
+			params.put("length", length);
 		} else if (tag.equalsIgnoreCase("movie")) {
 			params.put("username", username);
 			params.put("password", password);
 			params.put("category_id", "5");
 			params.put("start", start);
-			params.put("length", "12");
+			params.put("length", length);
 		} else if (tag.equalsIgnoreCase("social")) {
 			params.put("username", username);
 			params.put("password", password);
 			params.put("category_id", "6");
 			params.put("start", start);
-			params.put("length", "12");
+			params.put("length", length);
 		} else if (tag.equalsIgnoreCase("tool")) {
 			params.put("username", username);
 			params.put("password", password);
 			params.put("category_id", "7");
 			params.put("start", start);
-			params.put("length", "12");
+			params.put("length", length);
+		} else{
+			params.put("username", username);
+			params.put("password", password);
+			params.put("category_id", "2");
+			params.put("start", start);
+			params.put("length", length);
 		}
 		
 		HttpUtil.post(flag, params, new JsonHttpResponseHandler() {
@@ -116,7 +123,10 @@ public class AppMarketService {
 				if(count>=1){
 					status = 1;
 				}
-
+				else if(count == 0){
+					status = 3;
+				}
+					System.out.println("appitems"+appitems);
 				for (int i = 0; i < count; i++) {
 					try {
 						JSONObject items = appitems.getJSONObject(i);
@@ -136,7 +146,6 @@ public class AppMarketService {
 				}
 			}
 		});
-
 		return applist;
 	}
 }

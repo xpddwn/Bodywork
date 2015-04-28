@@ -33,9 +33,9 @@
         android:id="@+id/listtest1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="#D4D4D4"  
-        android:cacheColorHint="#00000000"  
+        android:background="@color/bg"
+        android:divider="@color/title"  
         android:fadeScrollbars="true"
-        android:dividerHeight="0.7dp"/>
+        android:dividerHeight="1dp"/>
 
 </LinearLayout>

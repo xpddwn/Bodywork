@@ -33,7 +33,7 @@ public class ApplicationClassify extends Activity implements IXListViewListener{
 
 	private ImageButton back;
 	private String name;
-	private int start = 0;
+	private static int  start = 0;
 	private String freshtime = null;
 
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,6 @@ public class ApplicationClassify extends Activity implements IXListViewListener{
 		gridview = (XListView) this.findViewById(R.id.listtest1);
 		gridview.setPullLoadEnable(true);
 		gridview.setXListViewListener(this);
-		infos.clear();
 		onRefresh();
 		setdata();
 		
@@ -126,6 +125,14 @@ public class ApplicationClassify extends Activity implements IXListViewListener{
 						| Gravity.CENTER_VERTICAL, 0, 0);
 				mytoast.show();
 				break;
+			case 3:
+				myThread.interrupt();
+				Toast mytoast2 = Toast.makeText(getApplicationContext(),
+						"已经到底啦", Toast.LENGTH_SHORT);
+				mytoast2.setGravity(Gravity.CENTER_HORIZONTAL
+						| Gravity.CENTER_VERTICAL, 0, 0);
+				mytoast2.show();
+				break;	
 			}
 		}
 	};
@@ -170,6 +177,12 @@ public class ApplicationClassify extends Activity implements IXListViewListener{
 						mHandler1.sendMessage(msg);
 						AppMarketService.setStatus();
 						break;
+					} else if (AppMarketService.getStatus() == 3) {
+						Message msg = new Message();
+						msg.what = 3;
+						mHandler1.sendMessage(msg);
+						AppMarketService.setStatus();
+						break;
 					}
 
 					else {
@@ -193,16 +206,22 @@ public class ApplicationClassify extends Activity implements IXListViewListener{
 
 		restartthread();
 		gettime();
-		getdata(name, String.valueOf(start));
+		getdata(name, "0");
 	}
 
 	@Override
 	public void onLoadMore() {
 		// TODO Auto-generated method stub
 		int mypos = infos.size();
+		System.out.println("infos"+mypos);
 		if (mypos==8) {
-			getdata(name, String.valueOf(8*(start++)));
+			getdata(name, String.valueOf(1*(start++)));
 		} else {
+			Toast mytoast = Toast.makeText(getApplicationContext(),
+					"已经到底，没有更多应用加载", Toast.LENGTH_SHORT);
+			mytoast.setGravity(Gravity.CENTER_HORIZONTAL
+					| Gravity.CENTER_VERTICAL, 0, 0);
+			mytoast.show();
 			gridview.stopLoadMore();
 		}
 		adapter.refreshData(infos);
